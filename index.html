@@ -1,25 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deep Sky Robotics</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9TBZLE5NCN');
+</script>
+  
+  <style>
+    body {
+      background-color: #0a0a0f;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hidden { display: none; }
+
+    .logo {
+      width: 150px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2 {
+      margin: 10px 0;
+      transition: opacity 1.5s ease;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    input[type="email"] {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      width: 250px;
+      margin-right: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: linear-gradient(to right, #ff00cc, #3333ff);
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .caption {
+      margin-top: 15px;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+  </style>
+
 </head>
 <body>
-  <div class="intro">
+  <!-- Intro Animation -->
+  <div id="intro">
     <h1 id="hello">Hello.</h1>
     <h2 id="welcome">Welcome.</h2>
   </div>
 
-  <div class="main">
-    <img src="https://via.placeholder.com/150" alt="Deep Sky Logo" class="logo">
-    <h1>DEEP SKY ROBOTICS</h1>
-    <p>Building the Recursive AI OS of the Future</p>
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-      <input type="email" name="email" placeholder="Enter your email address" required>
+  <!-- Main Landing Content -->
+  <div id="main-content" class="hidden">
+    <img src="logo.png" alt="Deep Sky Robotics Logo" class="logo" />
+
+    <h1>Deep Sky Robotics</h1>
+    <p>The Operating System for the AI-Driven Future</p>
+
+    <form id="email-form">
+      <input type="email" name="email" placeholder="Enter your email address" required />
       <button type="submit">Join Beta & Updates</button>
     </form>
+
+    <p class="caption">Join the waitlist to be among the first to experience the future.</p>
   </div>
+
+  <script>
+    // Intro Animation
+    const hello = document.getElementById('hello');
+    const welcome = document.getElementById('welcome');
+    const mainContent = document.getElementById('main-content');
+
+    welcome.style.opacity = 0;
+    mainContent.classList.add('hidden');
+
+    setTimeout(() => { welcome.style.opacity = 1; }, 2000); 
+    setTimeout(() => { 
+      document.getElementById('intro').style.display = 'none';
+      mainContent.classList.remove('hidden');
+    }, 4000);
+
+    // Email Signup to Google Sheets
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzp5XGUAb-i1-iAIc_XTrv7Qj_LTd6zSK6I0Mw8-Fi4XPCPX1vMb074TNxwm6l47it86Q/exec';
+    const form = document.getElementById('email-form');
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+          alert('Thanks for signing up!');
+          form.reset();
+        })
+        .catch(error => console.error('Error!', error.message));
+    });
+  </script>
 </body>
 </html>
