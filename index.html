@@ -32,8 +32,15 @@
     .hidden { display: none; }
 
     .logo {
-      width: 150px;
-      margin-bottom: 20px;
+      width: 250px;
+      margin-bottom: 30px;
+    }
+    #main-content {
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    #main-content.show {
+      opacity: 1;
     }
 
     h1, h2 {
@@ -110,6 +117,7 @@
     setTimeout(() => { 
       document.getElementById('intro').style.display = 'none';
       mainContent.classList.remove('hidden');
+      mainContent.classlist.add('show');
     }, 4000);
 
     // Email Signup to Google Sheets
