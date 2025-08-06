@@ -124,12 +124,12 @@
     welcome.style.opacity = 0;
     mainContent.classList.add('hidden');
 
-    setTimeout(() => { welcome.style.opacity = 1; }, 2000); 
+    setTimeout(() => { welcome.style.opacity = 1; }, 1000); 
     setTimeout(() => { 
       document.getElementById('intro').style.display = 'none';
       mainContent.classList.remove('hidden');
       mainContent.classList.add('show');
-    }, 4000);
+    }, 2000);
 
     // Email Signup to Google Sheets
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwksm4vG0-SE_35b0xzjUx6ABUfjCjzM3Ca6Ce5PvEiPm4HAGf5eMlIfQS7fEv-bN9itA/exec';
