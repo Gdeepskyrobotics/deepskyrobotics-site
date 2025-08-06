@@ -35,11 +35,11 @@
       width: 350px;
       margin-bottom: 0px;
     }
-    main-content {
+    #main-content {
       opacity: 0;
       transition: opacity 1.5s ease;
     }
-    main-content.show {
+    #main-content.show {
       opacity: 1;
     }
 
@@ -100,10 +100,21 @@
       <input type="email" name="email" placeholder="Enter your email address" required />
       <button type="submit">Join Beta & Updates</button>
     </form>
-
+        <!-- Contact Us Button -->
+    <a href="mailto:contactdsr@protonmail.com" 
+       style="display:inline-block;
+              padding:10px 20px;
+              margin-top:20px;
+              background:linear-gradient(to right,#ff00cc,#3333ff);
+              color:white;
+              border-radius:5px;
+              text-decoration:none;
+              font-weight:bold;
+              font-family:Arial,sans-serif;">
+      Contact Us
+    </a>  
     <p class="caption">Join the waitlist to be among the first to experience the future.</p>
   </div>
-
   <script>
     // Intro Animation
     const hello = document.getElementById('hello');
@@ -120,21 +131,6 @@
       mainContent.classList.add('show');
     }, 4000);
 
-    <!-- Contact Us Button -->
-<a href="mailto:contactdsr@protonmail.com" 
-   style="display:inline-block;
-          padding:10px 20px;
-          margin-top:20px;
-          background:linear-gradient(to right,#ff00cc,#3333ff);
-          color:white;
-          border-radius:5px;
-          text-decoration:none;
-          font-weight:bold;
-          font-family:Arial,sans-serif;">
-  Contact Us
-</a>
-
-
     // Email Signup to Google Sheets
     const scriptURL = 'https://script.google.com/macros/s/AKfycbwksm4vG0-SE_35b0xzjUx6ABUfjCjzM3Ca6Ce5PvEiPm4HAGf5eMlIfQS7fEv-bN9itA/exec';
     const form = document.getElementById('email-form');
@@ -143,7 +139,7 @@
       e.preventDefault();
       fetch(scriptURL, { method: 'POST', body: new FormData(form)})
         .then(response => {
-          alert('Thanks for signing up!');
+          mainContent.innerHTML = "<h2>Thank you for joining Deep Sky Robotics!</h2><p>Check your email for confirmation.</p>";
           form.reset();
         })
         .catch(error => console.error('Error!', error.message));
