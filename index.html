@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Deep Sky Robotics</title>
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9TBZLE5NCN');
+  </script>
 
-  gtag('config', 'G-9TBZLE5NCN');
-</script>
-  
   <style>
     body {
       background-color: #0a0a0f;
@@ -35,17 +34,14 @@
       width: 350px;
       margin-bottom: 0px;
     }
+
     #main-content {
       opacity: 0;
       transition: opacity 1.5s ease;
     }
+
     #main-content.show {
       opacity: 1;
-    }
-
-    h1, h2 {
-      margin: 10px 0;
-      transition: opacity 1.5s ease;
     }
 
     form {
@@ -80,8 +76,8 @@
       font-size: 0.9em;
     }
   </style>
-
 </head>
+
 <body>
   <!-- Intro Animation -->
   <div id="intro">
@@ -89,10 +85,9 @@
     <h2 id="welcome">Welcome.</h2>
   </div>
 
-  <!-- Main Landing Content -->
+  <!-- Main Content -->
   <div id="main-content" class="hidden">
     <img src="logo.png" alt="Deep Sky Robotics Logo" class="logo" />
-
     <h1>Deep Sky Robotics</h1>
     <p>The Operating System for the AI-Driven Future</p>
 
@@ -100,21 +95,23 @@
       <input type="email" name="email" placeholder="Enter your email address" required />
       <button type="submit">Join Beta & Updates</button>
     </form>
-        <!-- Contact Us Button -->
-    <a href="mailto:contactdsr@protonmail.com" 
-       style="display:inline-block;
-              padding:10px 20px;
-              margin-top:20px;
-              background:linear-gradient(to right,#ff00cc,#3333ff);
-              color:white;
-              border-radius:5px;
-              text-decoration:none;
-              font-weight:bold;
-              font-family:Arial,sans-serif;">
+
+    <a href="mailto:contactdsr@protonmail.com" style="
+      display:inline-block;
+      padding:10px 20px;
+      margin-top:20px;
+      background:linear-gradient(to right,#ff00cc,#3333ff);
+      color:white;
+      border-radius:5px;
+      text-decoration:none;
+      font-weight:bold;
+      font-family:Arial,sans-serif;">
       Contact Us
-    </a>  
+    </a>
+
     <p class="caption">Join the waitlist to be among the first to experience the future.</p>
   </div>
+
   <script>
     // Intro Animation
     const hello = document.getElementById('hello');
@@ -124,33 +121,35 @@
     welcome.style.opacity = 0;
     mainContent.classList.add('hidden');
 
-    setTimeout(() => { welcome.style.opacity = 1; }, 1000); 
-    setTimeout(() => { 
+    setTimeout(() => { welcome.style.opacity = 1; }, 1000);
+    setTimeout(() => {
       document.getElementById('intro').style.display = 'none';
       mainContent.classList.remove('hidden');
       mainContent.classList.add('show');
     }, 2000);
 
-    // Email Signup to Google Sheets
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzCHyJMy2ybuDyCIZYHK9sHYZGjl6wvzqzQJw-kllAbOliMdgT9OC-uCRPdQ26aNzKF3w/exec';
+    // Email to Google Sheets
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwlAjQrhDM6x2frVuppW3n5uOEHw_U28mbUaxIOAwc-zB4QVg79oRJlpuErdtxMAYLLwA/exec';
     const form = document.getElementById('email-form');
 
     form.addEventListener('submit', e => {
-  e.preventDefault();
-  const emailInput = form.querySelector('input[name="email"]').value;
+      e.preventDefault();
+      const emailInput = form.querySelector('input[name="email"]').value;
 
-  fetch(scriptURL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: emailInput })
-  })
-  .then(response => {
-    form.innerHTML = "<p style='color: #fff; font-weight: bold;'>✅ You're on the list! Check your email for confirmation.</p>";
-    form.reset();
-  })
-  .catch(error => console.error('Error!', error.message));
-});
-
+      fetch(scriptURL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailInput })
+      })
+      .then(response => {
+        form.innerHTML = "<p style='color: #fff; font-weight: bold;'>✅ You're on the list! Check your email for confirmation.</p>";
+      })
+      .catch(error => {
+        console.error('Error!', error.message);
+        form.innerHTML = "<p style='color: red; font-weight: bold;'>❌ Something went wrong. Try again later.</p>";
+      });
+    });
   </script>
 </body>
 </html>
+
