@@ -136,14 +136,21 @@
     const form = document.getElementById('email-form');
 
     form.addEventListener('submit', e => {
-      e.preventDefault();
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-          mainContent.innerHTML = "<h2>Thank you for joining Deep Sky Robotics!</h2><p>Check your email for confirmation.</p>";
-          form.reset();
-        })
-        .catch(error => console.error('Error!', error.message));
-    });
+  e.preventDefault();
+  const emailInput = form.querySelector('input[name="email"]').value;
+
+  fetch(scriptURL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: emailInput })
+  })
+  .then(response => {
+    form.innerHTML = "<p style='color: #fff; font-weight: bold;'>✅ You're on the list! Check your email for confirmation.</p>";
+    form.reset();
+  })
+  .catch(error => console.error('Error!', error.message));
+});
+
   </script>
 </body>
 </html>
