@@ -44,36 +44,27 @@
       opacity: 1;
     }
 
-    form {
-      margin-top: 20px;
-    }
-
-    input[type="email"] {
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      width: 250px;
-      margin-right: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background: linear-gradient(to right, #ff00cc, #3333ff);
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
     .caption {
       margin-top: 15px;
       color: #aaa;
       font-size: 0.9em;
+      max-width: 600px;
+    }
+
+    a.button {
+      display: inline-block;
+      padding: 10px 20px;
+      margin-top: 20px;
+      background: linear-gradient(to right, #ff00cc, #3333ff);
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: Arial, sans-serif;
+    }
+
+    a.button:hover {
+      opacity: 0.9;
     }
   </style>
 </head>
@@ -91,25 +82,14 @@
     <h1>Deep Sky Robotics</h1>
     <p>The Operating System for the AI-Driven Future</p>
 
-    <form id="email-form">
-      <input type="email" name="email" placeholder="Enter your email address" required />
-      <button type="submit">Join Beta & Updates</button>
-    </form>
-
-    <a href="mailto:contactdsr@protonmail.com" style="
-      display:inline-block;
-      padding:10px 20px;
-      margin-top:20px;
-      background:linear-gradient(to right,#ff00cc,#3333ff);
-      color:white;
-      border-radius:5px;
-      text-decoration:none;
-      font-weight:bold;
-      font-family:Arial,sans-serif;">
+    <a href="mailto:contactdsr@protonmail.com" class="button">
       Contact Us
     </a>
 
-    <p class="caption">Join the waitlist to be among the first to experience the future.</p>
+    <p class="caption">
+      If you're interested in joining our beta program or partnering on enterprise AI solutions,
+      please reach out directly. We're currently hand-picking early users and collaborators.
+    </p>
   </div>
 
   <script>
@@ -127,29 +107,8 @@
       mainContent.classList.remove('hidden');
       mainContent.classList.add('show');
     }, 2000);
-
-    // Email to Google Sheets
-    const scriptURL = 'https://dsr-cors-proxy-email-o06g3zb2t-gabriel-reyes-projects-44389e2c.vercel.app/api/submit';
-    const form = document.getElementById('email-form');
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const emailInput = form.querySelector('input[name="email"]').value;
-
-      fetch(scriptURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: emailInput })
-      })
-      .then(response => {
-        form.innerHTML = "<p style='color: #fff; font-weight: bold;'>✅ You're on the list! Check your email for confirmation.</p>";
-      })
-      .catch(error => {
-        console.error('Error!', error.message);
-        form.innerHTML = "<p style='color: red; font-weight: bold;'>❌ Something went wrong. Try again later.</p>";
-      });
-    });
   </script>
 </body>
 </html>
+
 
