@@ -1,114 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Deep Sky Robotics</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Sky Robotics</title>
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-9TBZLE5NCN');
-  </script>
+<!-- Google Analytics (carried over from the existing site) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-9TBZLE5NCN');
+</script>
 
-  <style>
-    body {
-      background-color: #0a0a0f;
-      color: white;
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-      overflow: hidden;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#060608;color:#f8f9ff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#818cf8;text-decoration:none}a:hover{color:#a5b4fc}
+::selection{background:rgba(99,102,241,0.4)}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px}
+html{scroll-behavior:smooth}
+img{max-width:100%}
 
-    .hidden { display: none; }
+/* hover states compiled from the design's style-hover attributes */
+.h-navlink:hover{color:#c7d2fe}
+.h-demo:hover{box-shadow:0 2px 18px rgba(99,102,241,0.55);color:#ffffff}
+.h-card-nfo:hover{background:rgba(255,255,255,0.058);box-shadow:0 0 24px rgba(16,185,129,0.12)}
+.h-nfo-link:hover{color:#6ee7b7}
+.h-card-fin:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.22)}
+.h-deck:hover{box-shadow:0 2px 20px rgba(99,102,241,0.55);color:#ffffff}
+.h-pilot-cta:hover{background:rgba(99,102,241,0.2);color:#e0e7ff}
+.h-phone:hover{color:#e0e7ff}
+.h-contact:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.45);box-shadow:0 0 24px rgba(99,102,241,0.18);color:#f8f9ff}
+.h-contact-pilot:hover{background:rgba(99,102,241,0.16);box-shadow:0 0 24px rgba(99,102,241,0.22);color:#f8f9ff}
 
-    .logo {
-      width: 350px;
-      margin-bottom: 0px;
-    }
-
-    #main-content {
-      opacity: 0;
-      transition: opacity 1.5s ease;
-    }
-
-    #main-content.show {
-      opacity: 1;
-    }
-
-    .caption {
-      margin-top: 15px;
-      color: #aaa;
-      font-size: 0.9em;
-      max-width: 600px;
-    }
-
-    a.button {
-      display: inline-block;
-      padding: 10px 20px;
-      margin-top: 20px;
-      background: linear-gradient(to right, #ff00cc, #3333ff);
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      font-family: Arial, sans-serif;
-    }
-
-    a.button:hover {
-      opacity: 0.9;
-    }
-  </style>
+@media (max-width:820px){
+  .nav-links{gap:16px !important}
+  .platform-grid,.investor-grid,.contact-grid{grid-template-columns:1fr !important}
+  .hero-h1{font-size:34px !important}
+}
+</style>
 </head>
-
 <body>
-  <!-- Intro Animation -->
-  <div id="intro">
-    <h1 id="hello">Hello.</h1>
-    <h2 id="welcome">Welcome.</h2>
-  </div>
+<div style="min-height:100vh;background:#060608;position:relative;overflow-x:hidden">
+  <div style="position:absolute;top:-240px;left:50%;transform:translateX(-50%);width:1000px;height:620px;background:radial-gradient(ellipse at center,rgba(139,92,246,0.13),transparent 65%);pointer-events:none"></div>
 
-  <!-- Main Content -->
-  <div id="main-content" class="hidden">
-    <img src="logo.png" alt="Deep Sky Robotics Logo" class="logo" />
-    <h1>Deep Sky Robotics</h1>
-    <p>The Operating System for the AI-Driven Future</p>
+  <nav style="position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 32px;background:rgba(6,6,10,0.78);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.072)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="dsr-logo.png" alt="Deep Sky Robotics" style="width:34px;height:34px;object-fit:contain">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:800;letter-spacing:0.14em;color:#f8f9ff">DEEP SKY ROBOTICS</span>
+        <span style="font-size:8.5px;font-weight:600;letter-spacing:0.24em;color:rgba(248,249,255,0.5)">POWERED BY NEPHES</span>
+      </div>
+    </div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="nfo.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">NFO</a>
+      <a href="nephes.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">NEPHES</a>
+      <a href="#" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:#f8f9ff">COMPANY</a>
+      <a href="#contact" class="h-demo" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+    </div>
+  </nav>
 
-    <a href="mailto:contactdsr@protonmail.com" class="button">
-      Contact Us
-    </a>
+  <header style="position:relative;max-width:900px;margin:0 auto;padding:84px 32px 56px;text-align:center">
+    <img src="dsr-logo.png" alt="Deep Sky Robotics" style="width:88px;height:88px;object-fit:contain;margin-bottom:22px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.3em;color:rgba(248,249,255,0.5);margin-bottom:18px">SUB TERRA AD ASTRA</div>
+    <h1 class="hero-h1" style="margin:0 auto;max-width:760px;font-family:'Montserrat',sans-serif;font-size:44px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;text-wrap:balance">Reasoning systems for machines that can't afford surprises</h1>
+    <p style="margin:20px auto 0;max-width:620px;font-size:16px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">Deep Sky Robotics builds NEPHES, a distributed reasoning module that watches high-stakes signal streams — factory telemetry, market data — and turns them into decisions you can audit.</p>
+  </header>
 
-    <p class="caption">
-      If you're interested in joining our beta program or partnering on enterprise AI solutions,
-      please reach out directly. We're currently hand-picking early users and collaborators.
-    </p>
-  </div>
+  <section id="platform" style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">THE NEPHES PLATFORM</div>
+    <h2 style="margin:0 0 28px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">One core, two verticals</h2>
+    <div class="platform-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+      <div class="h-card-nfo" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(52,211,153,0.25);padding:26px;display:flex;flex-direction:column;transition:all 0.15s ease">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">MANUFACTURING</span>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.1em;padding:3px 9px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);color:#34d399;background:rgba(16,185,129,0.08)">SHIPPING</span>
+        </div>
+        <h3 style="margin:0 0 9px;font-size:17px;font-weight:700">NEPHES Factory Observer</h3>
+        <p style="margin:0 0 18px;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Predictive maintenance from the PLCs you already run — reasoned findings, tracked episodes, datasheet-cited recommendations. Installed as a desktop product, entirely on-prem.</p>
+        <a href="nfo.html" class="h-nfo-link" style="margin-top:auto;font-size:12.5px;font-weight:600;color:#34d399">Explore NFO →</a>
+      </div>
+      <div class="h-card-fin" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;display:flex;flex-direction:column;transition:all 0.15s ease">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">FINTECH</span>
+          <span style="font-size:9px;font-weight:700;letter-spacing:0.1em;padding:3px 9px;border-radius:9999px;border:1px solid rgba(129,140,248,0.4);color:#818cf8;background:rgba(99,102,241,0.08)">IN OPERATION</span>
+        </div>
+        <h3 style="margin:0 0 9px;font-size:17px;font-weight:700">NEPHES Trading Intelligence</h3>
+        <p style="margin:0 0 18px;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">A mixture-of-experts ensemble trained continuously on market data, with conformal uncertainty gating, a versioned model registry, and live plus shadow execution running side by side.</p>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">internal · powers the NEPHES core</span>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    // Intro Animation
-    const hello = document.getElementById('hello');
-    const welcome = document.getElementById('welcome');
-    const mainContent = document.getElementById('main-content');
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div class="investor-grid" style="border-radius:20px;border:1px solid rgba(99,102,241,0.22);background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(6,182,212,0.06) 55%,rgba(16,185,129,0.04));padding:44px 48px;display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:center">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#c7d2fe;margin-bottom:12px">FOR EARLY ADOPTERS &amp; ANGEL INVESTORS</div>
+        <h2 style="margin:0 0 14px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em">Get in before the crowd</h2>
+        <p style="margin:0;font-size:14.5px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">Every factory already produces the data NFO needs — it just goes unread. NEPHES reads it on hardware the customer already owns: no cloud bill, no data-governance objection, an install measured in minutes. We're looking for early-adopter factories to run founding pilots — hands-on support, founding-customer pricing — and raising an angel round to put NFO on more floors.</p>
+        <div style="display:flex;gap:14px;align-items:center;margin-top:24px;flex-wrap:wrap">
+          <a href="mailto:info@deepskyrobotics.com?subject=Angel%20investment%20intro" class="h-deck" style="display:inline-block;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:13.5px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Request the deck</a>
+          <a href="mailto:info@deepskyrobotics.com?subject=Founding%20pilot" class="h-pilot-cta" style="display:inline-block;padding:12px 26px;border-radius:6px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);color:#c7d2fe;font-size:13.5px;font-weight:600;white-space:nowrap">Become a founding pilot</a>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 18px;border-radius:10px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><span style="font-size:11px;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">PRODUCT STAGE</span><span style="font-size:13px;font-weight:700;color:#34d399">Installed desktop release</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 18px;border-radius:10px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><span style="font-size:11px;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">DEPLOYMENT MODEL</span><span style="font-size:13px;font-weight:700">On-prem, per-seat</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 18px;border-radius:10px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><span style="font-size:11px;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">PLATFORM LEVERAGE</span><span style="font-size:13px;font-weight:700">1 core → 2 verticals</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 18px;border-radius:10px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.45)"><span style="font-size:11px;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">NOW OPEN</span><span style="font-size:13px;font-weight:700;color:#c7d2fe">Angel round · founding pilots</span></div>
+      </div>
+    </div>
+  </section>
 
-    welcome.style.opacity = 0;
-    mainContent.classList.add('hidden');
+  <section id="contact" style="max-width:1200px;margin:0 auto;padding:0 32px 80px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">CONTACT</div>
+    <h2 style="margin:0 0 10px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">Talk to us</h2>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 26px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.5)"><a href="tel:+17314879236" class="h-phone" style="color:#c7d2fe">+1 (731) 487-9236</a><span>·</span><a href="tel:+12075317278" class="h-phone" style="color:#c7d2fe">+1 (207) 531-7278</a><span>·</span><a href="mailto:info@deepskyrobotics.com" class="h-phone" style="color:#c7d2fe">info@deepskyrobotics.com</a></div>
+    <div class="contact-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <a href="mailto:info@deepskyrobotics.com?subject=Demo%20request" class="h-contact" style="display:flex;flex-direction:column;gap:10px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;color:#f8f9ff;transition:all 0.15s ease">
+        <span style="font-size:16px;font-weight:700">Book a demo</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.72)">30 minutes on the live console with replay data from a real line.</span>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#22d3ee">info@deepskyrobotics.com →</span>
+      </a>
+      <a href="mailto:info@deepskyrobotics.com?subject=Sales%20inquiry" class="h-contact" style="display:flex;flex-direction:column;gap:10px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;color:#f8f9ff;transition:all 0.15s ease">
+        <span style="font-size:16px;font-weight:700">Contact sales</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.72)">Pricing, licensing and rollout across multiple lines or plants.</span>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#22d3ee">info@deepskyrobotics.com →</span>
+      </a>
+      <a href="mailto:info@deepskyrobotics.com?subject=Factory%20pilot%20request" class="h-contact-pilot" style="display:flex;flex-direction:column;gap:10px;border-radius:16px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.45);padding:26px;color:#f8f9ff;transition:all 0.15s ease">
+        <span style="font-size:16px;font-weight:700">Request a factory pilot</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.72)">30 days on one line, your PLC tags, your datasheets. Keep the findings.</span>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#22d3ee">info@deepskyrobotics.com →</span>
+      </a>
+    </div>
+  </section>
 
-    setTimeout(() => { welcome.style.opacity = 1; }, 1000);
-    setTimeout(() => {
-      document.getElementById('intro').style.display = 'none';
-      mainContent.classList.remove('hidden');
-      mainContent.classList.add('show');
-    }, 2000);
-  </script>
+  <footer style="border-top:1px solid rgba(255,255,255,0.072);padding:30px 32px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;align-items:center;gap:11px">
+        <img src="dsr-logo.png" alt="" style="width:26px;height:26px;object-fit:contain">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">© 2026 DEEP SKY ROBOTICS · SUB TERRA AD ASTRA</span>
+      </div>
+      <div style="display:flex;gap:22px">
+        <a href="nfo.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">NFO</a>
+      </div>
+    </div>
+  </footer>
+</div>
 </body>
 </html>
-
-

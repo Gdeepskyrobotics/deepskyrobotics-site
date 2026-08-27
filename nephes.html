@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEPHES — Deep Sky Robotics</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9TBZLE5NCN');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#060608;color:#f8f9ff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#818cf8;text-decoration:none}a:hover{color:#a5b4fc}
+::selection{background:rgba(99,102,241,0.4)}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px}
+html{scroll-behavior:smooth}
+img{max-width:100%}
+@keyframes flowMove{0%{left:-40%}100%{left:100%}}
+.h-navlink:hover{color:#c7d2fe}
+.h-demo:hover{box-shadow:0 2px 18px rgba(99,102,241,0.55);color:#ffffff}
+.h-demo-lg:hover{box-shadow:0 2px 20px rgba(99,102,241,0.55);color:#ffffff}
+.h-principle:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.22)}
+.h-card-nfo:hover{background:rgba(255,255,255,0.058);box-shadow:0 0 24px rgba(16,185,129,0.12);color:#f8f9ff}
+.h-card-fin:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.22)}
+.h-pilot-cta:hover{background:rgba(99,102,241,0.2);color:#e0e7ff}
+.h-phone:hover{color:#e0e7ff}
+@media (max-width:900px){
+  .nav-links{gap:16px !important}
+  .pipeline-grid{grid-template-columns:1fr !important}
+  .pipeline-grid > div:nth-child(even){display:none !important}
+  .principles-grid,.runs-grid,.cta-row{grid-template-columns:1fr !important}
+  .cta-row{flex-direction:column;align-items:flex-start !important}
+}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background:#060608;position:relative;overflow-x:hidden">
+  <div style="position:absolute;top:-240px;left:50%;transform:translateX(-50%);width:1000px;height:620px;background:radial-gradient(ellipse at center,rgba(99,102,241,0.15),transparent 65%);pointer-events:none"></div>
+  <div style="position:absolute;top:400px;left:-200px;width:560px;height:480px;background:radial-gradient(ellipse at center,rgba(139,92,246,0.09),transparent 65%);pointer-events:none"></div>
+
+  <nav style="position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 32px;background:rgba(6,6,10,0.78);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.072)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="dsr-logo.png" alt="Deep Sky Robotics" style="width:34px;height:34px;object-fit:contain">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:800;letter-spacing:0.14em;color:#f8f9ff">DEEP SKY ROBOTICS</span>
+        <span style="font-size:8.5px;font-weight:600;letter-spacing:0.24em;color:rgba(248,249,255,0.5)">POWERED BY NEPHES</span>
+      </div>
+    </div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="nfo.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">NFO</a>
+      <a href="nephes.html" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:#f8f9ff">NEPHES</a>
+      <a href="index.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">COMPANY</a>
+      <a href="index.html#contact" class="h-demo" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+    </div>
+  </nav>
+
+  <header style="position:relative;max-width:900px;margin:0 auto;padding:88px 32px 56px;text-align:center">
+    <div style="display:inline-flex;padding:5px 14px;border-radius:9999px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);font-size:10px;font-weight:700;letter-spacing:0.18em;color:#c7d2fe;margin-bottom:26px">THE ENGINE</div>
+    <h1 style="margin:0 auto;font-family:'Montserrat',sans-serif;font-size:52px;font-weight:800;letter-spacing:-0.02em;line-height:1.08;text-wrap:balance">The only engine <span style="background:linear-gradient(90deg,#818cf8,#22d3ee 55%,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">you'll ever need</span></h1>
+    <p style="margin:22px auto 0;max-width:640px;font-size:16.5px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">NEPHES is a reasoning engine for signals that matter. Machines and markets speak in continuous streams of numbers — NEPHES listens, understands what's normal, notices what isn't, and says why, with the evidence attached. And because it adapts to the latest and greatest in AI infrastructure on its own, you never have to chase it. It's the core every Deep Sky Robotics product is built on.</p>
+  </header>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">HOW IT THINKS</div>
+    <h2 style="margin:0 0 28px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">Observe → Reason → Judge → Explain</h2>
+    <div class="pipeline-grid" style="display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr 26px 1fr;align-items:stretch">
+      <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:12px">01 · OBSERVE</div>
+        <h3 style="margin:0 0 9px;font-size:16px;font-weight:700">Any stream, one language</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Sensor telemetry, market ticks, token flows — every source is normalized into one canonical stream the engine can reason over, in real time.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div style="width:100%;height:2px;position:relative;background:rgba(99,102,241,0.18);overflow:hidden"><div style="position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,#818cf8,transparent);animation:flowMove 1.5s linear infinite"></div></div></div>
+      <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:12px">02 · REASON</div>
+        <h3 style="margin:0 0 9px;font-size:16px;font-weight:700">A fabric of specialists</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Instead of one monolithic model, NEPHES routes each signal through specialized reasoning engines — limits, patterns, anomalies, cross-signal relationships — that each look for something different.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div style="width:100%;height:2px;position:relative;background:rgba(99,102,241,0.18);overflow:hidden"><div style="position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,#818cf8,transparent);animation:flowMove 1.5s linear infinite"></div></div></div>
+      <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:12px">03 · JUDGE</div>
+        <h3 style="margin:0 0 9px;font-size:16px;font-weight:700">Confidence before action</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Every conclusion carries a calibrated confidence. Below the bar, NEPHES keeps watching instead of acting — knowing when <em>not</em> to fire is the feature.</p>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><div style="width:100%;height:2px;position:relative;background:rgba(99,102,241,0.18);overflow:hidden"><div style="position:absolute;top:0;left:-40%;width:40%;height:100%;background:linear-gradient(90deg,transparent,#818cf8,transparent);animation:flowMove 1.5s linear infinite"></div></div></div>
+      <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:12px">04 · EXPLAIN</div>
+        <h3 style="margin:0 0 9px;font-size:16px;font-weight:700">Evidence, not verdicts</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Outputs arrive as findings with their reasoning trail — what was observed, what it was compared against, why it matters — and persist as an auditable history.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">PRINCIPLES</div>
+    <h2 style="margin:0 0 28px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">What makes it different</h2>
+    <div class="principles-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+      <div class="h-principle" style="display:flex;gap:18px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px 26px;transition:all 0.15s ease">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;flex-shrink:0;padding-top:2px">A</div>
+        <div><h3 style="margin:0 0 7px;font-size:15.5px;font-weight:700">It tracks stories, not alarms</h3><p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">A developing condition becomes one continuously updated episode — opened, tracked, and closed — instead of a thousand duplicate alerts. Humans see a narrative, not noise.</p></div>
+      </div>
+      <div class="h-principle" style="display:flex;gap:18px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px 26px;transition:all 0.15s ease">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;flex-shrink:0;padding-top:2px">B</div>
+        <div><h3 style="margin:0 0 7px;font-size:15.5px;font-weight:700">It grounds itself in documents</h3><p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Give it the paperwork — a manufacturer's datasheet, a spec, a policy — and its conclusions cite the documented limits they're judged against. No black-box verdicts.</p></div>
+      </div>
+      <div class="h-principle" style="display:flex;gap:18px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px 26px;transition:all 0.15s ease">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;flex-shrink:0;padding-top:2px">C</div>
+        <div><h3 style="margin:0 0 7px;font-size:15.5px;font-weight:700">It runs where the data lives</h3><p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">The engine deploys on-premises — a factory PC, a trading workstation — with nothing leaving the building. No cloud dependency, no data-governance objection.</p></div>
+      </div>
+      <div class="h-principle" style="display:flex;gap:18px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px 26px;transition:all 0.15s ease">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;flex-shrink:0;padding-top:2px">D</div>
+        <div><h3 style="margin:0 0 7px;font-size:15.5px;font-weight:700">It doesn't care what the signal is</h3><p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">The same core reads vibration on a conveyor and momentum in a market. New vertical, new gateway — same engine.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="position:relative;border-radius:20px;border:1px solid rgba(99,102,241,0.45);background:linear-gradient(135deg,rgba(99,102,241,0.14),rgba(6,182,212,0.07) 55%,rgba(16,185,129,0.04));padding:48px;overflow:hidden;text-align:center">
+      <div style="position:absolute;top:-90px;left:50%;transform:translateX(-50%);width:520px;height:280px;background:radial-gradient(ellipse at center,rgba(99,102,241,0.2),transparent 70%);pointer-events:none"></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#c7d2fe;margin-bottom:14px">IT KEEPS UP SO YOU DON'T HAVE TO</div>
+      <h2 style="margin:0 auto;max-width:760px;font-family:'Montserrat',sans-serif;font-size:34px;font-weight:800;letter-spacing:-0.02em;line-height:1.15;text-wrap:balance">AI reinvents itself every few months. <span style="background:linear-gradient(90deg,#818cf8,#22d3ee 55%,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">NEPHES keeps up — you focus on what really matters.</span></h2>
+      <p style="margin:18px auto 0;max-width:640px;font-size:14.5px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">New models, new runtimes, new tricks — NEPHES absorbs them behind one stable interface. The engine adapts to the latest and greatest underneath while nothing you built on top changes. Adopt it once; it stays current for you, and your team stays on the plant, the portfolio, the product.</p>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">IN PRODUCTION</div>
+    <h2 style="margin:0 0 28px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">Where NEPHES runs today</h2>
+    <div class="runs-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px">
+      <a href="nfo.html" class="h-card-nfo" style="display:flex;flex-direction:column;gap:10px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(52,211,153,0.25);padding:26px;color:#f8f9ff;transition:all 0.15s ease">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">MANUFACTURING</span><span style="font-size:9px;font-weight:700;letter-spacing:0.1em;padding:3px 9px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);color:#34d399;background:rgba(16,185,129,0.08)">SHIPPING</span></div>
+        <span style="font-size:16.5px;font-weight:700">Factory Observer</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.72)">Reads live PLC telemetry and turns it into evidence-backed maintenance calls, days before the failure.</span>
+        <span style="margin-top:auto;font-size:12.5px;font-weight:600;color:#34d399">Explore NFO →</span>
+      </a>
+      <div class="h-card-fin" style="display:flex;flex-direction:column;gap:10px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;transition:all 0.15s ease">
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">FINTECH</span><span style="font-size:9px;font-weight:700;letter-spacing:0.1em;padding:3px 9px;border-radius:9999px;border:1px solid rgba(129,140,248,0.4);color:#818cf8;background:rgba(99,102,241,0.08)">IN OPERATION</span></div>
+        <span style="font-size:16.5px;font-weight:700">Trading Intelligence</span>
+        <span style="font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.72)">Reads market streams and fires only inside calibrated confidence bands — with a risk-free shadow book running alongside the live one.</span>
+        <span style="margin-top:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(248,249,255,0.5)">internal operation</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 80px">
+    <div class="cta-row" style="border-radius:20px;border:1px solid rgba(99,102,241,0.22);background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(6,182,212,0.06) 55%,rgba(16,185,129,0.04));padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px">
+      <div>
+        <h2 style="margin:0 0 10px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em">Have a signal stream worth watching?</h2>
+        <p style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(248,249,255,0.72);max-width:560px">See the engine at work on the factory floor — or talk to us about your vertical.</p>
+      </div>
+      <div style="display:flex;gap:12px;flex-shrink:0">
+        <a href="index.html#contact" class="h-demo-lg" style="padding:13px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+        <a href="nfo.html" class="h-pilot-cta" style="padding:13px 26px;border-radius:6px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);color:#c7d2fe;font-size:14px;font-weight:600;white-space:nowrap">See it in NFO</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.072);padding:30px 32px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;align-items:center;gap:11px">
+        <img src="dsr-logo.png" alt="" style="width:26px;height:26px;object-fit:contain">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">© 2026 DEEP SKY ROBOTICS · SUB TERRA AD ASTRA</span>
+      </div>
+      <div style="display:flex;gap:22px">
+        <a href="nfo.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">NFO</a>
+        <a href="index.html#contact" class="h-phone" style="font-size:11px;font-weight:600;letter-spacing:0.1em;color:#c7d2fe">BOOK A DEMO</a>
+      </div>
+    </div>
+  </footer>
+</div>
+</body>
+</html>

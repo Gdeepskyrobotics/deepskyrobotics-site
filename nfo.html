@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEPHES Factory Observer — Deep Sky Robotics</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9TBZLE5NCN');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+html,body{margin:0;padding:0;background:#060608;color:#f8f9ff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#818cf8;text-decoration:none}a:hover{color:#a5b4fc}
+::selection{background:rgba(99,102,241,0.4)}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px}
+html{scroll-behavior:smooth}
+img{max-width:100%}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(74,222,128,0.5)}70%{box-shadow:0 0 0 5px rgba(74,222,128,0)}100%{box-shadow:0 0 0 0 rgba(74,222,128,0)}}
+.h-navlink:hover{color:#c7d2fe}
+.h-demo:hover{box-shadow:0 2px 18px rgba(99,102,241,0.55);color:#ffffff}
+.h-demo-lg:hover{box-shadow:0 2px 20px rgba(99,102,241,0.55);color:#ffffff}
+.h-pilot-cta:hover{background:rgba(99,102,241,0.2);color:#e0e7ff}
+.h-profile:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.45);box-shadow:0 0 24px rgba(99,102,241,0.18)}
+.h-cap:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.22)}
+.h-card-nfo:hover{background:rgba(255,255,255,0.058);box-shadow:0 0 24px rgba(16,185,129,0.12);color:#f8f9ff}
+.h-footlink:hover{color:#c7d2fe}
+.h-founder:hover{color:#e0e7ff}
+@media (max-width:960px){
+  .nav-links{gap:15px !important}
+  .hero-h1{font-size:40px !important}
+  .profiles-grid,.stats-grid,.caps-grid,.runs-grid,.security-grid,.split,.deploy-split,.cta-row{grid-template-columns:1fr !important}
+  .cta-row{flex-direction:column;align-items:flex-start !important}
+}
+</style>
+</head>
+<body>
+<div style="min-height:100vh;background:#060608;position:relative;overflow-x:hidden">
+  <div style="position:absolute;top:-220px;left:50%;transform:translateX(-50%);width:1100px;height:640px;background:radial-gradient(ellipse at center,rgba(99,102,241,0.16),transparent 65%);pointer-events:none"></div>
+  <div style="position:absolute;top:120px;right:-180px;width:600px;height:500px;background:radial-gradient(ellipse at center,rgba(6,182,212,0.08),transparent 65%);pointer-events:none"></div>
+
+  <nav style="position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 32px;background:rgba(6,6,10,0.78);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.072)">
+    <div style="display:flex;align-items:center;gap:12px">
+      <img src="dsr-logo.png" alt="Deep Sky Robotics" style="width:34px;height:34px;object-fit:contain">
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="font-size:12px;font-weight:800;letter-spacing:0.14em;color:#f8f9ff">DEEP SKY ROBOTICS</span>
+        <span style="font-size:8.5px;font-weight:600;letter-spacing:0.24em;color:rgba(248,249,255,0.5)">POWERED BY NEPHES</span>
+      </div>
+    </div>
+    <div class="nav-links" style="display:flex;align-items:center;gap:28px">
+      <a href="nfo.html" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:#f8f9ff">NFO</a>
+      <a href="nephes.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">NEPHES</a>
+      <a href="index.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">COMPANY</a>
+      <a href="index.html#contact" class="h-demo" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+    </div>
+  </nav>
+
+  <header style="position:relative;max-width:1200px;margin:0 auto;padding:88px 32px 48px;text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:9999px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);font-size:10px;font-weight:700;letter-spacing:0.18em;color:#c7d2fe;margin-bottom:26px">NEPHES FACTORY OBSERVER</div>
+    <h1 class="hero-h1" style="margin:0 auto;max-width:860px;font-family:'Montserrat',sans-serif;font-size:58px;font-weight:800;letter-spacing:-0.02em;line-height:1.06;text-wrap:balance">Predictive maintenance that <span style="background:linear-gradient(90deg,#818cf8,#22d3ee 55%,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">shows its work</span></h1>
+    <p style="margin:22px auto 0;max-width:640px;font-size:17px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">NFO plugs into the PLCs you already run — Modbus or OPC&nbsp;UA — reasons over every signal in real time, and hands your operators maintenance calls with the evidence attached. Entirely on your hardware.</p>
+    <div style="display:flex;justify-content:center;gap:14px;margin-top:34px">
+      <a href="index.html#contact" class="h-demo-lg" style="padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+      <a href="index.html#contact" class="h-pilot-cta" style="padding:12px 26px;border-radius:6px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);color:#c7d2fe;font-size:14px;font-weight:600;white-space:nowrap">Request a factory pilot</a>
+    </div>
+    <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:rgba(248,249,255,0.5)">Windows installer · no admin rights · no cloud dependency</div>
+  </header>
+
+  <!-- Console section: the LIVE interactive console is intentionally NOT shipped
+       to the public site. This is a static, non-interactive preview panel; the
+       real console is shown in demos. -->
+  <div style="max-width:1200px;margin:0 auto;padding:0 32px 20px;position:relative">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;flex-wrap:wrap;gap:8px">
+      <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">THE NEPHES FACTORY OBSERVER CONSOLE</span>
+      <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80"><span style="width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-ring 1.8s infinite"></span>runs on-prem · not on the web</span>
+    </div>
+    <div style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12)">
+      <!-- static evocation of the console: a header bar + a heatmap-style grid, non-interactive -->
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)">
+        <span style="width:9px;height:9px;border-radius:50%;background:#4ade80"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:rgba(248,249,255,0.6)">NEPHES FACTORY OBSERVER · line A · 2,000 sensors · 1 Hz</span>
+        <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#22d3ee">manufacturing · enterprise · backend</span>
+      </div>
+      <div style="padding:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:5px;background:#0b0b0a">
+        <!-- 168 cells, a scatter of severities to evoke a live sensor wall -->
+        <span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.6)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(248,113,113,0.75)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(248,113,113,0.6)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;padding:34px 24px 40px;position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,10,0.1),rgba(11,11,10,0.82));text-align:center">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.01em;color:#f8f9ff;margin-bottom:8px">Every role sees its own plant, live</div>
+          <p style="margin:0 auto 20px;max-width:440px;font-size:13.5px;line-height:1.55;color:rgba(248,249,255,0.72)">The full interactive console — sensor wall, per-role views, click-through evidence — runs on-prem, not on the open web. See it live on your own line.</p>
+          <a href="index.html#contact" class="h-demo-lg" style="display:inline-block;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo to see it live</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section style="max-width:1200px;margin:0 auto;padding:20px 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">ONE CONSOLE · EVERY ROLE</div>
+    <h2 style="margin:0 0 8px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">Every role sees its own plant</h2>
+    <p style="margin:0 0 24px;font-size:14px;color:rgba(248,249,255,0.5)">One install, three built-in profiles — book a demo to drive them live.</p>
+    <div class="profiles-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <a href="index.html#contact" class="h-profile" style="cursor:pointer;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;transition:all 0.15s ease;color:#f8f9ff">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:14px">PROFILE · MANUFACTURING</div>
+        <h3 style="margin:0 0 10px;font-size:16px;font-weight:700">The floor view</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">The sensor wall with live AI analysis, top risks, risk trend and the action log. Plant composition health up top; every alert one click from its evidence.</p>
+        <div style="margin-top:16px;display:flex;justify-content:space-between;gap:10px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)"><span>for operators &amp; shift leads</span><span style="color:#818cf8">see it in a demo →</span></div>
+      </a>
+      <a href="index.html#contact" class="h-profile" style="cursor:pointer;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;transition:all 0.15s ease;color:#f8f9ff">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:14px">PROFILE · ENTERPRISE</div>
+        <h3 style="margin:0 0 10px;font-size:16px;font-weight:700">The management view</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Value delivered, downtime avoided, work orders, energy and quality — per-asset health rolled up to what it costs and what NFO saved.</p>
+        <div style="margin-top:16px;display:flex;justify-content:space-between;gap:10px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)"><span>for executives &amp; plant managers</span><span style="color:#818cf8">see it in a demo →</span></div>
+      </a>
+      <a href="index.html#contact" class="h-profile" style="cursor:pointer;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px;transition:all 0.15s ease;color:#f8f9ff">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#22d3ee;margin-bottom:14px">PROFILE · BACKEND</div>
+        <h3 style="margin:0 0 10px;font-size:16px;font-weight:700">The brain itself</h3>
+        <p style="margin:0;font-size:13.5px;line-height:1.6;color:rgba(248,249,255,0.72);text-wrap:pretty">Routing and system health — how signals flow to expert packs, how the reasoning mix is weighted, and how deep the system is thinking. Read-only, always.</p>
+        <div style="margin-top:16px;display:flex;justify-content:space-between;gap:10px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)"><span>for maintainers &amp; integrators</span><span style="color:#818cf8">see it in a demo →</span></div>
+      </a>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div class="stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+      <div style="text-align:center;padding:22px 12px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,#818cf8,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">1 Hz</div><div style="margin-top:6px;font-size:10px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">LIVE SIGNAL CADENCE</div></div>
+      <div style="text-align:center;padding:22px 12px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,#818cf8,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">2,000+</div><div style="margin-top:6px;font-size:10px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">SENSORS SUPPORTED ON ONE HEATMAP</div></div>
+      <div style="text-align:center;padding:22px 12px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,#818cf8,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">&lt;3 ms</div><div style="margin-top:6px;font-size:10px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">FULL-DASHBOARD RESPONSE</div></div>
+      <div style="text-align:center;padding:22px 12px;border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072)"><div style="font-size:30px;font-weight:800;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;background:linear-gradient(90deg,#818cf8,#22d3ee);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">100%</div><div style="margin-top:6px;font-size:10px;font-weight:600;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">DATA STAYS ON-PREM</div></div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">CAPABILITIES</div>
+    <h2 style="margin:0 0 28px;font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;letter-spacing:-0.02em">Everything between the floor and the work order</h2>
+    <div class="caps-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Three ways in</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Modbus TCP, OPC UA, or replay for commissioning. Tag maps live in plain YAML; switch gateways with a single setting.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">modbus_tags.yaml · opcua_nodes.yaml</div>
+      </div>
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Four reasoning engines</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Threshold, missing-signal, spike and drift detection; ML anomaly scoring; cross-tag correlation; episode lifecycle — all governed by one fabric.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">Sensor · SensorML · Correlation · Episode</div>
+      </div>
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Episodes, not alert storms</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">An ongoing condition is one persistent episode with per-episode emit cooldown. Stale episodes auto-close. Severity is unambiguous: info, warning, critical.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">open → tracked → closed · full history kept</div>
+      </div>
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Datasheet-grounded AI</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Attach manufacturer PDFs to any sensor. Layout-aware extraction reads real spec tables, so recommendations cite rated limits, maintenance intervals and model ids.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">PDF · TXT · MD · CSV · JSON — bound to asset + tag</div>
+      </div>
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Desktop-grade deployment</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Per-user installer with no admin prompt. Native window, system tray, single-instance lock, and one-click checksum-verified auto-updates.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">NFO-Setup.exe · runtimes bundled · no Python</div>
+      </div>
+      <div class="h-cap" style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:24px;transition:all 0.15s ease">
+        <h3 style="margin:0 0 9px;font-size:15.5px;font-weight:700">Built for uptime</h3>
+        <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Write-ahead-logged local store, indexed queries, response caching, and a single batch endpoint that returns the whole dashboard in under 3 ms.</p>
+        <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">SQLite WAL · TTL cache · /dashboard in 2.94 ms</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="border-radius:20px;border:1px solid rgba(52,211,153,0.25);background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(6,182,212,0.04) 60%,transparent);padding:44px 48px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#34d399;margin-bottom:12px">SECURITY</div>
+      <h2 style="margin:0 0 14px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em;max-width:640px">Your controllers can't be reached, so they can't be attacked</h2>
+      <p style="margin:0 0 28px;max-width:660px;font-size:14.5px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">Because NFO is 100% on-premises, there is no cloud tenant, no vendor tunnel, and no outbound AI service touching your plant. The reasoning runs beside your PLCs, not between them and the internet — so malicious-AI attacks on your controllers have nothing to grab onto.</p>
+      <div class="security-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:22px">
+          <h3 style="margin:0 0 8px;font-size:15px;font-weight:700">No path in</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">All data, models and reasoning stay inside the building. Air-gap it entirely — NFO never needs the internet to work.</p>
+        </div>
+        <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:22px">
+          <h3 style="margin:0 0 8px;font-size:15px;font-weight:700">Read-only by design — for now</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">NFO listens to Modbus and OPC UA; it never writes to the PLC. The AI can recommend — only your people can actuate. Supervised write-back is on the roadmap, opt-in and gated the same way.</p>
+        </div>
+        <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:22px">
+          <h3 style="margin:0 0 8px;font-size:15px;font-weight:700">Auditable, not autonomous</h3>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:rgba(248,249,255,0.72)">Every finding and recommendation is persisted locally with its evidence, so you can verify exactly what the AI saw and said.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="deploy-split" style="max-width:1200px;margin:0 auto;padding:0 32px 72px;display:grid;grid-template-columns:1fr 1.2fr;gap:48px;align-items:start">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#818cf8;margin-bottom:10px">DEPLOYMENT</div>
+      <h2 style="margin:0 0 16px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em">Installer to insight in minutes</h2>
+      <p style="margin:0;font-size:14px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">NFO installs like a desktop product because it is one. No IT ticket, no server provisioning, no cloud onboarding. Close the window and it keeps observing from the tray.</p>
+      <div style="margin-top:24px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;min-width:22px">01</span><span style="font-size:13.5px;color:rgba(248,249,255,0.9)">Run the installer — per-user, no admin rights needed</span></div>
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;min-width:22px">02</span><span style="font-size:13.5px;color:rgba(248,249,255,0.9)">Point the gateway at your PLC and map tags in YAML</span></div>
+        <div style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#22d3ee;min-width:22px">03</span><span style="font-size:13.5px;color:rgba(248,249,255,0.9)">Watch findings, episodes and cited recommendations arrive</span></div>
+      </div>
+    </div>
+    <div style="border-radius:16px;background:rgba(255,255,255,0.032);border:1px solid rgba(255,255,255,0.072);padding:26px">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;color:rgba(248,249,255,0.5);margin-bottom:16px">SPECIFICATIONS</div>
+      <div style="display:grid;grid-template-columns:150px 1fr;row-gap:0;font-size:12.5px">
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">Protocols</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">Modbus TCP · OPC UA · replay</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">Signal cadence</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">1 Hz default, tunable to 2 Hz</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">Storage</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">Local SQLite, WAL, indexed</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">Interface</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">Web console · REST API · operator console</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">OS</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">Windows 10/11, runtimes bundled</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5);border-bottom:1px solid rgba(255,255,255,0.072)">Updates</div><div style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.072);font-family:'JetBrains Mono',monospace;font-size:11.5px;color:rgba(248,249,255,0.9)">In-app, silent, checksum-verified</div>
+        <div style="padding:9px 0;color:rgba(248,249,255,0.5)">Data residency</div><div style="padding:9px 0;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#34d399">100% on-premises</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div class="cta-row" style="border-radius:20px;border:1px solid rgba(99,102,241,0.22);background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(6,182,212,0.06) 55%,rgba(16,185,129,0.04));padding:44px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px">
+      <div>
+        <h2 style="margin:0 0 10px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em">Run NFO on one line for 30 days</h2>
+        <p style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(248,249,255,0.72);max-width:560px">A pilot takes an afternoon to stand up: one machine, your PLC tags, your datasheets. Keep the findings either way.</p>
+      </div>
+      <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:13px 28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Request a factory pilot</a>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:0 32px 72px">
+    <div style="position:relative;border-radius:20px;border:1px solid rgba(99,102,241,0.22);background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(6,182,212,0.06) 55%,rgba(16,185,129,0.04));padding:44px 48px;overflow:hidden">
+      <div style="position:absolute;top:-80px;right:-60px;width:340px;height:280px;background:radial-gradient(ellipse at center,rgba(6,182,212,0.14),transparent 70%);pointer-events:none"></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;color:#c7d2fe;margin-bottom:12px">EARLY ADOPTERS &amp; ANGEL INVESTORS — NOW OPEN</div>
+      <h2 style="margin:0 0 14px;font-family:'Montserrat',sans-serif;font-size:34px;font-weight:800;letter-spacing:-0.02em;max-width:640px">One reasoning core. Two markets.</h2>
+      <p style="margin:0 0 26px;max-width:620px;font-size:15px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">NFO is the first vertical built on NEPHES — Deep Sky Robotics' distributed reasoning module, built to be the only engine you'll ever need: it adapts to the latest in AI infrastructure so the products on top never have to. The same core already runs a FinTech trading engine in live operation. We're taking on a small set of founding pilot factories and opening an angel round to put NFO on more floors.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;font-family:'JetBrains Mono',monospace;font-size:10.5px">
+        <span style="padding:6px 12px;border-radius:9999px;border:1px solid rgba(52,211,153,0.4);color:#34d399;background:rgba(16,185,129,0.08)">MANUFACTURING · NFO · SHIPPING</span>
+        <span style="padding:6px 12px;border-radius:9999px;border:1px solid rgba(255,255,255,0.11);color:rgba(248,249,255,0.72)">FINTECH · IN OPERATION</span>
+      </div>
+      <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
+        <a href="nephes.html" class="h-demo" style="padding:11px 24px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Meet the engine</a>
+        <a href="mailto:info@deepskyrobotics.com" class="h-founder" style="font-size:13px;font-weight:600;color:#c7d2fe">Talk to the founders →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer style="border-top:1px solid rgba(255,255,255,0.072);padding:36px 32px 44px">
+    <div style="max-width:1200px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="dsr-logo.png" alt="" style="width:30px;height:30px;object-fit:contain">
+        <div style="display:flex;flex-direction:column;gap:3px">
+          <span style="font-size:11px;font-weight:800;letter-spacing:0.14em;color:#f8f9ff">DEEP SKY ROBOTICS</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">SUB TERRA AD ASTRA</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:36px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:9.5px;font-weight:700;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">PRODUCT</span>
+          <a href="nfo.html" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">NEPHES Factory Observer</a>
+          <a href="nephes.html" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">The NEPHES engine</a>
+          <a href="index.html" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">Company</a>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <span style="font-size:9.5px;font-weight:700;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">CONTACT</span>
+          <a href="index.html#contact" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">Book a demo</a>
+          <a href="index.html#contact" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">Request a factory pilot</a>
+          <a href="mailto:info@deepskyrobotics.com" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">info@deepskyrobotics.com</a>
+          <a href="tel:+17314879236" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">+1 (731) 487-9236</a>
+          <a href="tel:+12075317278" class="h-footlink" style="font-size:12px;color:rgba(248,249,255,0.72);white-space:nowrap">+1 (207) 531-7278</a>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1200px;margin:28px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,0.072);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:rgba(248,249,255,0.5)">
+      <span>© 2026 Deep Sky Robotics</span>
+      <span>Live console available on request</span>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
