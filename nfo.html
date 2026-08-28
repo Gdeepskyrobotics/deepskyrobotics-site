@@ -3,6 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NEPHES Factory Observer plugs into the PLCs you already run — Modbus or OPC UA — and reasons over every signal in real time, handing operators maintenance calls with the evidence attached. Entirely on your hardware.">
+<link rel="canonical" href="https://deepskyrobotics.com/nfo.html">
+<link rel="icon" type="image/png" href="/dsr-logo.png">
+<link rel="apple-touch-icon" href="/dsr-logo.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deep Sky Robotics">
+<meta property="og:title" content="NEPHES Factory Observer — Deep Sky Robotics">
+<meta property="og:description" content="NEPHES Factory Observer plugs into the PLCs you already run — Modbus or OPC UA — and reasons over every signal in real time, handing operators maintenance calls with the evidence attached. Entirely on your hardware.">
+<meta property="og:url" content="https://deepskyrobotics.com/nfo.html">
+<meta property="og:image" content="https://deepskyrobotics.com/dsr-logo.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NEPHES Factory Observer — Deep Sky Robotics">
+<meta name="twitter:description" content="NEPHES Factory Observer plugs into the PLCs you already run — Modbus or OPC UA — and reasons over every signal in real time, handing operators maintenance calls with the evidence attached. Entirely on your hardware.">
+<meta name="twitter:image" content="https://deepskyrobotics.com/dsr-logo.png">
 <title>NEPHES Factory Observer — Deep Sky Robotics</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9TBZLE5NCN');</script>
@@ -32,6 +46,10 @@ img{max-width:100%}
   .profiles-grid,.stats-grid,.caps-grid,.runs-grid,.security-grid,.split,.deploy-split,.cta-row{grid-template-columns:1fr !important}
   .cta-row{flex-direction:column;align-items:flex-start !important}
 }
+@media (max-width:600px){
+  .nav-links a:not(.h-demo){display:none !important}
+  .nav-links{gap:0 !important}
+}
 </style>
 </head>
 <body>
@@ -51,7 +69,7 @@ img{max-width:100%}
       <a href="nfo.html" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:#f8f9ff">NFO</a>
       <a href="nephes.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">NEPHES</a>
       <a href="index.html" class="h-navlink" style="font-size:11px;font-weight:600;letter-spacing:0.12em;color:rgba(248,249,255,0.5)">COMPANY</a>
-      <a href="index.html#contact" class="h-demo" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+      <a href="index.html#contact" class="h-demo" style="padding:8px 18px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:12px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
     </div>
   </nav>
 
@@ -60,38 +78,51 @@ img{max-width:100%}
     <h1 class="hero-h1" style="margin:0 auto;max-width:860px;font-family:'Montserrat',sans-serif;font-size:58px;font-weight:800;letter-spacing:-0.02em;line-height:1.06;text-wrap:balance">Predictive maintenance that <span style="background:linear-gradient(90deg,#818cf8,#22d3ee 55%,#34d399);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">shows its work</span></h1>
     <p style="margin:22px auto 0;max-width:640px;font-size:17px;line-height:1.65;color:rgba(248,249,255,0.72);text-wrap:pretty">NFO plugs into the PLCs you already run — Modbus or OPC&nbsp;UA — reasons over every signal in real time, and hands your operators maintenance calls with the evidence attached. Entirely on your hardware.</p>
     <div style="display:flex;justify-content:center;gap:14px;margin-top:34px">
-      <a href="index.html#contact" class="h-demo-lg" style="padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
+      <a href="index.html#contact" class="h-demo-lg" style="padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo</a>
       <a href="index.html#contact" class="h-pilot-cta" style="padding:12px 26px;border-radius:6px;border:1px solid rgba(99,102,241,0.45);background:rgba(99,102,241,0.1);color:#c7d2fe;font-size:14px;font-weight:600;white-space:nowrap">Request a factory pilot</a>
     </div>
     <div style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:rgba(248,249,255,0.5)">Windows installer · no admin rights · no cloud dependency</div>
   </header>
 
-  <!-- Console section: the LIVE interactive console is intentionally NOT shipped
-       to the public site. This is a static, non-interactive preview panel; the
-       real console is shown in demos. -->
+  <!-- Live interactive console — a self-contained DEMO driven entirely by
+       SIMULATED data (no backend, nothing company-internal). See console/index.html. -->
   <div style="max-width:1200px;margin:0 auto;padding:0 32px 20px;position:relative">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;flex-wrap:wrap;gap:8px">
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">THE NEPHES FACTORY OBSERVER CONSOLE</span>
-      <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#4ade80"><span style="width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pulse-ring 1.8s infinite"></span>runs on-prem · not on the web</span>
+      <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#22d3ee"><span style="width:7px;height:7px;border-radius:50%;background:#22d3ee;animation:pulse-ring 1.8s infinite"></span>live demo · simulated data</span>
     </div>
-    <div style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12)">
-      <!-- static evocation of the console: a header bar + a heatmap-style grid, non-interactive -->
-      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02)">
-        <span style="width:9px;height:9px;border-radius:50%;background:#4ade80"></span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:0.06em;color:rgba(248,249,255,0.6)">NEPHES FACTORY OBSERVER · line A · 2,000 sensors · 1 Hz</span>
-        <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#22d3ee">manufacturing · enterprise · backend</span>
-      </div>
-      <div style="padding:22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:5px;background:#0b0b0a">
-        <!-- 168 cells, a scatter of severities to evoke a live sensor wall -->
-        <span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.6)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(248,113,113,0.75)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.3)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.35)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(248,113,113,0.6)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(234,179,8,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.55)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(129,140,248,0.45)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.4)"></span><span style="aspect-ratio:1;border-radius:2px;background:rgba(52,211,153,0.5)"></span>
-      </div>
-      <div style="display:flex;align-items:center;justify-content:center;padding:34px 24px 40px;position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,10,0.1),rgba(11,11,10,0.82));text-align:center">
-        <div>
-          <div style="font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.01em;color:#f8f9ff;margin-bottom:8px">Every role sees its own plant, live</div>
-          <p style="margin:0 auto 20px;max-width:440px;font-size:13.5px;line-height:1.55;color:rgba(248,249,255,0.72)">The full interactive console — sensor wall, per-role views, click-through evidence — runs on-prem, not on the open web. See it live on your own line.</p>
-          <a href="index.html#contact" class="h-demo-lg" style="display:inline-block;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo to see it live</a>
-        </div>
-      </div>
+    <div class="console-embed" style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12);height:660px">
+      <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:660px;border:0;background:#0d0d0b"></iframe>
+    </div>
+    <script>
+    /* Responsive console: on wide screens the console renders at its natural
+       width; below 1000px the whole console (all columns) is scaled to fit, so
+       it never overflows and stays fully visible + interactive on phones. */
+    (function () {
+      var wrap = document.querySelector('.console-embed');
+      var fr = document.querySelector('.console-frame');
+      if (!wrap || !fr) return;
+      var LW = 1200, LH = 760, DH = 660;   // logical console size · desktop height
+      function fit() {
+        var w = wrap.clientWidth;
+        if (w >= 1000) {                    // desktop / wide: natural, no scaling
+          fr.style.width = '100%'; fr.style.height = DH + 'px';
+          fr.style.transform = 'none'; wrap.style.height = DH + 'px';
+        } else {                            // tablet / phone: scale full console to fit
+          var s = w / LW;
+          fr.style.width = LW + 'px'; fr.style.height = LH + 'px';
+          fr.style.transformOrigin = 'top left';
+          fr.style.transform = 'scale(' + s + ')';
+          wrap.style.height = Math.round(LH * s) + 'px';
+        }
+      }
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+    </script>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:0 4px;flex-wrap:wrap;gap:16px">
+      <p style="margin:0;max-width:640px;font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.55)">Everything above is <strong style="color:rgba(248,249,255,0.82)">simulated</strong> — a working slice of the real console, running on synthetic data in your browser. In production, NFO reads your own PLCs and sensors in real time, entirely on your hardware.</p>
+      <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo to see it live</a>
     </div>
   </div>
 
@@ -220,7 +251,7 @@ img{max-width:100%}
         <h2 style="margin:0 0 10px;font-family:'Montserrat',sans-serif;font-size:30px;font-weight:800;letter-spacing:-0.02em">Run NFO on one line for 30 days</h2>
         <p style="margin:0;font-size:14.5px;line-height:1.6;color:rgba(248,249,255,0.72);max-width:560px">A pilot takes an afternoon to stand up: one machine, your PLC tags, your datasheets. Keep the findings either way.</p>
       </div>
-      <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:13px 28px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Request a factory pilot</a>
+      <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:13px 28px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Request a factory pilot</a>
     </div>
   </section>
 
@@ -235,7 +266,7 @@ img{max-width:100%}
         <span style="padding:6px 12px;border-radius:9999px;border:1px solid rgba(255,255,255,0.11);color:rgba(248,249,255,0.72)">FINTECH · IN OPERATION</span>
       </div>
       <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap">
-        <a href="nephes.html" class="h-demo" style="padding:11px 24px;border-radius:6px;background:linear-gradient(135deg,#6366f1,#06b6d4);color:#ffffff;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Meet the engine</a>
+        <a href="nephes.html" class="h-demo" style="padding:11px 24px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:13px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Meet the engine</a>
         <a href="mailto:info@deepskyrobotics.com" class="h-founder" style="font-size:13px;font-weight:600;color:#c7d2fe">Talk to the founders →</a>
       </div>
     </div>

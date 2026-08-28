@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /console/
+Disallow: /ui/
+Sitemap: https://deepskyrobotics.com/sitemap.xml
