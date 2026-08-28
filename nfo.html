@@ -50,6 +50,14 @@ img{max-width:100%}
   .nav-links a:not(.h-demo){display:none !important}
   .nav-links{gap:0 !important}
 }
+@media (max-width:999px){
+  /* On phones/tablets the embedded console is a scaled, scroll-safe LIVE
+     preview: it must NEVER capture the page's touch-scroll (that is what
+     leaves a mobile visitor stuck on one screen). Interact via "Open the
+     live console" instead. This is a JS-independent guarantee. */
+  .console-frame{pointer-events:none !important}
+  .console-open{display:inline-flex !important}
+}
 </style>
 </head>
 <body>
@@ -95,9 +103,14 @@ img{max-width:100%}
       <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:660px;border:0;background:#0d0d0b"></iframe>
     </div>
     <script>
-    /* Responsive console: on wide screens the console renders at its natural
-       width; below 1000px the whole console (all columns) is scaled to fit, so
-       it never overflows and stays fully visible + interactive on phones. */
+    /* Responsive console. Desktop (>=1000px): the console renders at natural
+       width and is fully interactive. Phone/tablet (<1000px): the whole console
+       is scaled to fit AND made a non-interactive live PREVIEW -- the iframe is
+       taken out of flow (position:absolute, so iOS Safari cannot expand the page
+       to the iframe's content height) and given pointer-events:none (so a
+       finger-swipe scrolls the PAGE, never the console). Mobile users interact
+       via the "Open the live console" link below. Defensive: skips a 0-width
+       layout and re-fits on load + a short delay (lazy iframe / late layout). */
     (function () {
       var wrap = document.querySelector('.console-embed');
       var fr = document.querySelector('.console-frame');
@@ -105,11 +118,17 @@ img{max-width:100%}
       var LW = 1200, LH = 760, DH = 660;   // logical console size · desktop height
       function fit() {
         var w = wrap.clientWidth;
-        if (w >= 1000) {                    // desktop / wide: natural, no scaling
+        if (!w) return;                     // layout not ready; a later call will fit
+        if (w >= 1000) {                    // desktop: natural, interactive
+          fr.style.position = 'static';
+          fr.style.pointerEvents = 'auto';
           fr.style.width = '100%'; fr.style.height = DH + 'px';
-          fr.style.transform = 'none'; wrap.style.height = DH + 'px';
-        } else {                            // tablet / phone: scale full console to fit
+          fr.style.transform = 'none';
+          wrap.style.height = DH + 'px';
+        } else {                            // phone/tablet: scaled, scroll-safe preview
           var s = w / LW;
+          fr.style.position = 'absolute'; fr.style.top = '0'; fr.style.left = '0';
+          fr.style.pointerEvents = 'none';
           fr.style.width = LW + 'px'; fr.style.height = LH + 'px';
           fr.style.transformOrigin = 'top left';
           fr.style.transform = 'scale(' + s + ')';
@@ -118,11 +137,16 @@ img{max-width:100%}
       }
       fit();
       window.addEventListener('resize', fit);
+      window.addEventListener('load', fit);
+      setTimeout(fit, 300);
     })();
     </script>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:0 4px;flex-wrap:wrap;gap:16px">
-      <p style="margin:0;max-width:640px;font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.55)">Everything above is <strong style="color:rgba(248,249,255,0.82)">simulated</strong> — a working slice of the real console, running on synthetic data in your browser. In production, NFO reads your own PLCs and sensors in real time, entirely on your hardware.</p>
-      <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo to see it live</a>
+      <p style="margin:0;max-width:560px;font-size:12.5px;line-height:1.55;color:rgba(248,249,255,0.55)">Everything above is <strong style="color:rgba(248,249,255,0.82)">simulated</strong> — a working slice of the real console, running on synthetic data in your browser. In production, NFO reads your own PLCs and sensors in real time, entirely on your hardware.</p>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+        <a class="console-open h-navlink" href="console/index.html" target="_blank" rel="noopener" style="display:none;align-items:center;gap:6px;padding:11px 18px;border-radius:6px;border:1px solid rgba(255,255,255,0.14);color:rgba(248,249,255,0.85);font-size:13px;font-weight:600;white-space:nowrap">Open the live console ↗</a>
+        <a href="index.html#contact" class="h-demo-lg" style="flex-shrink:0;padding:12px 26px;border-radius:6px;background:linear-gradient(135deg,#4f46e5,#0e7490);color:#ffffff;font-size:14px;font-weight:600;white-space:nowrap;box-shadow:0 2px 12px rgba(99,102,241,0.35)">Book a demo to see it live</a>
+      </div>
     </div>
   </div>
 
