@@ -32,6 +32,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+html{overflow-x:hidden}
 html,body{margin:0;padding:0;background:#060608;color:#f8f9ff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
 a{color:#818cf8;text-decoration:none}a:hover{color:#a5b4fc}
 ::selection{background:rgba(99,102,241,0.4)}
@@ -66,7 +67,7 @@ img{max-width:100%}
 </script>
 </head>
 <body>
-<div style="min-height:100vh;background:#060608;position:relative;overflow-x:hidden">
+<div style="min-height:100vh;background:#060608;position:relative;overflow-x:clip">
   <div style="position:absolute;top:-240px;left:50%;transform:translateX(-50%);width:1000px;height:620px;background:radial-gradient(ellipse at center,rgba(139,92,246,0.13),transparent 65%);pointer-events:none"></div>
 
   <nav style="position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:13px 32px;background:rgba(6,6,10,0.78);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.072)">
