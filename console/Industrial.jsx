@@ -43,10 +43,11 @@ const SECTIONS = [
 const FLAT_SEED = SECTIONS.flatMap((s) => s.assets.map((a) => ({ ...a, group: s.name, sub: s.sub })));
 const NODE_FW = { 'Assembly Line A': 'edge-01·v3.4.1', 'Conveyor System': 'edge-03·v3.4.1', 'Hydraulic Systems': 'edge-05·v3.3.9', 'Utilities': 'gw-plant·v2.9.4' };
 
-// ── 2000-point sensor fleet (heatmap / Grid view) ────────────────────────────
-// Each point clones a template's units + thresholds, with a base seeded into a
-// target zone so the fleet shows a realistic spread (~86% OK, ~10% warn, ~4% crit).
-const GRID_TOTAL = 2000;
+// ── Sensor fleet (heatmap / Grid view) ───────────────────────────────────────
+// One heatmap cell per real sensor on the floor (the few sensors, not a synthetic
+// crowd), each seeded into a target zone so the wall shows a realistic spread
+// (~86% OK, the rest flagged). Keeps the counts believable instead of "312 flagged".
+const GRID_TOTAL = FLAT_SEED.length;
 function buildGridSeed(n) {
   const out = [];
   for (let i = 0; i < n; i++) {
@@ -1218,7 +1219,7 @@ function TopRisks({ pool, setSel }) {
     return pool
       .map((a) => ({ a, r: riskOf(a), st: statusOf(a) }))
       .sort((x, y) => y.r.frac - x.r.frac)
-      .slice(0, 9);
+      .slice(0, 20);
   }, [pool]);
   const critN = pool.filter((a) => statusOf(a) === 'crit').length;
   return (
@@ -1713,7 +1714,6 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
           <div className="right-lower">
               <div className="rl-col">
                 <TopRisks pool={view === 'grid' ? gridPoints : tileAssets} setSel={setSel} />
-                <FaultSim groups={SECTIONS.map((s) => s.name)} zoneHealth={zoneHealth} faults={faults} faultTypes={faultTypes} injectFault={injectFault} clearFault={clearFault} clearAllFaults={clearAllFaults} />
               </div>
               <ActionLog tick={stream.tick} />
             </div>}
