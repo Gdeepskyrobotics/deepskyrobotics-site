@@ -361,6 +361,17 @@ body {
 .right-lower .rl-col > .top-risks { flex:1 1 0; min-height:90px; }
 .right-lower .rl-col > .fault-sim { flex:0 0 auto; }
 .right-lower > .action-log { flex:1 1 0; min-width:0; }
+/* combined right-side tabs — AI Analysis / Top Risks / Action Log in one card */
+.right-tabs { flex:1 1 0; min-height:0; min-width:0; display:flex; flex-direction:column; }
+.rt-tabbar { flex-shrink:0; display:flex; border-bottom:1px solid var(--card-border); }
+.rt-tab { flex:1; display:flex; align-items:center; justify-content:center; gap:6px; padding:10px 6px 9px; background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; font-size:9px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); cursor:pointer; font-family:inherit; white-space:nowrap; transition:color .15s, border-color .15s; }
+.rt-tab:hover { color:var(--text-1); }
+.rt-tab.on { color:var(--accent); border-bottom-color:var(--accent); }
+.rt-badge { font-family:var(--mono); font-size:8px; font-weight:700; min-width:16px; text-align:center; padding:1px 5px; border-radius:8px; background:rgba(var(--accent-rgb),.15); color:var(--accent); }
+.rt-badge.crit { background:rgba(248,113,113,.14); color:var(--crit); }
+.rt-body { flex:1 1 0; min-height:0; display:flex; }
+.rt-body > .side-card { flex:1 1 0; min-height:0; min-width:0; border:none; background:transparent; box-shadow:none; }
+.rt-body > .side-card > .card-head { display:none; }
 
 .wall-card { background:var(--card-bg2); border:1px solid var(--card-border); border-radius:var(--r-md); display:flex; flex-direction:column; min-height:0; flex:1 1 0; min-width:0; transition:flex-basis .35s cubic-bezier(.22,1,.36,1), max-width .35s cubic-bezier(.22,1,.36,1); }
 /* wall + on-demand detail sit side-by-side in column 1; detail fills the freed space */
