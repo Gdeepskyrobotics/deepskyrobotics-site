@@ -106,8 +106,8 @@ img{max-width:100%}
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">THE NEPHES FACTORY OBSERVER CONSOLE</span>
       <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#22d3ee"><span style="width:7px;height:7px;border-radius:50%;background:#22d3ee;animation:pulse-ring 1.8s infinite"></span>live demo · simulated data</span>
     </div>
-    <div class="console-embed" style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12);height:660px">
-      <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:660px;border:0;background:#0d0d0b"></iframe>
+    <div class="console-embed" style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12);height:840px">
+      <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:840px;border:0;background:#0d0d0b"></iframe>
     </div>
     <script>
     /* Responsive console. Desktop (>=1000px): the console renders at natural
@@ -122,7 +122,7 @@ img{max-width:100%}
       var wrap = document.querySelector('.console-embed');
       var fr = document.querySelector('.console-frame');
       if (!wrap || !fr) return;
-      var LW = 1200, LH = 760, DH = 660;   // logical console size · desktop height
+      var LW = 1200, LH = 840, DH = 840;   // logical console size · desktop height
       function fit() {
         var w = wrap.clientWidth;
         if (!w) return;                     // layout not ready; a later call will fit
