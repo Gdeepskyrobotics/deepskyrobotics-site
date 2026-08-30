@@ -1239,7 +1239,7 @@ function TopRisks({ pool, setSel }) {
                 <span className="tr-track"><span className="tr-fill" style={{ width: pct + '%', background: c }} /></span>
               </span>
               <span className="tr-vals">
-                <span className="tr-val" style={{ color: c }}>{a.val.toFixed(a.dec != null ? a.dec : 1)}<small>{a.unit}</small></span>
+                <span className="tr-val" style={{ color: st !== 'ok' ? c : 'var(--text-1)' }}>{a.val.toFixed(a.dec != null ? a.dec : 1)}<small>{a.unit}</small></span>
                 <span className="tr-lim">/ {Number(r.limit).toFixed(a.dec || 0)}{a.unit}</span>
               </span>
             </button>);
