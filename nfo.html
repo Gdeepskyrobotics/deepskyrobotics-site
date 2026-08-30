@@ -101,7 +101,7 @@ img{max-width:100%}
 
   <!-- Live interactive console — a self-contained DEMO driven entirely by
        SIMULATED data (no backend, nothing company-internal). See console/index.html. -->
-  <div style="max-width:1560px;margin:0 auto;padding:0 32px 20px;position:relative">
+  <div style="max-width:1542px;margin:0 auto;padding:0 32px 20px;position:relative">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;flex-wrap:wrap;gap:8px">
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">THE NEPHES FACTORY OBSERVER CONSOLE</span>
       <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#22d3ee"><span style="width:7px;height:7px;border-radius:50%;background:#22d3ee;animation:pulse-ring 1.8s infinite"></span>live demo · simulated data</span>
@@ -131,11 +131,12 @@ img{max-width:100%}
       function fit() {
         var w = wrap.clientWidth;
         if (!w) return;                     // layout not ready; a later call will fit
-        var s = Math.min(1, w / LW);        // shrink to fit width; never upscale
-        fr.style.position = 'absolute'; fr.style.top = '0'; fr.style.left = '0';
+        var s = w / LW;                     // auto-adjust: scale to fill the container width
+        fr.style.position = 'absolute'; fr.style.top = '0';
         fr.style.transformOrigin = 'top left';
         fr.style.width = LW + 'px'; fr.style.height = LH + 'px';
         fr.style.transform = 'scale(' + s + ')';
+        fr.style.left = Math.round((w - LW * s) / 2) + 'px';   // center horizontally in the embed
         fr.style.pointerEvents = (w >= 1000) ? 'auto' : 'none';
         wrap.style.height = Math.round(LH * s) + 'px';
       }
