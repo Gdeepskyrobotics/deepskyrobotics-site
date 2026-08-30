@@ -3265,7 +3265,6 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
             <div className="nm-sec">Console</div>
             <button className="nm-item" onClick={() => { setMenuOpen(false); onDemo && onDemo(); }}><span className="nm-ic">▶</span>Run investor demo</button>
             <button className="nm-item" onClick={() => { setMenuOpen(false); onAddSensor && onAddSensor(); }}><span className="nm-ic">＋</span>Provision a sensor</button>
-            <button className="nm-item" onClick={() => { setMenuOpen(false); onDatasheets && onDatasheets(); }}><span className="nm-ic">📑</span>Datasheet Library</button>
             <button className="nm-item" onClick={() => { setMenuOpen(false); onReport && onReport(); }}><span className="nm-ic">📋</span>Shift handoff report</button>
             <button className="nm-item" onClick={() => { setMenuOpen(false); window.dispatchEvent(new Event('nephes:customize')); }}><span className="nm-ic">🎛</span>Customize this view</button>
             <div className="nm-sec">System</div>
@@ -3368,7 +3367,6 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
                   <span className="settings-count">{customCount || 0} custom</span>
                 </div>
                 <button className="settings-add-sensor" onClick={() => { onAddSensor && onAddSensor(); }}>＋ Add Sensor</button>
-                <button className="settings-add-sensor ds-launch" onClick={() => { onDatasheets && onDatasheets(); }}>📑 Datasheet Library</button>
                 <div className="settings-hint">Manually register a sensor into the system — it goes live on the wall (Tiles view).</div>
                 <div className="settings-panel-title" style={{ marginTop: 14 }}>Data Source</div>
                 <div className="src-row">
@@ -6227,7 +6225,6 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
   { label: 'Clear all faults', ic: '✓', run: () => { clearAllFaults(); toast('All faults cleared'); } },
   { label: autoMit ? 'Turn Auto-Mitigate off' : 'Turn Auto-Mitigate on', ic: '◉', run: () => setAutoMit((v) => !v) },
   { label: 'Provision a sensor', ic: '＋', run: () => setShowAdd(true) },
-  { label: 'Open Datasheet Library', ic: '📑', run: () => setShowDatasheets(true) },
   { label: 'Shift handoff report', ic: '📋', run: () => setShowReport(true) },
   { label: 'Open Analytics profile', ic: '📊', run: () => setProfile('analytics') },
   { label: 'Customize this view', ic: '🎛', run: () => setShowCz(true) },
