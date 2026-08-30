@@ -1540,6 +1540,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
   const [profile, setProfile] = React.useState(startProfile);
   const [sel, setSel] = React.useState(null);
   const [view, setView] = React.useState(defaultView);
+  const [rightTab, setRightTab] = React.useState('ai');   // combined AI / Top Risks / Action Log panel
   const [riskHist, setRiskHist] = React.useState(() => Array.from({ length: 44 }, () => ({ c: 0, w: 0 })));
   const [blueLight, setBlueLight] = React.useState(true);
   const [autoMit, setAutoMit] = React.useState(false);
@@ -1677,6 +1678,10 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
 
   const selAsset = tileAssets.find((a) => a.id === sel) || gridPoints.find((a) => a.id === sel) || (liveHw.sensors || []).find((a) => a.id === sel) || null;
 
+  // notification badge counts for the combined right-side tabs
+  const risksCrit = (view === 'grid' ? gridPoints : tileAssets).filter((a) => statusOf(a) === 'crit').length;
+  const actN = ACTION_SEED.filter((a) => a.status !== 'resolved').length;
+
   return (
     <div className="shell" style={density === 'compact' ? { fontSize: 11 } : null}>
       <Header health={health} statusText={statusText} recText={recText} counts={counts} profile={profile} setProfile={switchProfile} clock={clock} stale={!stream.live} blueLight={blueLight} setBlueLight={setBlueLight} autoMit={autoMit} setAutoMit={setAutoMit} onAddSensor={() => setShowAdd(true)} customCount={customSensors.length} />
@@ -1705,16 +1710,25 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
             </React.Fragment>}
         </div>
         <div className="right-region">
-          <AiAnalysis profile={profile} alerts={alerts.slice(0, 6)} onAct={(id) => setSel(id)} autoMit={autoMit} mitigating={mitigating} onMitigate={startMitigation} />
           {profile === 'enterprise' || profile === 'backend' ?
-          <OperatorControls profile={profile} assets={tileAssets} /> :
-          profile === 'datasheets' ?
-          <div className="right-lower" /> :
-          <div className="right-lower">
-              <div className="rl-col">
-                <TopRisks pool={view === 'grid' ? gridPoints : tileAssets} setSel={setSel} />
+          <React.Fragment>
+              <AiAnalysis profile={profile} alerts={alerts.slice(0, 6)} onAct={(id) => setSel(id)} autoMit={autoMit} mitigating={mitigating} onMitigate={startMitigation} />
+              <OperatorControls profile={profile} assets={tileAssets} />
+            </React.Fragment> :
+          <div className="side-card right-tabs" id="rightTabs">
+              <div className="rt-tabbar">
+                {[{ k: 'ai', label: 'NEPHES AI', n: alerts.length },
+                { k: 'risks', label: 'Top Risks', n: risksCrit, crit: true },
+                { k: 'actions', label: 'Action Log', n: actN }].map((t) =>
+                <button key={t.k} className={`rt-tab ${rightTab === t.k ? 'on' : ''}`} onClick={() => setRightTab(t.k)}>
+                    {t.label}{t.n > 0 && <span className={`rt-badge ${t.crit ? 'crit' : ''}`}>{t.n}</span>}
+                  </button>)}
               </div>
-              <ActionLog tick={stream.tick} />
+              <div className="rt-body">
+                {rightTab === 'ai' && <AiAnalysis profile={profile} alerts={alerts.slice(0, 6)} onAct={(id) => setSel(id)} autoMit={autoMit} mitigating={mitigating} onMitigate={startMitigation} />}
+                {rightTab === 'risks' && <TopRisks pool={view === 'grid' ? gridPoints : tileAssets} setSel={setSel} />}
+                {rightTab === 'actions' && <ActionLog tick={stream.tick} />}
+              </div>
             </div>}
         </div>
       </main>
