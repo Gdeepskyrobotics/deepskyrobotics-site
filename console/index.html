@@ -396,7 +396,7 @@ body {
 .grp-head .g-count { margin-left:auto; font-family:var(--mono); font-size:8px; color:var(--text-3); }
 .grp-head.warn .g-name { color:var(--warn); } .grp-head.warn { border-left-color:var(--warn); }
 .grp-head.crit .g-name { color:var(--crit); } .grp-head.crit { border-left-color:var(--crit); }
-.grp-grid { display:grid; grid-template-columns:repeat(var(--cols,5), minmax(0,1fr)); gap:6px; }
+.grp-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:6px; }
 
 /* plant trends strip (lower sensor wall, tiles view) */
 .trend-strip-wrap { margin-top:4px; }
@@ -471,7 +471,7 @@ body {
 .hm-key { display:inline-flex; align-items:center; gap:5px; text-transform:uppercase; font-weight:700; letter-spacing:.1em; }
 .hm-sw { width:9px; height:9px; border-radius:2px; display:inline-block; }
 .hm-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(13px,1fr)); gap:3px; padding:2px; }
-.hm-grid.hm-100 { grid-template-columns:repeat(var(--gcols,50), minmax(0,1fr)); gap:3px; justify-content:stretch; }
+.hm-grid.hm-100 { grid-template-columns:repeat(auto-fit, minmax(46px,1fr)); gap:3px; justify-content:stretch; }
 .hm-cell { aspect-ratio:1/1; border-radius:2px; background:var(--ok); cursor:pointer; transition:transform .08s ease, box-shadow .08s ease; }
 .hm-grid.hm-100 .hm-cell { border-radius:1px; }
 .hm-cell.hm-warn { background:var(--warn); } .hm-cell.hm-crit { background:var(--crit); }
