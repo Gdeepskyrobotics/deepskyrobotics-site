@@ -6,8 +6,7 @@
 const PROFILES = [
 { id: 'manufacturing', name: 'Manufacturing' },
 { id: 'enterprise', name: 'Enterprise' },
-{ id: 'backend', name: 'Backend' },
-{ id: 'datasheets', name: 'Equipment Knowledge' }];
+{ id: 'backend', name: 'Backend' }];
 
 
 // ── Factory floor model ──────────────────────────────────────────────────────
