@@ -101,13 +101,13 @@ img{max-width:100%}
 
   <!-- Live interactive console — a self-contained DEMO driven entirely by
        SIMULATED data (no backend, nothing company-internal). See console/index.html. -->
-  <div style="max-width:1200px;margin:0 auto;padding:0 32px 20px;position:relative">
+  <div style="max-width:1560px;margin:0 auto;padding:0 32px 20px;position:relative">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;flex-wrap:wrap;gap:8px">
       <span style="font-size:10px;font-weight:700;letter-spacing:0.1em;color:rgba(248,249,255,0.5)">THE NEPHES FACTORY OBSERVER CONSOLE</span>
       <span style="display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#22d3ee"><span style="width:7px;height:7px;border-radius:50%;background:#22d3ee;animation:pulse-ring 1.8s infinite"></span>live demo · simulated data</span>
     </div>
-    <div class="console-embed" style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12);height:840px">
-      <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:840px;border:0;background:#0d0d0b"></iframe>
+    <div class="console-embed" style="position:relative;border-radius:16px;border:1px solid rgba(255,255,255,0.11);overflow:hidden;background:#0d0d0b;box-shadow:0 4px 16px rgba(0,0,0,0.6),0 0 48px rgba(99,102,241,0.12);height:880px">
+      <iframe class="console-frame" src="console/index.html" title="NEPHES Factory Observer — live demo (simulated data)" loading="lazy" scrolling="no" sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer" style="display:block;width:100%;height:880px;border:0;background:#0d0d0b"></iframe>
     </div>
     <script>
     /* Responsive console. Desktop (>=1000px): the console renders at natural
@@ -122,25 +122,22 @@ img{max-width:100%}
       var wrap = document.querySelector('.console-embed');
       var fr = document.querySelector('.console-frame');
       if (!wrap || !fr) return;
-      var LW = 1200, LH = 840, DH = 840;   // logical console size · desktop height
+      // The console's own layout is ~1478px wide (fixed right column + the
+      // sensor wall + detail panel). Render it at that natural size and SCALE
+      // the whole thing to fit the container, so the right-hand panels (Action
+      // Log) are never clipped. Interactive on desktop; a non-interactive
+      // scaled preview on phone/tablet.
+      var LW = 1478, LH = 880;
       function fit() {
         var w = wrap.clientWidth;
         if (!w) return;                     // layout not ready; a later call will fit
-        if (w >= 1000) {                    // desktop: natural, interactive
-          fr.style.position = 'static';
-          fr.style.pointerEvents = 'auto';
-          fr.style.width = '100%'; fr.style.height = DH + 'px';
-          fr.style.transform = 'none';
-          wrap.style.height = DH + 'px';
-        } else {                            // phone/tablet: scaled, scroll-safe preview
-          var s = w / LW;
-          fr.style.position = 'absolute'; fr.style.top = '0'; fr.style.left = '0';
-          fr.style.pointerEvents = 'none';
-          fr.style.width = LW + 'px'; fr.style.height = LH + 'px';
-          fr.style.transformOrigin = 'top left';
-          fr.style.transform = 'scale(' + s + ')';
-          wrap.style.height = Math.round(LH * s) + 'px';
-        }
+        var s = Math.min(1, w / LW);        // shrink to fit width; never upscale
+        fr.style.position = 'absolute'; fr.style.top = '0'; fr.style.left = '0';
+        fr.style.transformOrigin = 'top left';
+        fr.style.width = LW + 'px'; fr.style.height = LH + 'px';
+        fr.style.transform = 'scale(' + s + ')';
+        fr.style.pointerEvents = (w >= 1000) ? 'auto' : 'none';
+        wrap.style.height = Math.round(LH * s) + 'px';
       }
       fit();
       window.addEventListener('resize', fit);
