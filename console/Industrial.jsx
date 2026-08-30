@@ -519,7 +519,7 @@ function SensorWall({ assets, gridPoints, sel, setSel, view, setView, profile, s
         <React.Fragment>
             <div className="hm-legend">
               <span className="hm-count">{fmt(gridVisible.length)} of {fmt(gridPoints.length)} points</span>
-              <span className="hm-key"><span className="hm-sw" style={{ background: 'var(--ok)' }} />OK</span>
+              <span className="hm-key"><span className="hm-sw" style={{ background: '#3e6a4d' }} />OK</span>
               <span className="hm-key"><span className="hm-sw" style={{ background: 'var(--warn)' }} />Warn</span>
               <span className="hm-key"><span className="hm-sw" style={{ background: 'var(--crit)' }} />Crit</span>
             </div>
