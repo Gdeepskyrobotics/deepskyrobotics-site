@@ -1,0 +1,51 @@
+/* preview.css: page styles for /preview/. Lines 2-34 are index.html @21cf7aa lines 35-68, verbatim, minus scroll-behavior. */
+html{overflow-x:hidden}
+html,body{margin:0;padding:0;background:#060608;color:#f8f9ff;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#818cf8;text-decoration:none}a:hover{color:#a5b4fc}
+::selection{background:rgba(99,102,241,0.4)}
+::-webkit-scrollbar{width:4px;height:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:2px}
+img{max-width:100%}
+
+/* hover states compiled from the design's style-hover attributes */
+.h-navlink:hover{color:#c7d2fe}
+.h-demo:hover{box-shadow:0 2px 18px rgba(99,102,241,0.55);color:#ffffff}
+.h-card-nfo:hover{background:rgba(255,255,255,0.058);box-shadow:0 0 24px rgba(16,185,129,0.12)}
+.h-nfo-link:hover{color:#6ee7b7}
+.h-card-fin:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.22)}
+.h-deck:hover{box-shadow:0 2px 20px rgba(99,102,241,0.55);color:#ffffff}
+.h-pilot-cta:hover{background:rgba(99,102,241,0.2);color:#e0e7ff}
+.h-phone:hover{color:#e0e7ff}
+.h-contact:hover{background:rgba(255,255,255,0.058);border-color:rgba(99,102,241,0.45);box-shadow:0 0 24px rgba(99,102,241,0.18);color:#f8f9ff}
+.h-contact-pilot:hover{background:rgba(99,102,241,0.16);box-shadow:0 0 24px rgba(99,102,241,0.22);color:#f8f9ff}
+
+@media (max-width:820px){
+  .nav-links{gap:16px !important}
+  .platform-grid,.investor-grid,.contact-grid{grid-template-columns:1fr !important}
+  .hero-h1{font-size:34px !important}
+}
+.nav-toggle{display:none;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);color:#f8f9ff;cursor:pointer;padding:0}
+.nav-toggle:hover{background:rgba(255,255,255,0.1)}
+@media (max-width:600px){
+  .nav-toggle{display:inline-flex}
+  .nav-links{display:none !important;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch !important;gap:0 !important;background:rgba(8,8,12,0.98);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-bottom:1px solid rgba(255,255,255,0.1);padding:6px 0 12px;box-shadow:0 14px 40px rgba(0,0,0,0.6)}
+  .nav-links.open{display:flex !important}
+  .nav-links a{padding:14px 32px !important;font-size:15px !important;letter-spacing:0.04em !important;color:rgba(248,249,255,0.9) !important}
+  .nav-links a.h-demo{margin:10px 32px 2px !important;padding:14px !important;justify-content:center;text-align:center;border-radius:8px !important;color:#fff !important}
+}
+/* ---- preview additions ---- */
+html{overflow-x:clip} /* clip, never hidden/auto on an ancestor of the acts: those break the engine's sticky stages */
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.3em;color:rgba(248,249,255,0.5);margin-bottom:18px}
+.hero-h1{margin:0;max-width:760px;font-family:'Montserrat',sans-serif;font-size:44px;font-weight:800;letter-spacing:-0.02em;line-height:1.12;text-wrap:balance}
+.kicker{margin:18px 0 0;font-size:18px;line-height:1.5;color:#c7d2fe}
+.lede{margin:0 0 14px;max-width:560px;font-size:17px;line-height:1.65;color:rgba(248,249,255,0.82);text-wrap:pretty}
+.caption{margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.08em;color:rgba(248,249,255,0.72)}
+.flow-section{max-width:1200px;margin:0 auto;padding:96px 32px 72px;box-sizing:border-box}
+/* Act 3: the console sits in a frame, not full-bleed */
+.console-stage :is(video[data-sc-scrub], .sc-stage__poster){inset:auto;left:50%;top:46%;translate:-50% -50%;width:min(88vw,1280px);height:auto;aspect-ratio:16/9;object-fit:contain;border-radius:14px;border:1px solid rgba(255,255,255,0.12);box-shadow:0 30px 80px rgba(0,0,0,0.55);background:#0b0b10}
+.sc-copy.console-caption{left:0;right:0;top:auto;bottom:clamp(1.5rem,6vh,4rem);translate:none;max-width:none;text-align:center}
+@media (max-width:860px), (hover:none) and (pointer:coarse){
+  .console-stage :is(video[data-sc-scrub], .sc-stage__poster){aspect-ratio:720/406;width:92vw}
+}
+@media (max-width:820px){ .flow-section{padding:72px 16px 56px} }
+/* Without JS the engine never runs: show everything it would have revealed. */
+html:not(.sc-js) :is([data-sc-cue],[data-sc-in],[data-sc-in] > *,[data-sc-reveal]){opacity:1 !important;transform:none !important;translate:none !important;clip-path:none !important}
