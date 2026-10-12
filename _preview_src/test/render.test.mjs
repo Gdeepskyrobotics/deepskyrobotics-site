@@ -5,8 +5,8 @@ import { CLIPS, VARIANTS, selectClips, encodeArgs, posterArgs, frameName, poster
 
 test('four clips, two variants with the agreed encode settings', () => {
   assert.deepEqual(CLIPS.map((c) => c.id), ['s1-drift', 's2-trace', 's3-console', 's4-fork']);
-  assert.deepEqual(VARIANTS.desktop, { suffix: '', w: 1920, h: 1080, crf: 20, g: 8 });
-  assert.deepEqual(VARIANTS.mobile, { suffix: '-m', w: 720, h: 1280, crf: 24, g: 4 });
+  assert.deepEqual(VARIANTS.desktop, { suffix: '', w: 1920, h: 1080, crf: 23, g: 8 });
+  assert.deepEqual(VARIANTS.mobile, { suffix: '-m', w: 720, h: 1280, crf: 26, g: 4 });
 });
 
 test('selectClips: all, a list, and unknown ids', () => {

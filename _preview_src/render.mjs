@@ -13,8 +13,8 @@ export const CLIPS = [
   { id: 's4-fork', kind: 'scene' },
 ];
 export const VARIANTS = {
-  desktop: { suffix: '', w: 1920, h: 1080, crf: 20, g: 8 },
-  mobile: { suffix: '-m', w: 720, h: 1280, crf: 24, g: 4 },
+  desktop: { suffix: '', w: 1920, h: 1080, crf: 23, g: 8 },
+  mobile: { suffix: '-m', w: 720, h: 1280, crf: 26, g: 4 },
 };
 // Mobile console clip: the centre of the desktop capture as a landscape inset (even height for yuv420p).
 export const CONSOLE_MOBILE_VF = 'crop=1600:900:160:90,scale=720:406:flags=lanczos,setsar=1';
