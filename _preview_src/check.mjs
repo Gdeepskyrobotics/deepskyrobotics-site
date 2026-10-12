@@ -61,7 +61,21 @@ const PROBE = (act) => `(() => {
   };
 })()`;
 
-const ARRIVED = `(() => { const i = window.ScrollCraft && ScrollCraft.instances[0]; if (!i) return true;
+// Printed when an act's copy is not visible: engine act state plus each text element's box and effective opacity.
+const DIAG = (act) => `(() => {
+  const s = document.querySelector('section[data-act="${act}"]');
+  const i = window.ScrollCraft && ScrollCraft.instances[0];
+  const a = i && i.acts.find((x) => x.el === s);
+  const eff = (e) => { let o = 1; for (let n = e; n && n.nodeType === 1; n = n.parentElement) o *= parseFloat(getComputedStyle(n).opacity); return o; };
+  return JSON.stringify({
+    scrollY: Math.round(scrollY), vh: innerHeight, sectionTop: Math.round(s.getBoundingClientRect().top), sectionH: s.offsetHeight,
+    engine: a ? { p: +a.p.toFixed(3), raw: +a.raw.toFixed(3), live: a.live, top: Math.round(a.top), height: Math.round(a.height), cues: a.cues.map((q) => q.el.style.opacity) } : null,
+    revealed: s.querySelectorAll('.sc-in').length + '/' + s.querySelectorAll('[data-sc-in], [data-sc-stagger] > *').length,
+    els: [...s.querySelectorAll('h1,h2,h3,p')].slice(0, 6).map((e) => { const r = e.getBoundingClientRect(); return [e.tagName, Math.round(r.top), Math.round(r.bottom), Math.round(r.width), +eff(e).toFixed(2), getComputedStyle(e).visibility]; }),
+  });
+})()`;
+
+const ARRIVED =`(() => { const i = window.ScrollCraft && ScrollCraft.instances[0]; if (!i) return true;
   return i.clips.every((c) => !c.live || (c.ready && !c.el.seeking && Math.abs(c.cur - c.target) < 0.002)); })()`;
 
 async function measure(profileName, base, shots) {
@@ -112,6 +126,7 @@ async function measure(profileName, base, shots) {
       writeFileSync(join(shots, `${String(i + 1).padStart(2, '0')}-act-${a.act}.png`), await page.screenshot());
       // Pinning is asserted only with motion on: under reduced motion the engine may collapse pins.
       results.push({ act: a.act, textLen: probe.textLen, copyVisible: p.js ? probe.visible >= 1 : probe.allVisible, pinnedOk: p.js && !p.reduced && a.pinned ? Math.abs(probe.stageTop) <= 1 : null });
+      if (!results.at(-1).copyVisible) console.log(`diag: act ${a.act} target y=${y} ${await page.eval(DIAG(a.act))}`);
       overflow = Math.max(overflow, await overflowNow());
     }
     await page.eval(`window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' })`);
