@@ -125,6 +125,13 @@ async function measure(profileName, base, shots) {
     let overflow = await overflowNow();
     writeFileSync(join(shots, '00-top.png'), await page.screenshot());
 
+    // preview.js mounts the engine on the reader's first interaction, and mounting sizes the pinned acts. Make that
+    // first scroll (1 px and back) before reading any act geometry, or every scroll target uses the pre-mount layout.
+    if (p.js) {
+      for (const top of [1, 0]) { await page.eval(`window.scrollTo({ top: ${top}, behavior: 'instant' })`); await page.eval(FRAMES); }
+      await idle();
+    }
+
     const acts = await page.eval(`[...document.querySelectorAll('section[data-act]')].map((s) => ({ act: s.dataset.act, top: s.getBoundingClientRect().top + scrollY, height: s.offsetHeight, pinned: ['scrub', 'pin'].includes(s.getAttribute('data-sc-act')) }))`);
     const results = [];
     for (const [i, a] of acts.entries()) {
