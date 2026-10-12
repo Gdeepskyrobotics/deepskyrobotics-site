@@ -1,0 +1,59 @@
+name: preview-render
+# Renders the preview's clips and posters and commits them to the PR branch.
+# Manual: add the `render` label to the PR. workflow_dispatch also works once this file is on main (never on main itself).
+on:
+  pull_request:
+    types: [labeled]
+  workflow_dispatch:
+    inputs:
+      clips:
+        description: "all, or a comma list: s1-drift,s2-trace,s3-console,s4-fork"
+        required: true
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-render-${{ github.head_ref || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    if: >-
+      (github.event_name == 'pull_request' && github.event.label.name == 'render'
+        && github.event.pull_request.head.repo.full_name == github.repository)
+      || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    env:
+      CLIPS: ${{ inputs.clips || 'all' }}
+      BRANCH: ${{ github.head_ref || github.ref_name }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          for enc in libx264 libwebp; do
+            ffmpeg -hide_banner -encoders | grep -q "$enc" || { echo "::error::ffmpeg lacks $enc"; exit 1; }
+          done
+          node --version; google-chrome --version
+      - name: Serve the repo
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/http.log 2>&1 &
+          for i in $(seq 1 20); do curl -fs http://127.0.0.1:8080/ >/dev/null && break; sleep 0.5; done
+      - name: Render clips and posters
+        run: node _preview_src/render.mjs --base http://127.0.0.1:8080 --clips "$CLIPS" --out preview --summary "$GITHUB_STEP_SUMMARY"
+      - name: Commit to the branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for d in preview/media preview/posters preview/fonts; do [ -d "$d" ] && git add "$d"; done
+          if git diff --cached --quiet; then echo "Nothing changed."; exit 0; fi
+          git commit -m "render: preview clips and posters ($CLIPS)"
+          git push origin "HEAD:$BRANCH"
