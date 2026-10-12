@@ -30,6 +30,13 @@
     }
   }
   EVENTS.forEach(function (t) { window.addEventListener(t, start, { passive: true }); });
+  // Arriving on a #fragment: the engine's html{scroll-behavior:smooth} turns the jump into a glide, and mounting on its
+  // first scroll event would strand the reader part-way. Mount now and put the reader on the target.
+  var target = null;
+  try {
+    if (window.location && window.location.hash) target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+  } catch (e) { target = null; }
+  if (target) { start(); target.scrollIntoView({ block: 'start', behavior: 'instant' }); }
 
   if (typeof window.IntersectionObserver !== 'function') return;
   var seen = {};

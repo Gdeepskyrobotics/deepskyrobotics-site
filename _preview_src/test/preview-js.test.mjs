@@ -96,3 +96,39 @@ test('a reader already down the page keeps their place when the engine mounts', 
   assert.ok(Math.abs(scrolls[0].top - want) < 1, `scrolled to ${scrolls[0].top}, want ${want}`);
   assert.equal(scrolls[0].behavior, 'instant');
 });
+
+test('arriving on a #fragment mounts at once and puts the reader on that element', () => {
+  // The engine's html{scroll-behavior:smooth} turns a fragment arrival into a glide; mounting on its first scroll
+  // event would strand the reader part-way. With a target in the URL the engine mounts immediately instead.
+  const mounts = [], intoView = [], listeners = {};
+  const contact = { scrollIntoView: (o) => intoView.push(JSON.parse(JSON.stringify(o))) };
+  const ctx = vm.createContext({
+    location: { hash: '#contact' },
+    document: { body: {}, documentElement: { classList: { add() {} } }, getElementById: (id) => (id === 'contact' ? contact : null), querySelectorAll: () => [] },
+    addEventListener: (t, fn) => { (listeners[t] ||= []).push(fn); },
+    removeEventListener: (t, fn) => { listeners[t] = (listeners[t] || []).filter((g) => g !== fn); },
+    scrollY: 0, innerHeight: 900,
+    ScrollCraft: { mount: (root) => mounts.push(root) },
+  });
+  ctx.window = ctx;
+  vm.runInContext(CODE, ctx);
+  assert.equal(mounts.length, 1);
+  assert.deepEqual(intoView, [{ block: 'start', behavior: 'instant' }]);
+  (listeners.scroll || []).forEach((fn) => fn({ type: 'scroll' }));
+  assert.equal(mounts.length, 1);
+});
+
+test('a fragment that names no element, or a malformed one, waits for the reader as usual', () => {
+  for (const hash of ['#nope', '#%E0%A4%A']) {
+    const mounts = [];
+    const ctx = vm.createContext({
+      location: { hash },
+      document: { body: {}, documentElement: { classList: { add() {} } }, getElementById: () => null, querySelectorAll: () => [] },
+      addEventListener() {}, removeEventListener() {},
+      ScrollCraft: { mount: (root) => mounts.push(root) },
+    });
+    ctx.window = ctx;
+    assert.doesNotThrow(() => vm.runInContext(CODE, ctx), hash);
+    assert.equal(mounts.length, 0, hash);
+  }
+});
