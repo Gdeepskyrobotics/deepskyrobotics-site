@@ -67,3 +67,32 @@ test('no engine, no gtag, no IntersectionObserver: nothing throws', () => {
   const h = harness({ gtag: false });
   assert.doesNotThrow(() => h.enter(0));
 });
+
+test('a reader already down the page keeps their place when the engine mounts', () => {
+  // Four acts, one screen each before the mount; the mount stretches them to their spans (3.2, 2.6, 2.6, 1.8 x 900).
+  const vh = 900, post = [2880, 2340, 2340, 1620];
+  let heights = [900, 900, 900, 900], y = 2000;
+  const scrolls = [], listeners = {};
+  const topOf = (i) => heights.slice(0, i).reduce((a, b) => a + b, 0);
+  const sections = heights.map((_, i) => ({
+    getAttribute: (n) => (n === 'data-act' ? String(i + 1) : null),
+    getBoundingClientRect: () => ({ top: topOf(i) - y, bottom: topOf(i) + heights[i] - y, height: heights[i] }),
+  }));
+  const ctx = vm.createContext({
+    document: { body: {}, documentElement: { classList: { add() {} } }, querySelectorAll: (sel) => (sel === 'section[data-act]' ? sections : []) },
+    addEventListener: (t, fn) => { (listeners[t] ||= []).push(fn); },
+    removeEventListener() {},
+    innerHeight: vh,
+    scrollTo: (o) => { scrolls.push(JSON.parse(JSON.stringify(o))); y = o.top; },
+    ScrollCraft: { mount: () => { heights = post; } },
+  });
+  Object.defineProperty(ctx, 'scrollY', { get: () => y });
+  ctx.window = ctx;
+  vm.runInContext(CODE, ctx);
+  listeners.scroll.forEach((fn) => fn({ type: 'scroll' }));
+  // Mid-screen (2450) was 650/900 through act 3; after the mount it is the same fraction through act 3's 2340 px.
+  const want = 2880 + 2340 + (650 / 900) * 2340 - vh / 2;
+  assert.equal(scrolls.length, 1);
+  assert.ok(Math.abs(scrolls[0].top - want) < 1, `scrolled to ${scrolls[0].top}, want ${want}`);
+  assert.equal(scrolls[0].behavior, 'instant');
+});

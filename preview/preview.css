@@ -53,3 +53,9 @@ html:not(.sc-js) :is([data-sc-cue],[data-sc-in],[data-sc-in] > *,[data-sc-reveal
    behind its copy, so acts don't pile up on the first screen. :where() keeps these below the console frame's rules. */
 [data-sc-stage]:not(.sc-stage){position:relative;height:100vh;height:100svh;overflow:clip}
 :where([data-sc-stage]:not(.sc-stage)) :is(video[data-sc-scrub], .sc-stage__poster){position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* Act 3 on short screens: fit the frame in the band between the sticky nav and the caption, never under either. */
+.console-stage{--sc-nav:64px;--sc-cap:calc(clamp(1.5rem,6vh,4rem) + 4.5rem)}
+.console-stage :is(video[data-sc-scrub], .sc-stage__poster){top:calc(var(--sc-nav) + (100svh - var(--sc-nav) - var(--sc-cap)) / 2);width:min(88vw,1280px,calc((100svh - var(--sc-nav) - var(--sc-cap) - 2rem) * 16 / 9))}
+@media (max-width:860px), (hover:none) and (pointer:coarse){
+  .console-stage :is(video[data-sc-scrub], .sc-stage__poster){width:min(92vw,calc((100svh - var(--sc-nav) - var(--sc-cap) - 2rem) * 720 / 406))}
+}
