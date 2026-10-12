@@ -20,6 +20,16 @@
 <title>NEPHES Factory Observer — Deep Sky Robotics</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9TBZLE5NCN"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-9TBZLE5NCN');</script>
+<script data-ga="mailto">
+document.addEventListener('click', function (e) {
+  var a = e.target && e.target.closest && e.target.closest('a[href^="mailto:"]');
+  if (!a || typeof gtag !== 'function') return;
+  var m = /[?&]subject=([^&]*)/i.exec(a.getAttribute('href') || '');
+  var s = 'none';
+  if (m) { try { s = decodeURIComponent(m[1]); } catch (err) { s = m[1]; } }
+  gtag('event', 'mailto_click', { link_subject: s });
+}, true);
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
