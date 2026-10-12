@@ -1437,7 +1437,7 @@ function SensorArt({ points }) {
     backdropFilter: 'blur(3px)',
   });
   const legend = {
-    flow: 'Flow field — colour & turbulence track live OK / WARN / CRIT state',
+    flow: 'Flow field — colour & turbulence track simulated OK / WARN / CRIT state',
     mosaic: 'Mosaic — ' + (IMAGES.find((i) => i.id === img) || {}).label + ' rendered from the sensor tiles, tinted by plant health',
     kaleido: 'Kaleidoscope — the sensor field mirrored into a living mandala',
     spiral: 'Phyllotaxis — sensors placed on a golden-angle spiral',
@@ -1616,7 +1616,7 @@ const SNL_VERDICT = {
  * Specialist reading timer_logic" tells you what it claims to be for, which is
  * what makes a verdict against it meaningful. */
 const SNL_READS = {
-  sensor_anomaly:       'live telemetry — vibration, temperature, current',
+  sensor_anomaly:       'simulated telemetry — vibration, temperature, current',
   maintenance_history:  'the maintenance log and inspection notes',
   cycling_sequence:     'start/stop counts and restart behaviour',
   mechanical_root_cause:'mechanical evidence — alignment, bearings',
@@ -2645,7 +2645,7 @@ function LadderLogic({ onNotif, stream, jump }) {
                   <span className={`lad-wval ${v ? 'on' : ''}`}>{v ? '1 ●' : '0'}</span>}
                 </div>);
             })}
-            <div className="lad-watch-note">{armed ? 'Forces armed — click a bit row to cycle its force.' : 'Live values from the scan. Arm forces to override a bit.'}</div>
+            <div className="lad-watch-note">{armed ? 'Forces armed — click a bit row to cycle its force.' : 'Simulated values from the scan. Arm forces to override a bit.'}</div>
           </div>}
           {rail === 'nephes' && <div className="lad-nephes">
             {findings.length === 0 && <div className="lad-clean">✓ Static analysis clean — no dual coils, dangling latches, dead rungs, zero presets or unused tags.</div>}
@@ -2774,11 +2774,11 @@ Object.assign(window, { LadderLogic });
 // Profiles map to the header pills: Manufacturing · Enterprise · Backend.
 
 const PROFILES = [
-{ id: 'manufacturing', name: 'Manufacturing', desc: 'Floor operations · live sensor wall' },
+{ id: 'manufacturing', name: 'Manufacturing', desc: 'Floor operations · simulated sensor wall' },
 { id: 'enterprise', name: 'Enterprise', desc: 'Financial view for managers' },
 { id: 'backend', name: 'Backend', desc: 'Infrastructure & data pipeline' },
 { id: 'analytics', name: 'Analytics', desc: 'Trends, zones & outcomes' },
-{ id: 'logic', name: 'Logic', desc: 'Ladder programs · live edit & apply' }];
+{ id: 'logic', name: 'Logic', desc: 'Ladder programs · edit & apply (demo)' }];
 
 // Generic "open a detail" bus — any element can dispatch this to surface a panel.
 const openInfo = (title, sub, rows, cta) => window.dispatchEvent(new CustomEvent('nephes:info', { detail: { title, sub, rows: rows || [], cta } }));
@@ -2884,7 +2884,7 @@ const KPI_MEANING = {
   'Uptime': 'Platform availability over the last 30 days.' };
 const DOC_CONTENT = {
   'Remote Backend Roadmap': ['What a production deployment adds behind this console — the UI is already shaped around these seams.', [['Ingest layer', 'MQTT / OPC-UA connectors at the edge pushing telemetry to a stream bus — the Data Pipeline map depicts this route.'], ['Time-series historian', 'TimescaleDB / InfluxDB storing every reading — powers trends, histograms and analytics from real data instead of the in-browser buffer.'], ['Alarm rules engine', 'Server-side warn/crit evaluation so alerts fire with no browser open; drag-set limits write back via sensor.patch.'], ['Command API + audit', 'Authenticated endpoints for mitigations and technician dispatches with a who/what/when audit trail — already brokered by the command bus.'], ['Auth & roles', 'SSO mapping users to the four profiles as permissions, not just views.'], ['Notifications', 'The bell and critical banner backed by email / SMS / push escalation policies.'], ['Live feed', 'A WebSocket stream replacing the tick simulator — the wall subscribes instead of simulating.'], ['Command bus (built)', 'Settings → Data Source switches Simulator ⇄ Remote. Commands POST to /v1/commands and fall back to the simulator when unreachable; recent commands are inspectable via NEPHES_SOURCE.outbox.']]],
-  'Operator Guide': ['How to run the floor from this console.', [['1 · Watch', 'The Sensor Wall colors by status — the legend in the filter bar explains each color.'], ['2 · Inspect', 'Click any cell (or use the arrow keys) to open Sensor Detail with live readings.'], ['3 · Act', 'Start Mitigation from the queue or detail panel — or flip on Auto-Mitigate.'], ['4 · Tune', 'Drag the dashed lines on the detail chart to change when a sensor alarms.']]],
+  'Operator Guide': ['How to run the floor from this console.', [['1 · Watch', 'The Sensor Wall colors by status — the legend in the filter bar explains each color.'], ['2 · Inspect', 'Click any cell (or use the arrow keys) to open Sensor Detail with simulated readings.'], ['3 · Act', 'Start Mitigation from the queue or detail panel — or flip on Auto-Mitigate.'], ['4 · Tune', 'Drag the dashed lines on the detail chart to change when a sensor alarms.']]],
   'Keyboard Shortcuts': ['Navigation and selection.', [['← ↑ ↓ →', 'Move the selected cell within a zone block'], ['Click a group tab', 'Focus that NEPHES group on the wall'], ['Esc / ✕', 'Close panels and menus'], ['▶ Demo', 'Run the 45-second guided story']]],
   'API Reference': ['NEPHES integration surface (illustrative; demo only).', [['GET /v1/sensors', 'Fleet state, values, thresholds'], ['POST /v1/mitigations', 'Dispatch a mitigation for a sensor'], ['GET /v1/groups', 'Correlation groups & membership'], ['POST /v1/webhooks', 'Subscribe to alarm & resolution events']]],
   'Release Notes': ['Demo build · simulated data.', [['New', 'Hands-on alarm limits · NEPHES groups · investor demo'], ['Improved', 'Priority queue · auto-zone provisioning · resolved-flash lifecycle'], ['Fixed', 'Hover-card positioning · reduced-motion animations'], ['Next', 'Lasso select · first-run tour · ⌘K search']]] };
@@ -2893,22 +2893,22 @@ const DOC_CONTENT = {
 const TOURS = {
   logic: [
   { sel: '.lad-tree', title: 'Program library', txt: 'All 300 controller programs, grouped by asset class — search, import an L5X, paste neutral text, or duplicate one as a template. Dots mark programs with rule findings.' },
-  { sel: '.lad-rungs', title: 'Live ladder', txt: 'Rungs scan live — energized paths flow green and timers count. EDIT DRAFT to change logic (palette + click-to-insert); ARM FORCES to override a bit — two-step on purpose.' },
-  { sel: '.lad-side', title: 'Watch · NEPHES · History', txt: 'Live tag values, deterministic rule findings with NEPHES advisories (advisory only — you decide), and every applied change with one-click revert.' }],
+  { sel: '.lad-rungs', title: 'Simulated ladder', txt: 'Rungs scan in the simulator — energized paths flow green and timers count. EDIT DRAFT to change logic (palette + click-to-insert); ARM FORCES to override a bit — two-step on purpose.' },
+  { sel: '.lad-side', title: 'Watch · NEPHES · History', txt: 'Simulated tag values, deterministic rule findings with NEPHES advisories (advisory only — you decide), and every applied change with one-click revert.' }],
   manufacturing: [
-  { sel: '.wall-card', title: 'The Sensor Wall', txt: 'Every square is a live sensor, colored by status — green ok, amber warning, red critical. Click any cell (or use the arrow keys) to inspect it.' },
+  { sel: '.wall-card', title: 'The Sensor Wall', txt: 'Every square is a simulated sensor, colored by status — green ok, amber warning, red critical. Click any cell (or use the arrow keys) to inspect it.' },
   { sel: '.wall-filters', title: 'Filters & NEPHES Groups', txt: 'Filter the wall by zone or status, or sort problems to the front. When sensors start failing together, NEPHES forms a group lane here automatically.' },
   { sel: '#aiCard', title: 'Priority Action Queue', txt: 'Your to-do list — every problem ranked worst-first with a recommended fix. One click starts the mitigation.' }],
   enterprise: [
-  { sel: '.saved-hero', title: 'Saved by NEPHES', txt: 'The running total of downtime and failures NEPHES has prevented — accruing live, in dollars.' },
-  { sel: '.fin-strip', title: 'The plant, in dollars', txt: 'Live financial exposure — revenue at risk, cost per unit, energy. Click any card to export its data.' },
-  { sel: '.exec-grid', title: 'Production Lines', txt: 'Each line with live health and $ at risk. Click a line to drill into its assets.' }],
+  { sel: '.saved-hero', title: 'Simulated savings', txt: 'The running total of downtime and failures NEPHES has prevented — accruing in simulated dollars.' },
+  { sel: '.fin-strip', title: 'The plant, in dollars', txt: 'Simulated financial exposure — revenue at risk, cost per unit, energy. Click any card to export its data.' },
+  { sel: '.exec-grid', title: 'Production Lines', txt: 'Each line with simulated health and $ at risk. Click a line to drill into its assets.' }],
   backend: [
-  { sel: '.pipeline', title: 'Data Pipeline', txt: 'The live route: sensors → edge → stream bus → NEPHES → storage. Numbers update in real time.' },
+  { sel: '.pipeline', title: 'Data Pipeline', txt: 'The simulated route: sensors → edge → stream bus → NEPHES → storage. Numbers update in real time.' },
   { sel: '.node-grid', title: 'Edge Node Fleet', txt: 'Every gateway and edge box, worst-first. Click a node to ping or restart it.' },
   { sel: '#aiCard', title: 'Infrastructure Alerts', txt: 'Network and ingestion problems ranked by severity — NEPHES can restart what’s broken.' }],
   analytics: [
-  { sel: '.ana-page', title: 'Analytics', txt: 'The whole plant’s story in one place — live health, worst zones, top offenders and mitigation outcomes.' },
+  { sel: '.ana-page', title: 'Analytics', txt: 'The whole plant’s story in one place — simulated health, worst zones, top offenders and mitigation outcomes.' },
   { sel: '.ana-tabs', title: 'Four lenses', txt: 'Overview for session trends · Zones ranked worst-first · Top Offenders closest to their limits · Mitigation outcomes with timing. Click any sensor to jump to it on the wall.' }] };
 
 // 🎛 per-profile window customization — visibility, vertical size, accent tint, column width
@@ -3367,10 +3367,10 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
                   <span className="settings-count">{customCount || 0} custom</span>
                 </div>
                 <button className="settings-add-sensor" onClick={() => { onAddSensor && onAddSensor(); }}>＋ Add Sensor</button>
-                <div className="settings-hint">Manually register a sensor into the system — it goes live on the wall (Tiles view).</div>
+                <div className="settings-hint">Manually register a sensor into the system — it appears on the wall (Tiles view).</div>
                 <div className="settings-panel-title" style={{ marginTop: 14 }}>Data Source</div>
                 <div className="src-row">
-                  <button className={`src-opt ${src.mode === 'sim' ? 'on' : ''}`} onClick={() => window.NEPHES_SOURCE && NEPHES_SOURCE.setMode('sim')}>Simulator<small>built-in live sim</small></button>
+                  <button className={`src-opt ${src.mode === 'sim' ? 'on' : ''}`} onClick={() => window.NEPHES_SOURCE && NEPHES_SOURCE.setMode('sim')}>Simulator<small>built-in demo sim</small></button>
                   <button className={`src-opt ${src.mode === 'remote' ? 'on' : ''}`} onClick={() => window.NEPHES_SOURCE && NEPHES_SOURCE.setMode('remote')}>Remote<small>NEPHES cloud / on‑prem</small></button>
                 </div>
                 {src.mode === 'remote' &&
@@ -3456,7 +3456,7 @@ function KpiStrip({ stream, counts, profile, kpiOff }) {
   if (!shown.length) return null;
   return (
     <section className="kpis fade-in">
-      {shown.map((k) => <KpiCard key={k.label} label={k.label} value={k.value} unit={k.unit} series={k.s} trend={trendOf(k.s, k.u)} onClick={() => openInfo('KPI · ' + k.label, KPI_MEANING[k.label] || 'Live plant performance indicator.', [['Metric', k.label], ['Current', k.value + (k.unit || '')], ['Trend', trendOf(k.s, k.u).txt || 'steady']], { label: '⤓ Export CSV', run: () => exportCSV(k.label.replace(/[^\w]+/g, '_') + '.csv', ['sample', k.label], k.s.map((v, i) => [i + 1, (+v).toFixed(2)])) })} />)}
+      {shown.map((k) => <KpiCard key={k.label} label={k.label} value={k.value} unit={k.unit} series={k.s} trend={trendOf(k.s, k.u)} onClick={() => openInfo('KPI · ' + k.label, KPI_MEANING[k.label] || 'Simulated plant performance indicator.', [['Metric', k.label], ['Current', k.value + (k.unit || '')], ['Trend', trendOf(k.s, k.u).txt || 'steady']], { label: '⤓ Export CSV', run: () => exportCSV(k.label.replace(/[^\w]+/g, '_') + '.csv', ['sample', k.label], k.s.map((v, i) => [i + 1, (+v).toFixed(2)])) })} />)}
     </section>);
 
 }
@@ -3813,10 +3813,10 @@ function SystemView({ stream }) {
   const online = NODES.filter((n) => n.state !== 'offline').length;
   const totalIngest = last.ingest;
   const stages = [
-    { name: 'Sensors', metric: '1,019', unit: 'points', sub: '4 lines + grid' },
+    { name: 'Sensors', metric: '1,019', unit: 'demo points', sub: '4 lines + grid' },
     { name: 'Edge Ingest', metric: fmt(totalIngest), unit: 'pt/s', sub: `${online}/${NODES.length} nodes` },
-    { name: 'Stream Bus', metric: fmt(last.queue), unit: 'queued', sub: 'partition lag 0' },
-    { name: 'NEPHES MoE', metric: last.latency.toFixed(1), unit: 'ms', sub: '8 experts active' },
+    { name: 'Stream Bus', metric: fmt(last.queue), unit: 'queued', sub: 'lag — (demo)' },
+    { name: 'NEPHES MoE', metric: last.latency.toFixed(1), unit: 'ms', sub: '8 demo experts' },
     { name: 'SQLite (demo)', metric: fmt(Math.round(totalIngest * 0.98)), unit: 'rows/s', sub: 'demo store' }];
 
   // — NEPHES MoE model runtime (live per-expert load) —
@@ -3838,7 +3838,7 @@ function SystemView({ stream }) {
     { id: 'quality-vision', name: 'Quality Vision', desc: 'Defect detection on Paint Line inspection cameras', seed: 3, tiedNode: 'edge-10' },
     { id: 'energy-optimizer', name: 'Energy Optimizer', desc: 'Plant-wide energy draw tuning & setpoint recommendations', seed: 4 },
     { id: 'demand-forecast', name: 'Demand Forecasting', desc: 'Throughput, staffing & shift-load projections', seed: 5 },
-    { id: 'digital-twin', name: 'Digital Twin Sync', desc: 'Live plant-state mirroring for the operator console', seed: 6 }];
+    { id: 'digital-twin', name: 'Digital Twin Sync', desc: 'Simulated plant-state mirroring for the operator console', seed: 6 }];
   const applications = APPLICATIONS.map((a) => {
     const rps = osc(a.seed * 11, 40, 90 + a.seed % 3 * 20);
     const lat = osc(a.seed * 5, 6, 14 + a.seed % 4 * 3);
@@ -3876,7 +3876,7 @@ function SystemView({ stream }) {
     { who: 'ops.manager', act: 'updated plant configuration', t: '3m' },
     { who: 'nephes.system', act: 'auto-mitigation enabled', t: '11m' },
     { who: 'tech.reyes', act: 'completed WO-4820', t: '24m' },
-    { who: 'admin', act: 'rotated API key svc-ingest', t: '1h' },
+    { who: 'admin', act: 'rotated demo API key (simulated)', t: '1h' },
     { who: 'nephes.system', act: 'demo model event (simulated)', t: '2h' }];
 
   return (
@@ -3939,7 +3939,7 @@ function SystemView({ stream }) {
         <div className="grp">
           <div className="grp-head"><span className="g-name">Data Quality</span><span className="g-sub">INGEST INTEGRITY</span><span className="g-count">demo</span></div>
           <div className="dq-strip">
-            {dq.map((d) => <div className={`dq-card clk ${d.tone}`} key={d.l} onClick={() => openInfo('Data Quality · ' + d.l, 'Live ingest-integrity metric.', [['Metric', d.l], ['Value', String(d.v)]])}><span className="dq-l">{d.l}</span><span className="dq-v">{d.v}</span></div>)}
+            {dq.map((d) => <div className={`dq-card clk ${d.tone}`} key={d.l} onClick={() => openInfo('Data Quality · ' + d.l, 'Simulated ingest-integrity metric.', [['Metric', d.l], ['Value', String(d.v)]])}><span className="dq-l">{d.l}</span><span className="dq-v">{d.v}</span></div>)}
           </div>
         </div>
         <div className="grp">
@@ -4230,7 +4230,7 @@ function ExecRollup({ assets, setSel, stream, config, onConfigure }) {
         <React.Fragment>
         <div className="saved-hero">
           <div className="sh-left">
-            <div className="sh-l">Saved by NEPHES · month-to-date</div>
+            <div className="sh-l">Simulated savings · month-to-date (demo)</div>
             <div className="sh-v">{money2(savedMTD)}</div>
             <div className="sh-trend">▲ accruing · {money2(savedShift)} this shift</div>
           </div>
@@ -4723,7 +4723,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
   const meta = {
     manufacturing: {
       sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked by failure-risk confidence.` : 'All monitored assets within nominal parameters. No mitigations required.',
-      chips: [['Scan', '950ms'], ['Experts', '8 active'], ['Confidence', '— (demo)']],
+      chips: [['Scan', '950ms'], ['Experts', '8 demo'], ['Confidence', '— (demo)']],
     },
     enterprise: {
       sum: n ? `~3.2% throughput at risk this shift ($1,240). ${n} item${n > 1 ? 's' : ''} need owner sign-off.` : 'No financial exposure from anomalies this shift. Output tracking to plan.',
@@ -5386,7 +5386,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
               <div className="ov-col">
                 <div className="rp-sec-t ov-t">TOP OFFENDERS<button className="ov-more" onClick={() => setTab('sensors')}>inspect →</button></div>
                 {(ranked.some((r) => r.st !== 'ok') ? ranked.filter((r) => r.st !== 'ok') : ranked).slice(0, 4).map(({ p, f, st }, i) =>
-                <div className="sn-row ov" key={p.id} onClick={() => { setInsp(p.id); setTab('sensors'); }} title="Open live histogram">
+                <div className="sn-row ov" key={p.id} onClick={() => { setInsp(p.id); setTab('sensors'); }} title="Open simulated histogram">
                     <span className="sn-rank">{i + 1}</span>
                     <span className={`sn-st ${st}`} />
                     <span className="sn-name">{p.name}</span>
@@ -5406,7 +5406,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
             </div>
           </React.Fragment>}
           {tab === 'zones' && <React.Fragment>
-            <div className="rp-meta">Every zone ranked worst-first — the bar shows the live mix of OK / warning / critical sensors. Click a culprit to inspect it on the wall.</div>
+            <div className="rp-meta">Every zone ranked worst-first — the bar shows the simulated mix of OK / warning / critical sensors. Click a culprit to inspect it on the wall.</div>
             {zones.map((z) =>
             <div className="zn-row" key={z.name}>
                 <span className="zn-name">{z.name}</span>
@@ -5419,7 +5419,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
           {tab === 'sensors' && (() => {
             const inspP = points.find((p) => p.id === insp) || (offenders[0] && offenders[0].p) || null;
             return <React.Fragment>
-            <div className="rp-meta">{alarmEmpty ? 'Nothing is in alarm right now — showing every sensor ranked by closeness to its limit.' : 'Sensors ranked by closeness to (or past) their safe limit — click a row for its live reading histogram.'}</div>
+            <div className="rp-meta">{alarmEmpty ? 'Nothing is in alarm right now — showing every sensor ranked by closeness to its limit.' : 'Sensors ranked by closeness to (or past) their safe limit — click a row for its simulated reading histogram.'}</div>
             <div className="flt-row">
               {[['alarm', 'IN ALARM'], ['crit', 'CRITICAL'], ['warn', 'WARNING'], ['all', 'ALL SENSORS']].map(([id, l]) => <button key={id} className={`flt-chip ${offFilter === id ? 'active' : ''}`} onClick={() => setOffFilter(id)}>{l}</button>)}
               <select className="flt-sel" value={offZone} onChange={(e) => setOffZone(e.target.value)} title="Filter by zone">
@@ -5487,7 +5487,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
             {offenders.map(({ p, f }, i) => {
               const st = statusOf(p);
               return (
-                <div className={`sn-row ${inspP && inspP.id === p.id ? 'active' : ''}`} key={p.id} onClick={() => setInsp(p.id)} title="Click for live histogram">
+                <div className={`sn-row ${inspP && inspP.id === p.id ? 'active' : ''}`} key={p.id} onClick={() => setInsp(p.id)} title="Click for simulated histogram">
                   <span className="sn-rank">{i + 1}</span>
                   <span className={`sn-st ${st}`} />
                   <span className="sn-name">{p.name}</span>
@@ -5566,7 +5566,7 @@ function ShiftReport({ data, onClose }) {
     `Sensors: ${d.counts.ok} OK · ${d.counts.warn} warn · ${d.counts.crit} critical`,
     `Events: ${d.events.crit} critical · ${d.events.warn} warnings · ${d.events.ok} recoveries`,
     `Mitigations: ${d.nDis} dispatched · ${d.nRes} resolved · auto-mitigate ${d.autoMit ? 'ON' : 'OFF'}`,
-    `Saved by NEPHES this shift: ${money(d.saved)}`,
+    `Simulated savings this shift (demo): ${money(d.saved)}`,
     d.risks.length ? 'Hand off: ' + d.risks.map((r) => `${r.name} (${r.val})`).join(', ') : 'No open risks at handoff.',
     d.workspaces && d.workspaces.length ? 'Workspaces: ' + d.workspaces.map((w) => w.name + ' — ' + w.n + ' sensors, ' + w.c + ' crit' + (w.lastNote ? ' (“' + w.lastNote + '”)' : '')).join(' · ') : 'No open workspace investigations.'];
     if (navigator.clipboard) navigator.clipboard.writeText(lines.join('\n')).then(() => toast('Handoff summary copied'));
@@ -5582,7 +5582,7 @@ function ShiftReport({ data, onClose }) {
             <div className="rp-stat"><span className="rs-v">{d.counts.warn}<i className="rs-sep">·</i><b style={{ color: d.counts.crit > 0 ? 'var(--crit)' : 'inherit' }}>{d.counts.crit}</b></span><span className="rs-l">Warn · crit now</span></div>
             <div className="rp-stat"><span className="rs-v">{d.events.crit + d.events.warn}</span><span className="rs-l">Alarm events</span></div>
             <div className="rp-stat"><span className="rs-v">{d.nRes}<i className="rs-sep">/</i>{d.nDis}</span><span className="rs-l">Resolved / sent</span></div>
-            <div className="rp-stat"><span className="rs-v" style={{ color: 'var(--accent)' }}>{money(d.saved)}</span><span className="rs-l">Saved by NEPHES</span></div>
+            <div className="rp-stat"><span className="rs-v" style={{ color: 'var(--accent)' }}>{money(d.saved)}</span><span className="rs-l">Simulated savings (demo)</span></div>
           </div>
           <div className="rp-cols">
             <div className="rp-sec">
@@ -6007,7 +6007,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
     [20000, 'Everything detected and ranked. And NEPHES is honest: the hydraulic fault is software-fixable — the worn bearing is not.'],
     [26000, '__AUTOMIT__Auto-Mitigate on. Corrections are dispatched — and NEPHES is honest here too: readings walk back to safe over the next minute, not by magic.'],
     [34000, '__DISPATCH__…while the bearing gets what it actually needs: a technician, dispatched with the diagnosis and part number attached.'],
-    [42500, '__TECHDONE__Technician on site — bearing replaced. NEPHES verifies the recovery live.'],
+    [42500, '__TECHDONE__Technician on site — bearing replaced. NEPHES verifies the recovery in the simulation.'],
     [50000, '__ENTERPRISE__The same hour in dollars — downtime avoided, revenue protected, and the running total NEPHES saved.'],
     [58000, 'Detect everything. Fix what software can. Route the rest to the right hands. That’s NEPHES ✓'],
     [66000, '__END__']];
@@ -6268,7 +6268,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
                       {Array.from({ length: 9 }).map((_, i) => <span key={i} />)}
                     </div>
                     <div className="sp-title">Select a sensor</div>
-                    <div className="sp-sub">Click any cell in the wall — or use the ← ↑ ↓ → keys — to inspect its live reading, location, device settings and NEPHES analysis.</div>
+                    <div className="sp-sub">Click any cell in the wall — or use the ← ↑ ↓ → keys — to inspect its simulated reading, location, device settings and NEPHES analysis.</div>
                   </div>
                 </div>)}
             </React.Fragment>}
@@ -6492,7 +6492,7 @@ function WsNewModal({ gridPoints, list, archived, onRestore, onCreate, onClose }
       <div className="modal ws-new-modal" onMouseDown={(e) => e.stopPropagation()}>
         <div className="modal-head">NEW WORKSPACE<button className="modal-close" onClick={onClose}>✕</button></div>
         <div className="ws-nm-body">
-          <div className="ws-msec2">⚡ NEPHES recommends<span className="ws-msec-sub">live failure clusters — grouped so a pattern reads as one problem, not an alarm flood</span></div>
+          <div className="ws-msec2">⚡ NEPHES recommends<span className="ws-msec-sub">simulated failure clusters — grouped so a pattern reads as one problem, not an alarm flood</span></div>
           {recs.length === 0 && <div className="ws-rec-empty">No failure clusters right now — the plant is quiet. Start from a preset or a blank workspace below.</div>}
           {recs.map((r, i) =>
           <button key={i} className="ws-rec" disabled={!!r.covered} onClick={() => onCreate({ name: r.name, pins: r.pins, srcLabel: r.srcLabel })}>
