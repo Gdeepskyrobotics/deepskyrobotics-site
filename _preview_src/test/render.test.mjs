@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { join } from 'node:path';
-import { CLIPS, VARIANTS, selectClips, encodeArgs, posterArgs, frameName, posterIndex } from '../render.mjs';
+import { CLIPS, VARIANTS, selectClips, encodeArgs, posterArgs, frameName, posterIndex, clipCrf } from '../render.mjs';
 
 test('four clips, two variants with the agreed encode settings', () => {
   assert.deepEqual(CLIPS.map((c) => c.id), ['s1-drift', 's2-trace', 's3-console', 's4-fork']);
@@ -42,4 +42,14 @@ test('frameName and posterIndex', () => {
   assert.equal(posterIndex(1, 150), 149);
   assert.equal(posterIndex(0.5, 150), 75);
   assert.equal(posterIndex(2, 150), 149);
+});
+
+test('the console clip encodes 3 CRF above the scenes (operator decision 2026-10-12, desktop budget)', () => {
+  const byId = (id) => CLIPS.find((c) => c.id === id);
+  assert.equal(clipCrf(byId('s3-console'), VARIANTS.desktop), 26);
+  assert.equal(clipCrf(byId('s3-console'), VARIANTS.mobile), 29);
+  for (const id of ['s1-drift', 's2-trace', 's4-fork']) {
+    assert.equal(clipCrf(byId(id), VARIANTS.desktop), 23, id);
+    assert.equal(clipCrf(byId(id), VARIANTS.mobile), 26, id);
+  }
 });

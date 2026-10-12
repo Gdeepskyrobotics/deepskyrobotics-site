@@ -9,7 +9,8 @@ import { launch, sleep, waitFor } from './cdp.mjs';
 export const CLIPS = [
   { id: 's1-drift', kind: 'scene' },
   { id: 's2-trace', kind: 'scene' },
-  { id: 's3-console', kind: 'console', seconds: 6, fps: 30, msPerFrame: 200, posterT: 0 },
+  // crfOffset: the console recording is the heaviest clip; +3 CRF keeps the desktop page inside its 6 MB budget.
+  { id: 's3-console', kind: 'console', seconds: 6, fps: 30, msPerFrame: 200, posterT: 0, crfOffset: 3 },
   { id: 's4-fork', kind: 'scene' },
 ];
 export const VARIANTS = {
@@ -18,6 +19,8 @@ export const VARIANTS = {
 };
 // Mobile console clip: the centre of the desktop capture as a landscape inset (even height for yuv420p).
 export const CONSOLE_MOBILE_VF = 'crop=1600:900:160:90,scale=720:406:flags=lanczos,setsar=1';
+
+export const clipCrf = (clip, v) => v.crf + (clip.crfOffset || 0);
 
 export function selectClips(arg) {
   if (!arg || arg === 'all') return CLIPS;
@@ -126,7 +129,7 @@ async function main() {
         for (const v of Object.values(VARIANTS)) {
           const r = await renderScene(browser, base, clip, v, work);
           const mp4 = join(mediaDir, `${clip.id}${v.suffix}.mp4`), webp = join(posterDir, `${clip.id}${v.suffix}.webp`);
-          ffmpeg(encodeArgs({ framesDir: r.dir, fps: r.fps, crf: v.crf, g: v.g, out: mp4 }));
+          ffmpeg(encodeArgs({ framesDir: r.dir, fps: r.fps, crf: clipCrf(clip, v), g: v.g, out: mp4 }));
           ffmpeg(posterArgs({ png: join(r.dir, frameName(posterIndex(r.posterT, r.n))), out: webp }));
           rows.push(row(mp4, r.n), row(webp));
           rmSync(r.dir, { recursive: true, force: true });
@@ -136,7 +139,7 @@ async function main() {
         for (const v of Object.values(VARIANTS)) {
           const vf = v.suffix ? CONSOLE_MOBILE_VF : null;
           const mp4 = join(mediaDir, `${clip.id}${v.suffix}.mp4`), webp = join(posterDir, `${clip.id}${v.suffix}.webp`);
-          ffmpeg(encodeArgs({ framesDir: r.dir, fps: clip.fps, crf: v.crf, g: v.g, vf, out: mp4 }));
+          ffmpeg(encodeArgs({ framesDir: r.dir, fps: clip.fps, crf: clipCrf(clip, v), g: v.g, vf, out: mp4 }));
           ffmpeg(posterArgs({ png: join(r.dir, frameName(posterIndex(clip.posterT, r.n))), vf, out: webp }));
           rows.push(row(mp4, r.n, r.deterministic ? '' : 'non-deterministic capture'), row(webp));
         }
