@@ -61,6 +61,10 @@ const PROBE = (act) => `(() => {
   };
 })()`;
 
+// After a scroll: two frames let scroll handlers, the engine's tick and observer callbacks run (timeout-guarded).
+const FRAMES = 'Promise.race([new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(() => r(true)))), new Promise((r) => setTimeout(() => r(false), 2000))])';
+const ANIMATING = "document.getAnimations().some((a) => a.playState === 'running')";
+
 // Printed when an act's copy is not visible: engine act state plus each text element's box and effective opacity.
 const DIAG = (act) => `(() => {
   const s = document.querySelector('section[data-act="${act}"]');
@@ -75,7 +79,7 @@ const DIAG = (act) => `(() => {
   });
 })()`;
 
-const ARRIVED =`(() => { const i = window.ScrollCraft && ScrollCraft.instances[0]; if (!i) return true;
+const ARRIVED = `(() => { const i = window.ScrollCraft && ScrollCraft.instances[0]; if (!i) return true;
   return i.clips.every((c) => !c.live || (c.ready && !c.el.seeking && Math.abs(c.cur - c.target) < 0.002)); })()`;
 
 async function measure(profileName, base, shots) {
@@ -104,6 +108,11 @@ async function measure(profileName, base, shots) {
       while (Date.now() < end) { if (await page.eval(ARRIVED)) return; await sleep(200); }
       errors.push(`playhead did not arrive within ${timeoutMs} ms`);
     };
+    // Reveal transitions (flow sections, 620 ms plus stagger) must finish before the copy is judged.
+    const calm = async (timeoutMs = 5000) => {
+      const end = Date.now() + timeoutMs;
+      while (Date.now() < end) { if (!(await page.eval(ANIMATING))) return; await sleep(100); }
+    };
     const overflowNow = () => page.eval('document.documentElement.scrollWidth - innerWidth');
 
     mkdirSync(shots, { recursive: true });
@@ -121,8 +130,11 @@ async function measure(profileName, base, shots) {
     for (const [i, a] of acts.entries()) {
       const y = Math.max(0, Math.round(a.pinned ? a.top + (a.height - p.height) / 2 : a.top + a.height / 2 - p.height / 2));
       await page.eval(`window.scrollTo({ top: ${y}, behavior: 'instant' })`);
+      // idle() only waits for the network, which is already quiet on most acts: let the page react to the scroll first.
+      if (p.js) await page.eval(FRAMES);
       await idle();
       if (p.js && !p.reduced) await settle();
+      if (p.js) await calm();
       const probe = await page.eval(PROBE(a.act));
       writeFileSync(join(shots, `${String(i + 1).padStart(2, '0')}-act-${a.act}.png`), await page.screenshot());
       // Pinning is asserted only with motion on: under reduced motion the engine may collapse pins.
