@@ -198,10 +198,14 @@ async function measure(profileName, base, shots) {
     // on their first scroll. The query string forces a real load rather than a same-document fragment jump.
     let anchorTop = null, anchorMounted = null;
     if (p.js) {
+      const where = "JSON.stringify({ y: Math.round(scrollY), vh: innerHeight, contact: Math.round(document.getElementById('contact').getBoundingClientRect().top), docH: document.documentElement.scrollHeight, mounted: !!(window.ScrollCraft && ScrollCraft.instances.length), ready: document.readyState })";
       await page.goto(`${base}?anchor=1#contact`);
       await idle();
+      console.log(`diag: anchor before ${await page.eval(where)}`);
       await page.eval("window.scrollBy({ top: 1, behavior: 'instant' })");
+      console.log(`diag: anchor sync ${await page.eval(where)}`);
       await frames(); await idle(); await frames();
+      console.log(`diag: anchor after ${await page.eval(where)}`);
       anchorMounted = await page.eval(MOUNTED);
       anchorTop = +(await page.eval("document.getElementById('contact').getBoundingClientRect().top / innerHeight")).toFixed(2);
       writeFileSync(join(shots, '90-anchor-contact.png'), await page.screenshot());
