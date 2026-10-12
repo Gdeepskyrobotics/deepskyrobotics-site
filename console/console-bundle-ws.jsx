@@ -2886,8 +2886,8 @@ const DOC_CONTENT = {
   'Remote Backend Roadmap': ['What a production deployment adds behind this console — the UI is already shaped around these seams.', [['Ingest layer', 'MQTT / OPC-UA connectors at the edge pushing telemetry to a stream bus — the Data Pipeline map depicts this route.'], ['Time-series historian', 'TimescaleDB / InfluxDB storing every reading — powers trends, histograms and analytics from real data instead of the in-browser buffer.'], ['Alarm rules engine', 'Server-side warn/crit evaluation so alerts fire with no browser open; drag-set limits write back via sensor.patch.'], ['Command API + audit', 'Authenticated endpoints for mitigations and technician dispatches with a who/what/when audit trail — already brokered by the command bus.'], ['Auth & roles', 'SSO mapping users to the four profiles as permissions, not just views.'], ['Notifications', 'The bell and critical banner backed by email / SMS / push escalation policies.'], ['Live feed', 'A WebSocket stream replacing the tick simulator — the wall subscribes instead of simulating.'], ['Command bus (built)', 'Settings → Data Source switches Simulator ⇄ Remote. Commands POST to /v1/commands and fall back to the simulator when unreachable; recent commands are inspectable via NEPHES_SOURCE.outbox.']]],
   'Operator Guide': ['How to run the floor from this console.', [['1 · Watch', 'The Sensor Wall colors by status — the legend in the filter bar explains each color.'], ['2 · Inspect', 'Click any cell (or use the arrow keys) to open Sensor Detail with live readings.'], ['3 · Act', 'Start Mitigation from the queue or detail panel — or flip on Auto-Mitigate.'], ['4 · Tune', 'Drag the dashed lines on the detail chart to change when a sensor alarms.']]],
   'Keyboard Shortcuts': ['Navigation and selection.', [['← ↑ ↓ →', 'Move the selected cell within a zone block'], ['Click a group tab', 'Focus that NEPHES group on the wall'], ['Esc / ✕', 'Close panels and menus'], ['▶ Demo', 'Run the 45-second guided story']]],
-  'API Reference': ['NEPHES integration surface (OpenAPI 3.1).', [['GET /v1/sensors', 'Fleet state, values, thresholds'], ['POST /v1/mitigations', 'Dispatch a mitigation for a sensor'], ['GET /v1/groups', 'Correlation groups & membership'], ['POST /v1/webhooks', 'Subscribe to alarm & resolution events']]],
-  'Release Notes': ['v0.9.0‑rc.3 · pre-release build.', [['New', 'Hands-on alarm limits · NEPHES groups · investor demo'], ['Improved', 'Priority queue · auto-zone provisioning · resolved-flash lifecycle'], ['Fixed', 'Hover-card positioning · reduced-motion animations'], ['Next', 'Lasso select · first-run tour · ⌘K search']]] };
+  'API Reference': ['NEPHES integration surface (illustrative; demo only).', [['GET /v1/sensors', 'Fleet state, values, thresholds'], ['POST /v1/mitigations', 'Dispatch a mitigation for a sensor'], ['GET /v1/groups', 'Correlation groups & membership'], ['POST /v1/webhooks', 'Subscribe to alarm & resolution events']]],
+  'Release Notes': ['Demo build · simulated data.', [['New', 'Hands-on alarm limits · NEPHES groups · investor demo'], ['Improved', 'Priority queue · auto-zone provisioning · resolved-flash lifecycle'], ['Fixed', 'Hover-card positioning · reduced-motion animations'], ['Next', 'Lasso select · first-run tour · ⌘K search']]] };
 
 // first-run tour steps, per profile — each profile's tour shows once
 const TOURS = {
@@ -2916,7 +2916,7 @@ const TINTS = { gold: null, teal: { a: '#5fb3a1', rgb: '95,179,161' }, violet: {
 const PANEL_DEFS = {
   manufacturing: [
   { id: 'kpis', label: 'KPI Ribbon', flags: '' },
-  { id: 'events', label: 'Live Events Bar', flags: '' },
+  { id: 'events', label: 'Demo Events Bar', flags: '' },
   { id: 'detail', label: 'Sensor Detail panel', flags: '' },
   { id: 'wall', label: 'Sensor Wall', flags: 'wall' },
   { id: 'ops', label: 'Priority Action Queue', flags: 'tint,size' },
@@ -2924,12 +2924,12 @@ const PANEL_DEFS = {
   { id: 'sim', label: 'Simulation & Tools tab', flags: '' }],
   enterprise: [
   { id: 'kpis', label: 'KPI Ribbon', flags: '' },
-  { id: 'events', label: 'Live Events Bar', flags: '' },
+  { id: 'events', label: 'Demo Events Bar', flags: '' },
   { id: 'ai', label: 'NEPHES AI Analysis', flags: 'tint,size' },
   { id: 'actions', label: 'Executive Actions', flags: 'tint,size' }],
   backend: [
   { id: 'kpis', label: 'KPI Ribbon', flags: '' },
-  { id: 'events', label: 'Live Events Bar', flags: '' },
+  { id: 'events', label: 'Demo Events Bar', flags: '' },
   { id: 'ops', label: 'Infrastructure Alerts', flags: 'tint,size' },
   { id: 'log', label: 'Action Log', flags: 'tint,size' },
   { id: 'risks', label: 'Top Risks (Simulation tab)', flags: '' },
@@ -3038,7 +3038,7 @@ const DOCS_LINKS = [
 { t: 'Security', meta: '' },
 { t: 'Deployment', meta: '' },
 { sep: true },
-{ t: 'API reference', meta: 'OpenAPI' }];
+{ t: 'API reference', meta: 'illustrative' }];
 
 
 // ── Factory floor model ──────────────────────────────────────────────────────
@@ -3270,7 +3270,7 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
             <div className="nm-sec">System</div>
             <button className="nm-item" onClick={() => { setMenuOpen(false); setStab('settings'); setOpen(true); }}><span className="nm-ic">⚙</span>Settings</button>
             <button className="nm-item" onClick={() => { setMenuOpen(false); setStab('docs'); setOpen(true); }}><span className="nm-ic">📘</span>Documentation</button>
-            <div className="nm-foot"><span className="sv-dot" />NEPHES Factory Observer · v0.9.0‑rc.3</div>
+            <div className="nm-foot"><span className="sv-dot" />NEPHES Factory Observer · demo build</div>
           </div>}
       </div>
       <div className="hdr-brand">
@@ -3296,7 +3296,7 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
         </div>
       </div>
       <div className="hdr-spacer" />
-      <div className={`live-dot-wrap ${stale ? 'stale' : ''}`} onClick={onToggleLive} role="button" tabIndex={0} style={{ cursor: 'pointer' }} title={stale ? 'Resume live data' : 'Pause live data'}><span className="live-dot" />{stale ? 'PAUSED' : 'LIVE'}</div>
+      <div className={`live-dot-wrap ${stale ? 'stale' : ''}`} onClick={onToggleLive} role="button" tabIndex={0} style={{ cursor: 'pointer' }} title={stale ? 'Resume demo data' : 'Pause demo data'}><span className="live-dot" />{stale ? 'PAUSED' : 'DEMO'}</div>
       <button className={`src-badge ${src.mode === 'remote' ? src.status === 'online' ? 'remote-on' : 'remote-off' : 'sim'}`} onClick={() => { setStab('settings'); setOpen(true); }} title="Data source — click to configure">{src.mode === 'remote' ? 'REMOTE' : 'SIM DATA'}</button>
       <div className="hdr-clock">{clock}</div>
       <button className={`mit-toggle ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit((v) => !v)} aria-pressed={autoMit} title="Auto-mitigate — NEPHES fixes problems by itself as they appear">
@@ -3420,7 +3420,7 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
               </div>}
             <div className="settings-ver">
               <span className="sv-dot" />NEPHES Factory Observer
-              <span className="sv-num">v0.9.0‑rc.3</span>
+              <span className="sv-num">demo build</span>
               <span className="sv-tag">PRE‑RELEASE</span>
             </div>
           </div>}
@@ -3444,7 +3444,7 @@ function KpiStrip({ stream, counts, profile, kpiOff }) {
   { label: 'Disk Free', value: infraCur.disk.toFixed(2), unit: 'TB', s: infraHist.disk, u: '' },
   { label: 'Network I/O', value: Math.round(infraCur.bw), unit: 'Mbps', s: infraHist.bw, u: '' },
   { label: 'Packet Loss', value: infraCur.loss.toFixed(2), unit: '%', s: infraHist.loss, u: '%' },
-  { label: 'Uptime', value: infraCur.uptime.toFixed(2), unit: '%', s: infraHist.uptime, u: '%' }] :
+  { label: 'Uptime', value: infraCur.uptime.toFixed(2), unit: '% (demo)', s: infraHist.uptime, u: '%' }] :
   [
   { label: 'OEE', value: last.oee.toFixed(1), unit: '%', s: series.oee, u: '%' },
   { label: 'Availability', value: last.avail.toFixed(1), unit: '%', s: series.avail, u: '%' },
@@ -3743,7 +3743,7 @@ function PlantTrends({ stream }) {
 
   return (
     <div className="grp trend-strip-wrap">
-      <div className="grp-head"><span className="g-name">Plant Trends</span><span className="g-sub">THIS SHIFT</span><span className="g-count">live</span></div>
+      <div className="grp-head"><span className="g-name">Plant Trends</span><span className="g-sub">THIS SHIFT</span><span className="g-count">demo</span></div>
       <div className="trend-strip">
         {cards.map((c) =>
         <div className="trend-card" key={c.label}>
@@ -3817,7 +3817,7 @@ function SystemView({ stream }) {
     { name: 'Edge Ingest', metric: fmt(totalIngest), unit: 'pt/s', sub: `${online}/${NODES.length} nodes` },
     { name: 'Stream Bus', metric: fmt(last.queue), unit: 'queued', sub: 'partition lag 0' },
     { name: 'NEPHES MoE', metric: last.latency.toFixed(1), unit: 'ms', sub: '8 experts active' },
-    { name: 'TimescaleDB', metric: fmt(Math.round(totalIngest * 0.98)), unit: 'rows/s', sub: 'retention 90d' }];
+    { name: 'SQLite (demo)', metric: fmt(Math.round(totalIngest * 0.98)), unit: 'rows/s', sub: 'demo store' }];
 
   // — NEPHES MoE model runtime (live per-expert load) —
   const osc = (seed, amp, mid) => Math.max(2, Math.round(mid + Math.sin((tick + seed) * 0.4) * amp + (Math.random() - 0.5) * amp * 0.3));
@@ -3826,15 +3826,15 @@ function SystemView({ stream }) {
     { n: 'Acoustic', s: 5 }, { n: 'Flow', s: 6 }, { n: 'Motion', s: 7 }, { n: 'Gateway', s: 8 }];
   const experts = EXPERTS.map((e) => ({ ...e, load: osc(e.s * 7, 22, 48 + e.s % 3 * 8) }));
   const modelMeta = [
-    { l: 'Model', v: 'nephes-moe v4.2.1' },
+    { l: 'Model', v: 'demo model' },
     { l: 'Inference', v: last.latency.toFixed(1) + ' ms' },
-    { l: 'Accuracy', v: '94.6%' },
-    { l: 'Drift vs 24h', v: '+0.3σ' }];
+    { l: 'Accuracy', v: '— (demo)' },
+    { l: 'Drift vs 24h', v: '— (demo)' }];
 
   // — applications running on top of the NEPHES model runtime (live per-app simulation) —
   const APPLICATIONS = [
     { id: 'predictive-maint', name: 'Predictive Maintenance', desc: 'Failure-risk scoring per asset, feeds the Priority Action Queue', seed: 1 },
-    { id: 'anomaly-detect', name: 'Anomaly Detection', desc: 'Real-time outlier flagging across the 2,000-point sensor fleet', seed: 2 },
+    { id: 'anomaly-detect', name: 'Anomaly Detection', desc: 'Real-time outlier flagging across the 2,000-point simulated sensor fleet', seed: 2 },
     { id: 'quality-vision', name: 'Quality Vision', desc: 'Defect detection on Paint Line inspection cameras', seed: 3, tiedNode: 'edge-10' },
     { id: 'energy-optimizer', name: 'Energy Optimizer', desc: 'Plant-wide energy draw tuning & setpoint recommendations', seed: 4 },
     { id: 'demand-forecast', name: 'Demand Forecasting', desc: 'Throughput, staffing & shift-load projections', seed: 5 },
@@ -3860,16 +3860,16 @@ function SystemView({ stream }) {
   // — job queue —
   const jobRunning = 2 + (tick % 3);
   const jobs = [
-    { id: 'retrain-moe', label: 'MoE nightly retrain', st: 'running', meta: '68% · ETA 9m' },
+    { id: 'retrain-moe', label: 'Model retrain (demo)', st: 'running', meta: 'demo job' },
     { id: 'snapshot', label: 'Health snapshot', st: 'running', meta: 'streaming' },
     { id: 'export-exec', label: 'Exec report export', st: 'queued', meta: 'waiting' },
-    { id: 'backfill', label: 'TimescaleDB backfill', st: 'done', meta: '2m ago' },
+    { id: 'backfill', label: 'Store backfill (demo)', st: 'done', meta: '2m ago' },
     { id: 'webhook-retry', label: 'Webhook retry batch', st: NODES.some((n) => n.state === 'offline') ? 'failed' : 'done', meta: NODES.some((n) => n.state === 'offline') ? '1 failed' : 'ok' }];
   // — integrations —
   const integrations = [
-    { l: 'Webhook Sink', v: 'connected', tone: 'ok', meta: '3 endpoints' },
-    { l: 'Alert Mailer', v: 'connected', tone: 'ok', meta: 'SMTP · 12 sent' },
-    { l: 'API Keys', v: '4 active', tone: 'ok', meta: '1 expiring 14d' },
+    { l: 'Webhook Sink', v: 'connected', tone: 'ok', meta: 'demo endpoints' },
+    { l: 'Alert Mailer', v: 'connected', tone: 'ok', meta: 'SMTP · demo alerts' },
+    { l: 'API Keys', v: '— (demo)', tone: 'ok', meta: 'demo keys' },
     { l: 'OPC-UA Bridge', v: NODES.some((n) => n.state === 'offline') ? 'degraded' : 'connected', tone: NODES.some((n) => n.state === 'offline') ? 'warn' : 'ok', meta: 'gw-plant' }];
   // — audit log —
   const audit = [
@@ -3877,7 +3877,7 @@ function SystemView({ stream }) {
     { who: 'nephes.system', act: 'auto-mitigation enabled', t: '11m' },
     { who: 'tech.reyes', act: 'completed WO-4820', t: '24m' },
     { who: 'admin', act: 'rotated API key svc-ingest', t: '1h' },
-    { who: 'nephes.system', act: 'model promoted v4.2.1', t: '2h' }];
+    { who: 'nephes.system', act: 'demo model event (simulated)', t: '2h' }];
 
   return (
     <div className="wall-card">
@@ -3888,7 +3888,7 @@ function SystemView({ stream }) {
       </div>
       <div className="wall-scroll system-scroll">
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Data Pipeline</span><span className="g-sub">SENSORS → STORE</span><span className="g-count">live</span></div>
+          <div className="grp-head"><span className="g-name">Data Pipeline</span><span className="g-sub">SENSORS → STORE</span><span className="g-count">demo</span></div>
           <div className="pipeline">
             {stages.map((s, i) =>
             <React.Fragment key={s.name}>
@@ -3909,7 +3909,7 @@ function SystemView({ stream }) {
           </div>
           <div className="mr-experts">
             {experts.map((e) =>
-            <div className="mr-exp clk" key={e.n} onClick={() => openInfo('MoE Expert · ' + e.n, e.n + ' expert — current routing load ' + e.load + '%.', [['Expert', e.n], ['Load', e.load + '%'], ['Model', 'nephes-moe v4.2.1']])}>
+            <div className="mr-exp clk" key={e.n} onClick={() => openInfo('MoE Expert · ' + e.n, e.n + ' expert — current routing load ' + e.load + '%.', [['Expert', e.n], ['Load', e.load + '%'], ['Model', 'demo model']])}>
                 <div className="mr-exp-top"><span className="mr-exp-n">{e.n}</span><span className="mr-exp-l">{e.load}%</span></div>
                 <div className="mr-exp-bar"><div style={{ width: e.load + '%', background: e.load >= 80 ? 'var(--warn)' : 'var(--accent)' }} /></div>
               </div>
@@ -3920,7 +3920,7 @@ function SystemView({ stream }) {
           <div className="grp-head"><span className="g-name">Applications</span><span className="g-sub">RUNNING ON MODEL RUNTIME</span><span className="g-count">{applications.length} apps</span></div>
           <div className="app-grid">
             {applications.map((a) =>
-            <div className={`app-card clk ${a.status}`} key={a.id} onClick={() => openInfo(a.name, a.desc, [['Status', a.status === 'warn' ? 'Degraded' : 'Healthy'], ['Requests', a.rps + '/s'], ['Latency', a.lat + ' ms'], ['Error rate', a.errRate + '%'], ['Model', 'nephes-moe v4.2.1']])}>
+            <div className={`app-card clk ${a.status}`} key={a.id} onClick={() => openInfo(a.name, a.desc, [['Status', a.status === 'warn' ? 'Degraded' : 'Healthy'], ['Requests', a.rps + '/s'], ['Latency', a.lat + ' ms'], ['Error rate', a.errRate + '%'], ['Model', 'demo model']])}>
                 <div className="app-top">
                   <span className={`app-dot ${a.status}`} />
                   <span className="app-name">{a.name}</span>
@@ -3937,7 +3937,7 @@ function SystemView({ stream }) {
           </div>
         </div>
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Data Quality</span><span className="g-sub">INGEST INTEGRITY</span><span className="g-count">live</span></div>
+          <div className="grp-head"><span className="g-name">Data Quality</span><span className="g-sub">INGEST INTEGRITY</span><span className="g-count">demo</span></div>
           <div className="dq-strip">
             {dq.map((d) => <div className={`dq-card clk ${d.tone}`} key={d.l} onClick={() => openInfo('Data Quality · ' + d.l, 'Live ingest-integrity metric.', [['Metric', d.l], ['Value', String(d.v)]])}><span className="dq-l">{d.l}</span><span className="dq-v">{d.v}</span></div>)}
           </div>
@@ -3973,7 +3973,7 @@ function SystemView({ stream }) {
           </div>
         </div>
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Audit Log</span><span className="g-sub">RECENT ACTIVITY</span><span className="g-count">live</span></div>
+          <div className="grp-head"><span className="g-name">Audit Log</span><span className="g-sub">RECENT ACTIVITY</span><span className="g-count">demo</span></div>
           <div className="audit-list">
             {audit.map((a, i) =>
             <div className="audit-row clk" key={i} onClick={() => openInfo('Audit entry', a.who + ' ' + a.act + ' (' + a.t + ' ago).', [['Actor', a.who], ['Action', a.act], ['When', a.t + ' ago']])}>
@@ -4241,7 +4241,7 @@ function ExecRollup({ assets, setSel, stream, config, onConfigure }) {
           </div>
         </div>
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Financial Impact</span><span className="g-sub">SHIFT A · LIVE</span><span className="g-count">USD</span></div>
+          <div className="grp-head"><span className="g-name">Financial Impact</span><span className="g-sub">SHIFT A · DEMO</span><span className="g-count">USD</span></div>
           <div className="fin-strip">
             {fins.map((f) =>
             <div className={`fin-card clk ${f.tone}`} key={f.l} onClick={() => openInfo(f.l, f.sub, [['Value', f.v], ['Detail', f.sub]], f.hist ? { label: '⤓ Export CSV', run: () => exportCSV(f.l.replace(/[^\w]+/g, '_') + '.csv', ['sample', f.l], f.hist.map((v, i) => [i + 1, (+v).toFixed(2)])) } : { label: '📌 Add to Executive Daily', toastMsg: f.l + ' added to the Executive Daily report' })}>
@@ -4254,7 +4254,7 @@ function ExecRollup({ assets, setSel, stream, config, onConfigure }) {
           </div>
         </div>
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Shift Performance</span><span className="g-sub">SHIFT A · VS PLAN</span><span className="g-count">live</span></div>
+          <div className="grp-head"><span className="g-name">Shift Performance</span><span className="g-sub">SHIFT A · VS PLAN</span><span className="g-count">demo</span></div>
           <div className="fin-strip">
             {shiftCards.map((c) =>
             <div className={`fin-card clk ${c.tone}`} key={c.l} onClick={() => openInfo(c.l, c.sub, [['Value', c.v], ['Detail', c.sub]])}>
@@ -4319,7 +4319,7 @@ function ExecRollup({ assets, setSel, stream, config, onConfigure }) {
           </div>
         </div>
         <div className="grp">
-          <div className="grp-head"><span className="g-name">Performance Trends</span><span className="g-sub">SESSION · SHIFT-OVER-SHIFT</span><span className="g-count">live</span></div>
+          <div className="grp-head"><span className="g-name">Performance Trends</span><span className="g-sub">SESSION · SHIFT-OVER-SHIFT</span><span className="g-count">demo</span></div>
           <div className="trend-strip">
             {trendCards.map((c) =>
             <div className="trend-card" key={c.l}>
@@ -4619,17 +4619,17 @@ function FaultSim({ groups, zoneHealth, faults, faultTypes, faultHw, techs, inje
 }
 
 const EXEC_WINDOWS = {
-  '📊 Impact': { title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '$1.94M']], cta: 'Open full report' },
-  '📈 Forecast': { title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '88%']], cta: 'View forecast model' },
+  '📊 Impact': { title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '— (demo)']], cta: 'Open full report' },
+  '📈 Forecast': { title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
   '🔔 Notify Lead': { title: 'Escalate to Lead', rows: [['Recipients', 'Plant Lead · Ops Mgr'], ['Severity', 'High'], ['Channel', 'SMS + Email'], ['Last sent', '14:02']], cta: 'Send notification' },
-  '📤 Export': { title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 sensors']], cta: 'Generate export' }
+  '📤 Export': { title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 simulated sensors']], cta: 'Generate export' }
 };
 
 const EXEC_ACTIONS = [
-  { key: 'impact', ic: '📊', t: 'Impact Report', d: 'Live throughput & $ at risk', title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '$1.94M']], cta: 'Open full report' },
-  { key: 'forecast', ic: '📈', t: '7-Day Forecast', d: 'Predicted OEE & failures', title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '88%']], cta: 'View forecast model' },
+  { key: 'impact', ic: '📊', t: 'Impact Report', d: 'Simulated throughput & $ at risk', title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '— (demo)']], cta: 'Open full report' },
+  { key: 'forecast', ic: '📈', t: '7-Day Forecast', d: 'Predicted OEE & failures', title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
   { key: 'notify', ic: '🔔', t: 'Notify Lead', d: 'Escalate to plant lead', title: 'Escalate to Lead', rows: [['Recipients', 'Plant Lead · Ops Mgr'], ['Severity', 'High'], ['Channel', 'SMS + Email'], ['Last sent', '14:02']], cta: 'Send notification' },
-  { key: 'export', ic: '📤', t: 'Export Snapshot', d: 'PDF of current state', title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 sensors']], cta: 'Generate export' },
+  { key: 'export', ic: '📤', t: 'Export Snapshot', d: 'PDF of current state', title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 simulated sensors']], cta: 'Generate export' },
   { key: 'spend', ic: '✅', t: 'Approve Spend', d: '2 maintenance POs pending', title: 'Approve Spend', rows: [['PO-2231 · Bearings', '$4,200'], ['PO-2232 · Filter kit', '$1,150'], ['Budget remaining', '$15.0k'], ['Approver', 'You']], cta: 'Approve all' },
   { key: 'review', ic: '🗓', t: 'Schedule Review', d: 'Shift handover & standup', title: 'Schedule Review', rows: [['Next handover', '14:00 · Shift B'], ['Standup', 'Tomorrow 06:15'], ['Attendees', '6 leads'], ['Agenda items', '4']], cta: 'Open scheduler' }];
 
@@ -4657,7 +4657,7 @@ function ExecActions({ summaryStatus }) {
             </div>
             <button className="ow-cta" onClick={() => {
             if (open === 'notify') { toast('Notification sent to Plant Lead · SMS + Email'); logAction('PLANT-LEAD', 'Escalation sent to Plant Lead & Ops Mgr'); }
-            else if (open === 'forecast') { toast('Forecast recalculated · model v4.2.1 · confidence 88%'); }
+            else if (open === 'forecast') { toast('Forecast recalculated · demo model · simulated data'); }
             else if (open === 'impact') { exportCSV('impact_report.csv', ['metric', 'value'], win.rows.map((r) => [r[0], String(r[1]).replace(/,/g, ' ')])); logAction('PLANT', 'Impact report exported'); }
             else if (open === 'review') { toast('Handover scheduled · invites sent to Shift B'); logAction('SHIFT-B', 'Handover review scheduled · 14:00'); }
             else { toast(win.cta + ' ✓'); }
@@ -4723,7 +4723,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
   const meta = {
     manufacturing: {
       sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked by failure-risk confidence.` : 'All monitored assets within nominal parameters. No mitigations required.',
-      chips: [['Scan', '950ms'], ['Experts', '8 active'], ['Confidence', '92%']],
+      chips: [['Scan', '950ms'], ['Experts', '8 active'], ['Confidence', '— (demo)']],
     },
     enterprise: {
       sum: n ? `~3.2% throughput at risk this shift ($1,240). ${n} item${n > 1 ? 's' : ''} need owner sign-off.` : 'No financial exposure from anomalies this shift. Output tracking to plan.',
@@ -4731,7 +4731,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
     },
     backend: {
       sum: n ? `Telemetry variance elevated on ${n} channel${n > 1 ? 's' : ''}. No packet loss; drift measured vs 24h baseline.` : 'All channels nominal. Model drift within tolerance; zero packet loss.',
-      chips: [['Drift', '+0.3σ'], ['Loss', '0.0%'], ['Model', 'v4.2.1']],
+      chips: [['Drift', '— (demo)'], ['Loss', '0.0%'], ['Model', 'demo model']],
     },
   }[profile];
 
@@ -5122,7 +5122,7 @@ function EventsBar({ events, onPick }) {
   return (
     <div className="events-bar side-card">
       <div className="card-head">
-        LIVE EVENTS {critCount > 0 && <span className="ev-unread">{critCount} crit</span>}
+        DEMO EVENTS {critCount > 0 && <span className="ev-unread">{critCount} crit</span>}
         <div className="ev-filters-inline">
           <button className={`ev-filter-btn ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>All</button>
           <button className={`ev-filter-btn f-warn ${filter === 'warn' ? 'active' : ''}`} onClick={() => setFilter('warn')}>Warn</button>
@@ -5477,7 +5477,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
                       })()}
                     </div>
                     <div className="insp-cell">
-                      <div className="tr-t">LIVE TREND · % TO LIMIT</div>
+                      <div className="tr-t">DEMO TREND · % TO LIMIT</div>
                       <Spark series={s} w={230} h={58} color={SEV_COLOR[st]} strokeW={1.6} dot={false} />
                       <div className="insp-limrow"><span className="sn-lim big"><i className={st} style={{ width: Math.min(100, r.frac * 100) + '%' }} /></span><span className="sn-pct" style={{ color: SEV_COLOR[st] }}>{Math.round(r.frac * 100)}%</span></div>
                     </div>
@@ -6000,7 +6000,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
     demoPrevAutoMit.current = autoMitRef.current;
     setProfile('manufacturing'); setView('grid'); setRTab('ops'); setAutoMit(false); setSel(null);
     const steps = [
-    [0, 'A live plant — 2,000 sensors streaming into NEPHES in real time.'],
+    [0, 'A simulated plant — 2,000 simulated sensors streaming into NEPHES in real time.'],
     [4000, '__FAULT__A hydraulic failure begins — watch the wall catch it as it spreads.'],
     [8500, '__FAULT2__And a second, nastier problem: a bearing physically wearing out on Assembly Line A.'],
     [14000, 'NEPHES separates the two problems and groups the sensors behind each — automatically, no alarm flood.'],
@@ -6232,7 +6232,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
   { label: 'Switch to Manufacturing view', ic: '⇄', run: () => setProfile('manufacturing') },
   { label: 'Switch to Enterprise view', ic: '⇄', run: () => setProfile('enterprise') },
   { label: 'Switch to Backend view', ic: '⇄', run: () => setProfile('backend') },
-  { label: (stream.live ? 'Pause' : 'Resume') + ' live data', ic: '⏯', run: () => onToggleLive && onToggleLive() },
+  { label: (stream.live ? 'Pause' : 'Resume') + ' demo data', ic: '⏯', run: () => onToggleLive && onToggleLive() },
   ...wsAll.filter((w) => !w.archived).slice(0, 6).map((w) => ({ label: 'Workspace: ' + w.name, ic: '🗂', run: () => { setProfile('manufacturing'); setWsActive(w.id); } })),
   { label: 'New workspace', ic: '🗂', run: () => { setProfile('manufacturing'); wsCreate({ name: 'Workspace ' + (wsAll.length + 1) }); } }];
 
@@ -6253,7 +6253,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
           <LadderLogic stream={stream} jump={ladderJump} onNotif={(msg, idx) => pushNotif('crit', msg, 'ladder:' + idx)} /> :
           profile === 'analytics' ?
           <div className="ana-page fade-in">
-            <div className="ana-page-head">NEPHES ANALYTICS<span className="ana-live-tag"><i />LIVE · UPDATES EVERY TICK</span></div>
+            <div className="ana-page-head">NEPHES ANALYTICS<span className="ana-live-tag"><i />DEMO · UPDATES EVERY TICK</span></div>
             <AnalyticsPanel recs={mitRecRef.current} hist={riskHist} points={gridPoints} events={events} onInspect={(id) => { setProfile('manufacturing'); setSel(id); }} />
           </div> :
           profile === 'backend' ?
