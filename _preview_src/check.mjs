@@ -108,6 +108,7 @@ async function measure(profileName, base, shots) {
 
     mkdirSync(shots, { recursive: true });
     await page.goto(base);
+    console.log(`diag: page ${await page.eval("document.visibilityState + ' focus=' + document.hasFocus()")}`);
     await idle();
     const firstBytes = bytes, firstClips = [...new Set(clips)];
     // A touch profile only tests what it claims if the page really sees a coarse pointer (the engine's mobile switch).

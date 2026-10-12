@@ -87,6 +87,8 @@ export async function launch({ chrome = process.env.CHROME || 'google-chrome', a
     if (touch) await s('Emulation.setTouchEmulationEnabled', { enabled: true, maxTouchPoints: 5 });
     if (userAgent) await s('Emulation.setUserAgentOverride', { userAgent });
     await s('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: reducedMotion ? 'reduce' : 'no-preference' }] });
+    // A created target opens behind the launch tab: hidden, so rAF, transitions and observers only advance on a screenshot.
+    await s('Page.bringToFront');
     return {
       send: s,
       on: (m, fn) => on(m, fn, sessionId),
