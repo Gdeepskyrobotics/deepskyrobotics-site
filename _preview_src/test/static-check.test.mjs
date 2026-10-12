@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import * as sc from '../static-check.mjs';
+import vm from 'node:vm';
 
 const INDEX = `<header><h1 class="hero-h1" style="x">Reasoning systems for machines that can't afford surprises</h1>
 <p style="y">Deep Sky Robotics is building NEPHES, a module designed to watch streams.</p></header>
@@ -109,4 +110,22 @@ test('every committed scene file is deterministic, and all three scenes exist', 
   const files = readdirSync(dir);
   for (const f of ['scene.js', 's1-drift.html', 's2-trace.html', 's4-fork.html']) assert.ok(files.includes(f), `${f} missing`);
   for (const f of files) assert.deepEqual(sc.checkSceneDeterminism(f, readFileSync(join(dir, f), 'utf8')), [], f);
+});
+
+test('S4 portrait keeps its core and lanes in the central band (landscape tablets cover-crop portrait clips)', () => {
+  // A 720x1280 clip covering a 1180x820 stage shows only scene y 30.5%-69.5%; the plan's scene rule keeps action there.
+  const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'scenes');
+  const ys = [];
+  const ctx2d = new Proxy({}, { get: (t, k) => (k in t ? t[k] : k === 'createRadialGradient' ? () => ({ addColorStop() {} })
+    : (...a) => { if (['moveTo', 'lineTo', 'arc'].includes(k)) ys.push(a[1]); }), set: (t, k, v) => { t[k] = v; return true; } });
+  const c = { location: { search: '?w=720&h=1280' }, URLSearchParams, Math,
+    document: { documentElement: { style: {} }, body: { style: {}, appendChild() {} }, createElement: () => ({ style: {}, getContext: () => ctx2d }) } };
+  c.window = c;
+  vm.createContext(c);
+  vm.runInContext(readFileSync(join(dir, 'scene.js'), 'utf8'), c);
+  vm.runInContext(/<script>([\s\S]*?)<\/script>/.exec(readFileSync(join(dir, 's4-fork.html'), 'utf8'))[1], c);
+  ys.length = 0;
+  c.__frame(1);
+  const lo = Math.min(...ys) / 1280, hi = Math.max(...ys) / 1280;
+  assert.ok(lo >= 0.31 && hi <= 0.69, `S4 portrait draws from ${lo.toFixed(3)} to ${hi.toFixed(3)} of the height`);
 });
