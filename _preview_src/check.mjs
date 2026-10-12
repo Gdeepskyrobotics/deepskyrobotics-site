@@ -31,6 +31,8 @@ export function evaluate(profileName, m) {
   if (m.errors.length) errs.push(`console errors: ${m.errors.join(' | ')}`);
   if (m.failed.length) errs.push(`failed requests: ${m.failed.join(' | ')}`);
   if (m.overflow > 0) errs.push(`horizontal overflow: ${m.overflow}px`);
+  const stray = (m.firstScreenActs || []).filter((a) => a !== '1');
+  if (stray.length) errs.push(`first screen shows copy from act(s) ${stray.join(', ')}: stages overlap before the engine mounts`);
   if (m.firstBytes > p.budget.first) errs.push(`first screen ${fmt(m.firstBytes)} > budget ${fmt(p.budget.first)}`);
   if (m.fullBytes > p.budget.full) errs.push(`full scroll ${fmt(m.fullBytes)} > budget ${fmt(p.budget.full)}`);
   if (p.reduced || !p.js) {
@@ -79,6 +81,13 @@ const DIAG = (act) => `(() => {
   });
 })()`;
 
+// Acts whose copy is on the first screen, before any scroll (no JS, or before the engine mounts). Only act 1 belongs there.
+const FIRST_SCREEN_ACTS = `(() => {
+  const eff = (e) => { let o = 1; for (let n = e; n && n.nodeType === 1; n = n.parentElement) o *= parseFloat(getComputedStyle(n).opacity); return o; };
+  const shown = (e) => { const r = e.getBoundingClientRect(); return r.width > 0 && r.bottom > 0 && r.top < innerHeight && eff(e) > 0.05 && getComputedStyle(e).visibility !== 'hidden'; };
+  return [...document.querySelectorAll('section[data-act]')].filter((s) => [...s.querySelectorAll('h1,h2,h3,p')].some(shown)).map((s) => s.dataset.act);
+})()`;
+
 const ARRIVED = `(() => { const i = window.ScrollCraft && ScrollCraft.instances[0]; if (!i) return true;
   return i.clips.every((c) => !c.live || (c.ready && !c.el.seeking && Math.abs(c.cur - c.target) < 0.002)); })()`;
 
@@ -124,6 +133,7 @@ async function measure(profileName, base, shots) {
     const emulationOk = !p.touch || (await page.eval("matchMedia('(pointer: coarse)').matches"));
     let overflow = await overflowNow();
     writeFileSync(join(shots, '00-top.png'), await page.screenshot());
+    const firstScreenActs = await page.eval(FIRST_SCREEN_ACTS);
 
     // preview.js mounts the engine on the reader's first interaction, and mounting sizes the pinned acts. Make that
     // first scroll (1 px and back) before reading any act geometry, or every scroll target uses the pre-mount layout.
@@ -151,7 +161,7 @@ async function measure(profileName, base, shots) {
     }
     await page.eval(`window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' })`);
     await idle();
-    return { firstBytes, fullBytes: bytes, firstClips, allClips: [...new Set(clips)], errors, failed, overflow, emulationOk, acts: results };
+    return { firstBytes, fullBytes: bytes, firstClips, allClips: [...new Set(clips)], errors, failed, overflow, emulationOk, firstScreenActs, acts: results };
   } finally { await browser.close(); }
 }
 

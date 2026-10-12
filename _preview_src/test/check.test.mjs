@@ -39,3 +39,8 @@ test('each failure is reported', () => {
   assert.equal(evaluate('desktop', ok({ acts: [{ act: '2', textLen: 3, copyVisible: false, pinnedOk: true }] })).length, 2);
   assert.equal(evaluate('tablet-touch', ok({ emulationOk: false })).length, 1);
 });
+
+test('the first screen may show copy from act 1 only (stages laid out before the engine mounts)', () => {
+  assert.deepEqual(evaluate('desktop', ok({ firstScreenActs: ['1'] })), []);
+  assert.equal(evaluate('desktop-nojs', ok({ fullBytes: 0.5e6, allClips: [], firstScreenActs: ['1', '2', '4'] })).length, 1);
+});
