@@ -99,3 +99,14 @@ test('vendor: header stripped, body hash recorded, LICENSE present', () => {
   assert.equal(sc.checkVendor({ js: withHeader, css: withHeader }, md).length, 1);
   assert.equal(sc.checkVendor({ js: withHeader, css: withHeader, license: lic }, h).length, 1);
 });
+
+import { readFileSync, readdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+test('every committed scene file is deterministic, and all three scenes exist', () => {
+  const dir = join(dirname(fileURLToPath(import.meta.url)), '..', 'scenes');
+  const files = readdirSync(dir);
+  for (const f of ['scene.js', 's1-drift.html', 's2-trace.html', 's4-fork.html']) assert.ok(files.includes(f), `${f} missing`);
+  for (const f of files) assert.deepEqual(sc.checkSceneDeterminism(f, readFileSync(join(dir, f), 'utf8')), [], f);
+});
