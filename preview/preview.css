@@ -47,5 +47,5 @@ html{overflow-x:clip} /* clip, never hidden/auto on an ancestor of the acts: tho
   .console-stage :is(video[data-sc-scrub], .sc-stage__poster){aspect-ratio:720/406;width:92vw}
 }
 @media (max-width:820px){ .flow-section{padding:72px 16px 56px} }
-/* Without JS the engine never runs: show everything it would have revealed. */
+/* Until the engine mounts (no JS, a failed load, or before the first scroll): show everything it would have revealed. */
 html:not(.sc-js) :is([data-sc-cue],[data-sc-in],[data-sc-in] > *,[data-sc-reveal]){opacity:1 !important;transform:none !important;translate:none !important;clip-path:none !important}
