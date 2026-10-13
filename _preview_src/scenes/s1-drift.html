@@ -1,0 +1,17 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>S1 drift</title>
+<body>
+<script src="scene.js"></script>
+<script>
+// S1 drift: a field of signal traces runs; one trace bends out of its band; the field slows to a stop.
+defineScene({ seconds: 5, fps: 30, posterT: 0, render: function (t, ctx, w, h) {
+  var d = Math.max(0, Math.min(t, 0.86) - 0.72); // deceleration window: speed falls linearly 1 -> 0
+  FIELD.draw(ctx, w, h, {
+    phaseT: Math.min(t, 0.72) + d - (d * d) / (2 * 0.14),
+    drift: ease.inOut(span(t, 0.38, 0.72)),
+    freeze: span(t, 0.72, 0.86),
+  });
+}});
+</script>
+</body>

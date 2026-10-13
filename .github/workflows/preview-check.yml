@@ -1,0 +1,53 @@
+name: preview-check
+# Unit tests, static rules and six browser profiles for /preview/.
+# Bot pushes do not trigger workflows: add the `check` label to re-run on the head commit after a render.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+    paths:
+      - "preview/**"
+      - "_preview_src/**"
+      - "*.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - ".github/workflows/preview-*.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    if: github.event.action != 'labeled' || github.event.label.name == 'check'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Unit tests
+        run: node _preview_src/test/run.mjs
+      - name: Static rules (incl. engine bytes vs the pinned upstream commit)
+        run: node _preview_src/static-check.mjs --root . --upstream
+
+  browser:
+    if: github.event.action != 'labeled' || github.event.label.name == 'check'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        profile: [desktop, mobile, desktop-reduced, mobile-reduced, tablet-touch, desktop-nojs, desktop-short]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Serve the repo
+        run: |
+          python3 -m http.server 8080 --bind 127.0.0.1 >/tmp/http.log 2>&1 &
+          for i in $(seq 1 20); do curl -fs http://127.0.0.1:8080/ >/dev/null && break; sleep 0.5; done
+      - name: Check ${{ matrix.profile }}
+        run: node _preview_src/check.mjs --base http://127.0.0.1:8080/preview/ --profile ${{ matrix.profile }} --shots shots/${{ matrix.profile }} --summary "$GITHUB_STEP_SUMMARY"
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: shots-${{ matrix.profile }}
+          path: shots/${{ matrix.profile }}
+          retention-days: 14
