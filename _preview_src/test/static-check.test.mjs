@@ -7,16 +7,16 @@ import vm from 'node:vm';
 const INDEX = `<header><h1 class="hero-h1" style="x">Reasoning systems for machines that can't afford surprises</h1>
 <p style="y">Deep Sky Robotics is building NEPHES, a module designed to watch streams.</p></header>
 <section id="platform"><div>THE NEPHES PLATFORM</div><h2>One core, two verticals</h2>
-<div class="platform-grid"><p>Designed to deliver predictive maintenance from the PLCs you already run — reasoned findings, tracked episodes, datasheet-cited recommendations. Planned as a desktop product.</p></div></section>
+<div class="platform-grid"><p>Designed to give maintenance teams evidence-backed findings from the PLCs you already run, read-only — tracked episodes, datasheet-cited recommendations. Planned as a desktop product.</p></div></section>
 <section><div>FOR EARLY ADOPTERS &amp; ANGEL INVESTORS</div><h2>Get in before the crowd</h2></section>
 <section id="contact"><h2>Talk to us</h2><a href="mailto:x">Book a demo</a></section>`;
 
 const PREVIEW_OK = `<meta name="robots" content="noindex, nofollow">
 <section data-act="1" data-sc-act="scrub" data-sc-span="3.2"><h1>Reasoning systems for machines that can't afford surprises</h1><p>When a line stops, the first question is why.</p></section>
-<section data-act="2" data-sc-act="scrub"><p>Deep Sky Robotics is building NEPHES, a module designed to watch streams.</p><p>Designed to deliver predictive maintenance from the PLCs you already run — reasoned findings, tracked episodes, datasheet-cited recommendations.</p></section>
-<section data-act="3" data-sc-act="scrub"><p>The Factory Observer console — live demo on simulated data.</p><a href="/nfo.html">Explore NFO →</a></section>
+<section data-act="2" data-sc-act="scrub"><p>Deep Sky Robotics is building NEPHES, a module designed to watch streams.</p><p>Designed to give maintenance teams evidence-backed findings from the PLCs you already run, read-only — tracked episodes, datasheet-cited recommendations.</p></section>
+<section data-act="3" data-sc-act="scrub"><p>The Factory Observer console — demo on simulated data.</p><a href="/nfo.html">Explore NFO →</a></section>
 <section data-act="4" data-sc-act="scrub"><div>THE NEPHES PLATFORM</div><h2>One core, two verticals</h2></section>
-<section data-act="4-cards"><div class="platform-grid"><p>Designed to deliver predictive maintenance from the PLCs you already run — reasoned findings, tracked episodes, datasheet-cited recommendations. Planned as a desktop product.</p></div></section>
+<section data-act="4-cards"><div class="platform-grid"><p>Designed to give maintenance teams evidence-backed findings from the PLCs you already run, read-only — tracked episodes, datasheet-cited recommendations. Planned as a desktop product.</p></div></section>
 <section data-act="5"><div>FOR EARLY ADOPTERS &amp; ANGEL INVESTORS</div><h2>Get in before the crowd</h2></section>
 <section data-act="5-contact" id="contact"><h2>Talk to us</h2><a href="mailto:x">Book a demo</a></section>`;
 

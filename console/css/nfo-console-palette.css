@@ -1,0 +1,50 @@
+/* NEPHES console palette: Live Operations and Replay use the Signal Console's colours.
+   Loaded after the page's own styles; the design-system tokens are re-pointed here, and the pages'
+   colours read those tokens (with their old values as fallbacks, so other pages are unchanged). */
+:root, body.ds {
+  --bg-base: #1b1b1a; --bg-body: #20201f; --bg-card: #242423; --bg-section: #2c2c2a; --panel: #242423;
+  --border: #33332f; --border-strong: #4a4945;
+  --text: #d9d5cc; --text-dim: #a8a49b; --text-faint: #9d9a92; --text-table: #c9c5bc; --text-kpi: #d9d5cc; --text-bar-num: #c9c5bc;
+  --accent: #d3b05a; --accent-rgb: 211, 176, 90; --accent-2: #dcc07a; --accent-dim: #8a7438; --brand-gold: #d3b05a; --on-accent: #1e1a10;
+  --good: #6f9e80; --warn: #dcae4f; --crit: #c27a72;
+  --pill-ok: #6f9e80; --pill-warn: #dcae4f; --pill-crit: #c27a72;
+  --meter-track: #2c2c2a; --meter-rest: #3a3936; --meter-good: #6f9e80; --meter-warn: #dcae4f; --meter-legend: #9d9a92;
+  --glow-good: none; --glow-warn: none; --glow-brand: none;
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+  /* status colours as rgb (for tints) and as readable text on the dark cards; the Live wall's tile surface and kicker */
+  --good-rgb: 111, 158, 128; --warn-rgb: 220, 174, 79; --crit-rgb: 194, 122, 114;
+  --good-text: #9cc4a8; --warn-text: #ecc77a; --warn-text-dim: #d8b56a; --crit-text: #f0b3ab; --crit-text-dim: #d9a39b;
+  --tile-bg: #262625; --text-kicker: #97948c;
+}
+html { background: #1b1b1a; }
+body.ds { background: #1b1b1a linear-gradient(180deg, #1b1b1a, #20201f 600px, #1b1b1a 1400px) no-repeat; color: var(--text); }
+
+/* Selected and primary controls look like the Signal Console's: a gold outline and gold text on a faint gold tint,
+   not a solid gold fill. */
+body.ds .seg .active, body.ds .seg [aria-pressed="true"], body.ds .seg [aria-current="page"],
+body.ds .tabbar button[aria-pressed="true"], body.ds .nav a.active,
+body.ds .btn.primary, body.ds .sensor .pin[aria-pressed="true"],
+body.ds:is([data-profile="motionlab"], [data-profile="replay"]) .ml-primary {
+  color: var(--accent); background: rgba(var(--accent-rgb), .10); border: 1px solid rgba(var(--accent-rgb), .75); box-shadow: none;
+}
+body.ds .btn.primary:hover, body.ds:is([data-profile="motionlab"], [data-profile="replay"]) .ml-primary:hover:not(:disabled) {
+  color: var(--accent); background: rgba(var(--accent-rgb), .16); filter: none;
+}
+body.ds .btn.icon.primary { color: var(--accent); }
+
+/* scrollbars in the console palette: a dark track and a warm grey thumb, thin, on the page and inside scrolling boxes */
+html { scrollbar-color: #3a3936 #1b1b1a; scrollbar-width: thin; }
+html * { scrollbar-color: #3a3936 transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-track { background: #1b1b1a; }
+::-webkit-scrollbar-thumb { background: #3a3936; border-radius: 6px; border: 2px solid transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb:hover { background: #57534b; background-clip: padding-box; }
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* the page title is the active tab, so the heading is kept for screen readers only and the page moves up */
+.page-head h1 { position: absolute; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* critical text on the small pills passes 4.5:1 (the plain --crit stays for dots, lines and borders) */
+:root, body.ds { --crit-ink: #d08a81; }
+body.ds .pill.critical, body.ds .pill.crit { color: var(--crit-ink); }

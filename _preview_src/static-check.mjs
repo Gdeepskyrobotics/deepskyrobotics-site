@@ -8,10 +8,12 @@ import { pathToFileURL } from 'node:url';
 export const FORBIDDEN = [
   'entirely on-prem', 'installed desktop release', 'read-only, always', 'reads live plc telemetry',
   'days before the failure', "can't be attacked", "only engine you'll ever need", 'integrates with', 'we beat',
+  // NFO UI honesty (2026-10-27): no early-warning claim, no fake confidence, no write-back promise.
+  'predictive maintenance', 'calibrated confidence', 'write-back is on the roadmap', 'live demo',
 ];
 export const NEW_LINES = [
   'When a line stops, the first question is why.',
-  'The Factory Observer console — live demo on simulated data.',
+  'The Factory Observer console — demo on simulated data.',
 ];
 export const ENGINE_HEADER = '/*! scroll-craft 0.3.1 @75d81f7 | MIT | Copyright (c) 2026 Nate Herk | see LICENSE */';
 export const ENGINE_SHA = '75d81f74e83692add18cd7a8a8e078b8a887a579';
@@ -102,7 +104,7 @@ export function checkReused(previewHtml, indexHtml) {
   const t = textOf(previewHtml);
   const h1 = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(indexHtml);
   const intro = /<header\b[\s\S]*?<p\b[^>]*>([\s\S]*?)<\/p>/i.exec(indexHtml);
-  const nfo = /Designed to deliver predictive maintenance[^.]*\./.exec(textOf(indexHtml));
+  const nfo = /Designed to give maintenance teams evidence-backed findings[^.]*\./.exec(textOf(indexHtml));
   const want = [
     ['index H1', h1 && textOf(h1[1])],
     ['index intro paragraph', intro && textOf(intro[1])],
