@@ -588,9 +588,7 @@ function RecCard({ asset, sev, conf, msg, onAct, auto, mitigating, onMitigate, p
       <div className="r-top">
         <span className="r-asset">{asset}</span>
         <span className={`r-sev ${resolved ? 'done' : cls}`}>{resolved ? 'resolved' : sev}</span>
-        {!resolved && <span className="r-conf">{Math.round(conf * 100)}%</span>}
       </div>
-      {!resolved && <div className="conf-bar-wrap"><div className={`conf-bar ${cls}`} style={{ width: `${Math.round(conf * 100)}%` }} /></div>}
       <div className="r-msg">{msg}</div>
       <div className="r-cta-row">
         {resolved ?
@@ -964,7 +962,7 @@ function ProfileDetail({ p, assets, onMatch, onEdit }) {
           <div className="ds-detail-src">{p.source_file}</div>
         </div>
         <div className="ds-conf-badge" style={{ borderColor: confColor(p.confidence), color: confColor(p.confidence) }}>
-          {Math.round(p.confidence * 100)}%<small>confidence</small>
+          {Math.round(p.confidence * 100)}%<small>extraction score · uncalibrated</small>
         </div>
       </div>
       <div className="ds-conf-track"><div className="ds-conf-fill" style={{ width: `${Math.round(p.confidence * 100)}%`, background: confColor(p.confidence) }} /></div>
@@ -1088,7 +1086,7 @@ function DatasheetLibrary({ assets, onClose, onBind }) {
     <div className="modal-scrim" onMouseDown={onClose}>
       <div className="ds-modal" onMouseDown={(e) => e.stopPropagation()}>
         <div className="modal-head">DATASHEET LIBRARY
-          <span className="ds-head-meta">{profiles.length} profiles · avg confidence {avgConf}%</span>
+          <span className="ds-head-meta">{profiles.length} profiles · avg extraction score {avgConf}% (uncalibrated)</span>
           <button className="modal-close" onClick={onClose}>✕</button>
         </div>
         <div className="ds-body">
@@ -1661,7 +1659,7 @@ function SubNetRow({ c, audit }) {
         <span className="snl-reads">
           reads {SNL_READS[c.specialty] || (c.specialty || '').replace(/_/g, ' ')}
         </span>
-        <span className="snl-conf" title="confidence this SubNet reports">
+        <span className="snl-conf" title="Demo score this SubNet reports; not a calibrated probability">
           {(c.confidence * 100).toFixed(0)}%
         </span>
       </div>
@@ -3190,11 +3188,11 @@ function useGridPoints({ live = true, speed = 1, volatility = 1, autoMit = false
 }
 
 const REC_MSGS = {
-  arm1: 'Bearing wear signature on axis 4. Schedule lubrication within 48h to avoid spindle seizure.',
-  servo: 'Sustained load above 90% — reduce feed rate 8% or rebalance the cell to extend drive life.',
-  rollr: 'Torque trending into critical band. Inspect roller bearings; possible debris on track.',
-  filt: 'Filter ΔP near limit — clogging detected. Replace element next maintenance window.',
-  cool: 'Coolant temperature above setpoint. Verify chiller loop flow and ambient extraction.'
+  arm1: 'Vibration on axis 4 above its warning band. Possible causes include bearing wear or lubrication; inspect at the next planned stop and lock out and tag out before hands-on work.',
+  servo: 'Drive load above 90% for a sustained period. Review feed rate and cell balance with the process owner.',
+  rollr: 'Torque in the critical band. Inspect the roller bearings and the track for debris; lock out and tag out before hands-on work.',
+  filt: 'Filter ΔP near its limit, consistent with clogging. Plan an element change at the next maintenance window; lock out and tag out before hands-on work.',
+  cool: 'Coolant temperature above setpoint. Check chiller loop flow and ambient extraction.'
 };
 
 // ── Header ────────────────────────────────────────────────────────────────────
@@ -4427,15 +4425,14 @@ function DetailCard({ a, onClose, onAct, autoMit, mitigating, onMitigate, isTop,
             <div className="da-head"><span className="da-dot" style={{ background: c }} />NEPHES AI ANALYSIS</div>
             {(() => {
             const conf = st === 'crit' ? 0.86 + a.id.length % 7 * 0.014 : 0.62 + a.id.length % 7 * 0.025;
-            const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded its critical limit' : 'is drifting toward the warning band'} on ${a.name}. Recommend inspection at the next opportunity.`;
+            const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded its critical limit' : 'is drifting toward the warning band'} on ${a.name}. Recommend inspection at the next opportunity; lock out and tag out before hands-on work.`;
             const cls = st === 'crit' ? 'crit' : 'warn';
             return (
               <React.Fragment>
                   <div className="da-row">
                     <span className={`da-sev ${cls}`}>{st === 'crit' ? 'CRITICAL' : 'WARNING'}</span>
-                    <span className="da-conf">{Math.round(conf * 100)}% confidence</span>
+                    <span className="da-conf">from a limit check</span>
                   </div>
-                  <div className="conf-bar-wrap"><div className={`conf-bar ${cls}`} style={{ width: `${Math.round(conf * 100)}%` }} /></div>
                   <div className="da-msg">{msg}</div>
                   {justResolved ?
                 <button className="r-primary done" disabled>✓ Resolved — readings normal</button> :
@@ -4620,14 +4617,14 @@ function FaultSim({ groups, zoneHealth, faults, faultTypes, faultHw, techs, inje
 
 const EXEC_WINDOWS = {
   '📊 Impact': { title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '— (demo)']], cta: 'Open full report' },
-  '📈 Forecast': { title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
+  '📈 Forecast': { title: '7-Day Forecast', rows: [['Projected OEE', '85.6% (demo figure)'], ['Predicted failures', '— (NFO does not forecast failures)'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
   '🔔 Notify Lead': { title: 'Escalate to Lead', rows: [['Recipients', 'Plant Lead · Ops Mgr'], ['Severity', 'High'], ['Channel', 'SMS + Email'], ['Last sent', '14:02']], cta: 'Send notification' },
   '📤 Export': { title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 simulated sensors']], cta: 'Generate export' }
 };
 
 const EXEC_ACTIONS = [
   { key: 'impact', ic: '📊', t: 'Impact Report', d: 'Simulated throughput & $ at risk', title: 'Impact Report', rows: [['Throughput at risk', '3.2% · $1,240/shift'], ['Top contributor', 'Assembly Line A'], ['Active alarms', '4'], ['Saved month-to-date', '— (demo)']], cta: 'Open full report' },
-  { key: 'forecast', ic: '📈', t: '7-Day Forecast', d: 'Predicted OEE & failures', title: '7-Day Forecast', rows: [['Projected OEE', '85.6% ▲1.4pp'], ['Predicted failures', '3 events'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
+  { key: 'forecast', ic: '📈', t: '7-Day Forecast', d: 'Demo OEE projection', title: '7-Day Forecast', rows: [['Projected OEE', '85.6% (demo figure)'], ['Predicted failures', '— (NFO does not forecast failures)'], ['Next maint. window', 'Thu 02:00'], ['Model confidence', '— (demo)']], cta: 'View forecast model' },
   { key: 'notify', ic: '🔔', t: 'Notify Lead', d: 'Escalate to plant lead', title: 'Escalate to Lead', rows: [['Recipients', 'Plant Lead · Ops Mgr'], ['Severity', 'High'], ['Channel', 'SMS + Email'], ['Last sent', '14:02']], cta: 'Send notification' },
   { key: 'export', ic: '📤', t: 'Export Snapshot', d: 'PDF of current state', title: 'Export Snapshot', rows: [['Range', 'Shift A · 06:00–now'], ['Format', 'PDF'], ['Scope', 'All lines · 2,000 simulated sensors']], cta: 'Generate export' },
   { key: 'spend', ic: '✅', t: 'Approve Spend', d: '2 maintenance POs pending', title: 'Approve Spend', rows: [['PO-2231 · Bearings', '$4,200'], ['PO-2232 · Filter kit', '$1,150'], ['Budget remaining', '$15.0k'], ['Approver', 'You']], cta: 'Approve all' },
@@ -4722,7 +4719,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
   const critN = alerts.filter((a) => statusOf(a) === 'crit').length;
   const meta = {
     manufacturing: {
-      sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked by failure-risk confidence.` : 'All monitored assets within nominal parameters. No action needed.',
+      sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked worst-first by severity and closeness to the limit.` : 'All monitored assets within nominal parameters. No action needed.',
       chips: [['Scan', '950ms'], ['Experts', '8 demo'], ['Confidence', '— (demo)']],
     },
     enterprise: {
@@ -4759,10 +4756,10 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
             const conf = st === 'crit' ? 0.86 + a.id.length % 7 * 0.014 : st === 'warn' ? 0.62 + a.id.length % 7 * 0.025 : Math.min(0.55, r.frac * 0.6);
             const hw = !!(hwGroups && hwGroups[a.group] && st !== 'ok');
             const msg = hw ?
-            `${a.label} out of range on ${a.name} — mechanical wear detected. Software can't correct this; on-site repair required.` :
+            `${a.label} out of range on ${a.name} — needs on-site inspection; lock out and tag out before hands-on work.` :
             st !== 'ok' ?
-            REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection.` :
-            `${a.label} on ${a.name} is trending toward its warning threshold — no breach yet.`;
+            REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection; lock out and tag out before hands-on work.` :
+            `${a.label} on ${a.name} is close to its warning threshold — no breach yet.`;
             return (
               <PriorityItem key={a.id} index={i} a={a} st={st} conf={conf} msg={msg}
                 busy={st !== 'ok' && !hw && !!(autoMit || (mitigating && mitigating[a.id]))}
@@ -4841,7 +4838,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
           {alerts.map((a, i) => {
             const st = statusOf(a);
             const conf = st === 'crit' ? 0.86 + a.id.length % 7 * 0.014 : 0.62 + a.id.length % 7 * 0.025;
-            const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection.`;
+            const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection; lock out and tag out before hands-on work.`;
             return (
               <PriorityItem key={a.id} index={i} a={a} st={st} conf={conf} msg={msg}
                 busy={!!(autoMit || (mitigating && mitigating[a.id]))}
@@ -4877,9 +4874,9 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
         {alerts.map((a) => {
           const st = statusOf(a);
           const conf = st === 'crit' ? 0.86 + a.id.length % 7 * 0.014 : 0.62 + a.id.length % 7 * 0.025;
-          const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection.`;
+          const msg = REC_MSGS[a.id] || `${a.label} ${st === 'crit' ? 'exceeded critical limit' : 'drifting toward warning band'} on ${a.name}. Recommend inspection; lock out and tag out before hands-on work.`;
           return <RecCard key={a.id} asset={a.name} sev={st === 'crit' ? 'critical' : 'warning'} conf={conf} msg={msg}
-            onAct={() => openInfo('Financial Impact · ' + a.name, msg, [['Asset', a.name], ['Severity', st === 'crit' ? 'Critical' : 'Warning'], ['Confidence', Math.round(conf * 100) + '%'], ['Est. shift impact', st === 'crit' ? '$1,240' : '$310'], ['Owner sign-off', 'Pending']])}
+            onAct={() => openInfo('Financial Impact · ' + a.name, msg, [['Asset', a.name], ['Severity', st === 'crit' ? 'Critical' : 'Warning'], ['Est. shift impact (demo)', st === 'crit' ? '$1,240' : '$310'], ['Owner sign-off', 'Pending']])}
             onMitigate={() => onMitigate && onMitigate(a.id)}
             auto={autoMit} mitigating={!!(mitigating && mitigating[a.id])} progress={mitigating && mitigating[a.id] && mitProgress ? mitProgress(a) : null} />;
         })}
@@ -4904,9 +4901,7 @@ function PriorityItem({ index, a, st, conf, msg, busy, autoLabel, onMitigate, to
         <span className="pq-name">{a.name}</span>
         <span className={`pq-sev ${watch ? 'watch' : st}`}>{watch ? 'watch' : st === 'crit' ? 'critical' : 'warning'}</span>
         {top && <span className="pq-top-tag">TOP</span>}
-        <span className="pq-pct" style={{ color: c }}>{pct}%</span>
       </div>
-      <div className="pq-bar"><div style={{ width: pct + '%', background: c }} /></div>
       <div className="pq-msg">{msg}</div>
       <div className="pq-foot">
         <span className="pq-vals">{a.val.toFixed(a.dec != null ? a.dec : 1)}{a.unit} / {Number(r.limit).toFixed(a.dec || 0)}{a.unit}</span>
@@ -5222,7 +5217,7 @@ function AddSensorModal({ groups, onAdd, onClose }) {
                         <span className="si-check" aria-hidden="true">✓</span>
                         <span className="si-main"><span className="si-name">{d.name}</span><span className="si-meta">{d.group || 'unassigned'} · {d.label} · {d.addr}</span></span>
                         {d.group ?
-                    <span className="si-assign">→ {ZONE_SHORT[d.group] || d.group} · {d.conf || 88}%</span> :
+                    <span className="si-assign">→ {ZONE_SHORT[d.group] || d.group} · matched by name pattern</span> :
                     <select className="si-fix" value="" onMouseDown={(e) => e.stopPropagation()} onClick={(e) => e.preventDefault()} onChange={(e) => fixZone(d.id, e.target.value)}>
                           <option value="" disabled>zone…</option>
                           {groups.map((g) => <option key={g} value={g}>{g}</option>)}
@@ -5245,7 +5240,7 @@ function AddSensorModal({ groups, onAdd, onClose }) {
             <div className="modal-body">
               <label className="mf-field mf-wide"><span className="mf-l">Sensor name / tag</span><input className="mf-in" value={f.name} onChange={(e) => { const v = e.target.value; const p = parseSensorId(v); setF((prev) => ({ ...prev, name: v, group: p.zone || prev.group })); }} placeholder="e.g. HYD-PT-0447" />
                 {f.name.trim() !== '' && (parseSensorId(f.name).zone ?
-              <span className="mf-hint ok">⌁ auto-placed → {parseSensorId(f.name).zone} · {parseSensorId(f.name).conf}% match from the name</span> :
+              <span className="mf-hint ok">⌁ auto-placed → {parseSensorId(f.name).zone} · matched by name pattern</span> :
               <span className="mf-hint warn">name not recognized — pick a zone manually</span>)}
               </label>
               <label className="mf-field"><span className="mf-l">Zone</span><select className="mf-in" value={f.group} onChange={set('group')}>{groups.map((g) => <option key={g} value={g}>{g}</option>)}</select></label>
