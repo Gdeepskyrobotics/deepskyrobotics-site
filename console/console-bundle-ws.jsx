@@ -582,7 +582,7 @@ function KpiCard({ label, value, unit, series, trend, onClick }) {
 function RecCard({ asset, sev, conf, msg, onAct, auto, mitigating, onMitigate, progress, resolved }) {
   const cls = sev === 'crit' || sev === 'critical' ? 'crit' : sev === 'warn' || sev === 'warning' ? 'warn' : '';
   const busy = auto || mitigating;
-  const primaryLabel = cls === 'crit' ? 'Start Mitigation' : 'Dispatch Technician';
+  const primaryLabel = cls === 'crit' ? 'Simulate repair' : 'Dispatch Technician';
   return (
     <div className={`rec ${resolved ? 'rec-done' : ''}`}>
       <div className="r-top">
@@ -596,7 +596,7 @@ function RecCard({ asset, sev, conf, msg, onAct, auto, mitigating, onMitigate, p
         {resolved ?
         <button className="r-primary done" disabled>✓ Resolved</button> :
         busy ?
-        <button className="r-primary auto" disabled>◉ {auto ? 'Auto-mitigating' : progress == null ? 'Dispatching' : 'Mitigating'}{progress != null ? ` · ${Math.round(progress * 100)}%` : '…'}</button> :
+        <button className="r-primary auto" disabled>◉ {auto ? 'Auto-repair (sim)' : progress == null ? 'Dispatching' : 'Repair (sim)'}{progress != null ? ` · ${Math.round(progress * 100)}%` : '…'}</button> :
         <button className={`r-primary ${cls}`} onClick={() => onMitigate && onMitigate()}>{primaryLabel}</button>}
         {!resolved && onAct && <button className="r-secondary" onClick={onAct}>View Financial Impact Details</button>}
       </div>
@@ -2530,7 +2530,7 @@ function LadderLogic({ onNotif, stream, jump }) {
     [7000, () => { setDraft({ rungs: target.rungs.map((r, i) => ({ c: r.c, t: r.t, dis: !!r.dis, orig: i })), tags: target.tags.map((t) => ({ ...t })), note: '' }); setRail('nephes'); }, 'Open a draft — the running program keeps scanning while you edit.'],
     [13000, () => setDraft((d) => d && { ...d, rungs: remark(d.rungs.filter((r, i) => !/Manual_Override/.test(r.t))) }), 'Delete the commissioning override rung that duplicates the coil.'],
     [19000, () => setReview(true), 'Review: rung-by-rung diff, re-run findings, blast radius — NEPHES explains in plain language.'],
-    [27000, () => { setReview(false); }, 'The operator decides. Apply pushes it to the controller and writes the audit trail.'],
+    [27000, () => { setReview(false); }, 'The operator decides. In this demo, Apply changes only the in-browser program and writes the audit trail. NFO never writes to a real PLC.'],
     [31000, () => { closeDraft(); setRail('history'); }, 'Every applied change lands in History with one-click revert.'],
     [36000, '__END__', '']];
     steps.forEach(([at, fn, cap], i) => {
@@ -2726,7 +2726,7 @@ function LadderLogic({ onNotif, stream, jump }) {
           <div className="lad-rev-foot">
             <span className="lad-rev-note">Audit entry will be written · snapshot taken for one-click revert</span>
             <button className="lad-rev-cancel" onClick={() => setReview(false)}>Keep editing</button>
-            <button className="lad-rev-apply" disabled={diff.rows.length === 0 && diff.presets.length === 0 && diff.newTags.length === 0} onClick={() => doApply()}>✓ Apply to controller</button>
+            <button className="lad-rev-apply" disabled={diff.rows.length === 0 && diff.presets.length === 0 && diff.newTags.length === 0} onClick={() => doApply()}>✓ Apply to demo program</button>
           </div>
         </div>
       </div>}
@@ -2884,9 +2884,9 @@ const KPI_MEANING = {
   'Uptime': 'Platform availability over the last 30 days.' };
 const DOC_CONTENT = {
   'Remote Backend Roadmap': ['What a production deployment adds behind this console — the UI is already shaped around these seams.', [['Ingest layer', 'MQTT / OPC-UA connectors at the edge pushing telemetry to a stream bus — the Data Pipeline map depicts this route.'], ['Time-series historian', 'TimescaleDB / InfluxDB storing every reading — powers trends, histograms and analytics from real data instead of the in-browser buffer.'], ['Alarm rules engine', 'Server-side warn/crit evaluation so alerts fire with no browser open; drag-set limits write back via sensor.patch.'], ['Command API + audit', 'Authenticated endpoints for mitigations and technician dispatches with a who/what/when audit trail — already brokered by the command bus.'], ['Auth & roles', 'SSO mapping users to the four profiles as permissions, not just views.'], ['Notifications', 'The bell and critical banner backed by email / SMS / push escalation policies.'], ['Live feed', 'A WebSocket stream replacing the tick simulator — the wall subscribes instead of simulating.'], ['Command bus (built)', 'Settings → Data Source switches Simulator ⇄ Remote. Commands POST to /v1/commands and fall back to the simulator when unreachable; recent commands are inspectable via NEPHES_SOURCE.outbox.']]],
-  'Operator Guide': ['How to run the floor from this console.', [['1 · Watch', 'The Sensor Wall colors by status — the legend in the filter bar explains each color.'], ['2 · Inspect', 'Click any cell (or use the arrow keys) to open Sensor Detail with simulated readings.'], ['3 · Act', 'Start Mitigation from the queue or detail panel — or flip on Auto-Mitigate.'], ['4 · Tune', 'Drag the dashed lines on the detail chart to change when a sensor alarms.']]],
+  'Operator Guide': ['How to run the floor from this console.', [['1 · Watch', 'The Sensor Wall colors by status — the legend in the filter bar explains each color.'], ['2 · Inspect', 'Click any cell (or use the arrow keys) to open Sensor Detail with simulated readings.'], ['3 · Act', 'Simulate a repair from the queue or detail panel, or turn on simulated auto-repair. In a plant, your people decide and act; NFO never acts on equipment.'], ['4 · Tune', 'Drag the dashed lines on the detail chart to change when a sensor alarms.']]],
   'Keyboard Shortcuts': ['Navigation and selection.', [['← ↑ ↓ →', 'Move the selected cell within a zone block'], ['Click a group tab', 'Focus that NEPHES group on the wall'], ['Esc / ✕', 'Close panels and menus'], ['▶ Demo', 'Run the 45-second guided story']]],
-  'API Reference': ['NEPHES integration surface (illustrative; demo only).', [['GET /v1/sensors', 'Fleet state, values, thresholds'], ['POST /v1/mitigations', 'Dispatch a mitigation for a sensor'], ['GET /v1/groups', 'Correlation groups & membership'], ['POST /v1/webhooks', 'Subscribe to alarm & resolution events']]],
+  'API Reference': ['NEPHES integration surface (illustrative; demo only).', [['GET /v1/sensors', 'Fleet state, values, thresholds'], ['POST /v1/notes', 'Attach a technician note to a finding (NFO never writes to equipment or a CMMS)'], ['GET /v1/groups', 'Correlation groups & membership'], ['POST /v1/webhooks', 'Subscribe to alarm & resolution events']]],
   'Release Notes': ['Demo build · simulated data.', [['New', 'Hands-on alarm limits · NEPHES groups · investor demo'], ['Improved', 'Priority queue · auto-zone provisioning · resolved-flash lifecycle'], ['Fixed', 'Hover-card positioning · reduced-motion animations'], ['Next', 'Lasso select · first-run tour · ⌘K search']]] };
 
 // first-run tour steps, per profile — each profile's tour shows once
@@ -2898,9 +2898,9 @@ const TOURS = {
   manufacturing: [
   { sel: '.wall-card', title: 'The Sensor Wall', txt: 'Every square is a simulated sensor, colored by status — green ok, amber warning, red critical. Click any cell (or use the arrow keys) to inspect it.' },
   { sel: '.wall-filters', title: 'Filters & NEPHES Groups', txt: 'Filter the wall by zone or status, or sort problems to the front. When sensors start failing together, NEPHES forms a group lane here automatically.' },
-  { sel: '#aiCard', title: 'Priority Action Queue', txt: 'Your to-do list — every problem ranked worst-first with a recommended fix. One click starts the mitigation.' }],
+  { sel: '#aiCard', title: 'Priority Action Queue', txt: 'Your to-do list — every problem ranked worst-first with a recommended next step. A person decides; in this demo, one click simulates the repair.' }],
   enterprise: [
-  { sel: '.saved-hero', title: 'Simulated savings', txt: 'The running total of downtime and failures NEPHES has prevented — accruing in simulated dollars.' },
+  { sel: '.saved-hero', title: 'Simulated savings', txt: 'Illustrative only: a running total in simulated dollars. NFO has no measured savings.' },
   { sel: '.fin-strip', title: 'The plant, in dollars', txt: 'Simulated financial exposure — revenue at risk, cost per unit, energy. Click any card to export its data.' },
   { sel: '.exec-grid', title: 'Production Lines', txt: 'Each line with simulated health and $ at risk. Click a line to drill into its assets.' }],
   backend: [
@@ -3299,9 +3299,9 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
       <div className={`live-dot-wrap ${stale ? 'stale' : ''}`} onClick={onToggleLive} role="button" tabIndex={0} style={{ cursor: 'pointer' }} title={stale ? 'Resume demo data' : 'Pause demo data'}><span className="live-dot" />{stale ? 'PAUSED' : 'DEMO'}</div>
       <button className={`src-badge ${src.mode === 'remote' ? src.status === 'online' ? 'remote-on' : 'remote-off' : 'sim'}`} onClick={() => { setStab('settings'); setOpen(true); }} title="Data source — click to configure">{src.mode === 'remote' ? 'REMOTE' : 'SIM DATA'}</button>
       <div className="hdr-clock">{clock}</div>
-      <button className={`mit-toggle ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit((v) => !v)} aria-pressed={autoMit} title="Auto-mitigate — NEPHES fixes problems by itself as they appear">
+      <button className={`mit-toggle ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit((v) => !v)} aria-pressed={autoMit} title="Demo control: the simulator repairs faults by itself so the story keeps moving. NFO never acts on equipment.">
         <span className="mt-icon">◉</span>
-        <span className="mt-label">AUTO-MITIGATE</span>
+        <span className="mt-label">AUTO-REPAIR (SIM)</span>
         <span className="mt-switch"><span className="mt-knob" /></span>
       </button>
       <div className="sound-wrap" ref={sndRef}>
@@ -3383,8 +3383,8 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
                 </React.Fragment>}
                 <div className="settings-hint">Every console action already routes through the NEPHES command bus — mitigations, dispatches and limit changes will replay against a real backend when one exists. Unreachable endpoints fall back to the simulator automatically.</div>
                 <div className="settings-panel-title" style={{ marginTop: 14 }}>Data</div>
-                <button className="settings-add-sensor" onClick={() => { setOpen(false); onAnalytics && onAnalytics(); }}>📊 Mitigation Analytics</button>
-                <div className="settings-hint">Recovery outcomes with timestamps — measured with vs without NEPHES mitigation.</div>
+                <button className="settings-add-sensor" onClick={() => { setOpen(false); onAnalytics && onAnalytics(); }}>📊 Recovery Analytics (sim)</button>
+                <div className="settings-hint">Simulated recovery outcomes with timestamps, with vs without a simulated repair.</div>
               </div>}
             {stab === 'appear' &&
             <div className="settings-pane">
@@ -3410,7 +3410,7 @@ function Header({ health, statusText, recText, counts, profile, setProfile, cloc
             {stab === 'docs' &&
             <div className="settings-pane">
                 <div className="settings-panel-title">Documentation</div>
-                {[['📘', 'Operator Guide', 'Floor monitoring & mitigation'], ['⌨', 'Keyboard Shortcuts', 'Navigation & selection'], ['🔌', 'API Reference', 'NEPHES integration & webhooks'], ['🗺', 'Remote Backend Roadmap', 'Production architecture & command bus'], ['📝', 'Release Notes', 'What’s new in this build']].map(([ic, t, d]) =>
+                {[['📘', 'Operator Guide', 'Floor monitoring & findings'], ['⌨', 'Keyboard Shortcuts', 'Navigation & selection'], ['🔌', 'API Reference', 'NEPHES integration & webhooks'], ['🗺', 'Remote Backend Roadmap', 'Production architecture & command bus'], ['📝', 'Release Notes', 'What’s new in this build']].map(([ic, t, d]) =>
                 <a key={t} className="doc-link" href="#" onClick={(e) => { e.preventDefault(); const dc = DOC_CONTENT[t]; if (dc) openInfo(t, dc[0], dc[1]); }}>
                     <span className="doc-ic">{ic}</span>
                     <span className="doc-text"><span className="doc-t">{t}</span><span className="doc-d">{d}</span></span>
@@ -3874,7 +3874,7 @@ function SystemView({ stream }) {
   // — audit log —
   const audit = [
     { who: 'ops.manager', act: 'updated plant configuration', t: '3m' },
-    { who: 'nephes.system', act: 'auto-mitigation enabled', t: '11m' },
+    { who: 'demo.simulator', act: 'simulated auto-repair enabled', t: '11m' },
     { who: 'tech.reyes', act: 'completed WO-4820', t: '24m' },
     { who: 'admin', act: 'rotated demo API key (simulated)', t: '1h' },
     { who: 'nephes.system', act: 'demo model event (simulated)', t: '2h' }];
@@ -4440,8 +4440,8 @@ function DetailCard({ a, onClose, onAct, autoMit, mitigating, onMitigate, isTop,
                   {justResolved ?
                 <button className="r-primary done" disabled>✓ Resolved — readings normal</button> :
                 autoMit || mitigating ?
-                <button className="r-primary auto" disabled>◉ {autoMit ? 'Auto-mitigating' : 'Mitigating'}{progress != null ? ` · ${Math.round(progress * 100)}%` : '…'}</button> :
-                <button className={`r-primary ${cls}`} onClick={() => onMitigate && onMitigate(a.id)}>{st === 'crit' ? 'Start Mitigation' : 'Dispatch Technician'}</button>}
+                <button className="r-primary auto" disabled>◉ {autoMit ? 'Auto-repair (sim)' : 'Repair (sim)'}{progress != null ? ` · ${Math.round(progress * 100)}%` : '…'}</button> :
+                <button className={`r-primary ${cls}`} onClick={() => onMitigate && onMitigate(a.id)}>{st === 'crit' ? 'Simulate repair' : 'Dispatch Technician'}</button>}
                 </React.Fragment>);
 
           })()}
@@ -4450,7 +4450,7 @@ function DetailCard({ a, onClose, onAct, autoMit, mitigating, onMitigate, isTop,
         {st === 'ok' && (justResolved || mitigating) &&
         <div className="detail-ai ok">
             <div className="da-head"><span className="da-dot" style={{ background: 'var(--ok)' }} />NEPHES AI ANALYSIS</div>
-            <div className="da-msg">Mitigation completed — {a.label.toLowerCase()} on {a.name} is back in the normal range.</div>
+            <div className="da-msg">Simulated repair completed — {a.label.toLowerCase()} on {a.name} is back in the normal range.</div>
             <button className="r-primary done" disabled>✓ Resolved — readings normal</button>
           </div>
         }
@@ -4722,7 +4722,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
   const critN = alerts.filter((a) => statusOf(a) === 'crit').length;
   const meta = {
     manufacturing: {
-      sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked by failure-risk confidence.` : 'All monitored assets within nominal parameters. No mitigations required.',
+      sum: n ? `Tracking ${n} open recommendation${n > 1 ? 's' : ''} across the floor, ranked by failure-risk confidence.` : 'All monitored assets within nominal parameters. No action needed.',
       chips: [['Scan', '950ms'], ['Experts', '8 demo'], ['Confidence', '— (demo)']],
     },
     enterprise: {
@@ -4744,7 +4744,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
         <div className="card-head">
           PRIORITY ACTION QUEUE
           <span className={`count-pill ${mCritN ? 'crit' : ''}`} style={{ marginLeft: 'auto' }}>{mCritN} critical</span>
-          <button className={`pq-auto ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit && setAutoMit((v) => !v)} title="Auto-mitigate — same switch as the header; NEPHES fixes problems by itself">◉ Auto {autoMit ? 'ON' : 'OFF'}</button>
+          <button className={`pq-auto ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit && setAutoMit((v) => !v)} title="Demo control, same switch as the header: the simulator repairs faults. NFO never acts on equipment.">◉ Auto {autoMit ? 'ON' : 'OFF'}</button>
         </div>
         <div className="ai-body">
           <div className="ai-assess">
@@ -4767,7 +4767,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
               <PriorityItem key={a.id} index={i} a={a} st={st} conf={conf} msg={msg}
                 busy={st !== 'ok' && !hw && !!(autoMit || (mitigating && mitigating[a.id]))}
                 progress={mitigating && mitigating[a.id] && mitProgress ? mitProgress(a) : null}
-                autoLabel={autoMit ? 'Auto-mitigating' : mitigating && mitigating[a.id] > 1 && Date.now() - mitigating[a.id] < 6000 ? 'Dispatching' : 'Mitigating'}
+                autoLabel={autoMit ? 'Auto-repair (sim)' : mitigating && mitigating[a.id] > 1 && Date.now() - mitigating[a.id] < 6000 ? 'Dispatching' : 'Repair (sim)'}
                 onMitigate={() => onMitigate && onMitigate(a.id)}
                 hw={hw} tech={!!(techs && techs[a.group])} onDispatch={() => onDispatch && onDispatch(a)}
                 shown={a.id === shownId || (shownName != null && a.name === shownName)} onOpen={() => onAct && onAct(a.id)}
@@ -4827,7 +4827,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
         <div className="card-head">
           PRIORITY ACTION QUEUE
           <span className={`count-pill ${critN ? 'crit' : ''}`} style={{ marginLeft: 'auto' }}>{critN} critical</span>
-          <button className={`pq-auto ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit && setAutoMit((v) => !v)} title="Auto-mitigate — same switch as the header; NEPHES fixes problems by itself">◉ Auto {autoMit ? 'ON' : 'OFF'}</button>
+          <button className={`pq-auto ${autoMit ? 'on' : ''}`} onClick={() => setAutoMit && setAutoMit((v) => !v)} title="Demo control, same switch as the header: the simulator repairs faults. NFO never acts on equipment.">◉ Auto {autoMit ? 'ON' : 'OFF'}</button>
         </div>
         <div className="ai-body">
           <div className="ai-assess">
@@ -4846,7 +4846,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
               <PriorityItem key={a.id} index={i} a={a} st={st} conf={conf} msg={msg}
                 busy={!!(autoMit || (mitigating && mitigating[a.id]))}
                 progress={mitigating && mitigating[a.id] && mitProgress ? mitProgress(a) : null}
-                autoLabel={autoMit ? 'Auto-mitigating' : mitigating && mitigating[a.id] > 1 && Date.now() - mitigating[a.id] < 6000 ? 'Dispatching' : 'Mitigating'}
+                autoLabel={autoMit ? 'Auto-repair (sim)' : mitigating && mitigating[a.id] > 1 && Date.now() - mitigating[a.id] < 6000 ? 'Dispatching' : 'Repair (sim)'}
                 onMitigate={() => onMitigate && onMitigate(a.id)}
                 shown={a.id === shownId || (shownName != null && a.name === shownName)} onOpen={() => onAct && onAct(a.id)}
                 top={a.id === topId} />);
@@ -4884,7 +4884,7 @@ function AiAnalysis({ profile, alerts, onAct, autoMit, setAutoMit, mitigating, o
             auto={autoMit} mitigating={!!(mitigating && mitigating[a.id])} progress={mitigating && mitigating[a.id] && mitProgress ? mitProgress(a) : null} />;
         })}
         {(resolved || []).map((r) =>
-        <RecCard key={'res-' + r.id} asset={r.name} sev="resolved" conf={1} msg="Mitigation completed — readings back in the normal range." resolved />
+        <RecCard key={'res-' + r.id} asset={r.name} sev="resolved" conf={1} msg="Simulated repair completed — readings back in the normal range." resolved />
         )}
       </div>
     </div>);
@@ -4921,7 +4921,7 @@ function PriorityItem({ index, a, st, conf, msg, busy, autoLabel, onMitigate, to
         <button className="r-primary auto" disabled>◉ {autoLabel}{progress != null ? ` · ${Math.round(progress * 100)}%` : ''}…</button> :
         shown ?
         <button className="r-primary ghost" onClick={onOpen}>Act in Sensor Detail ⟶</button> :
-        <button className={`r-primary ${st}`} onClick={onMitigate}>{st === 'crit' ? 'Start Mitigation' : 'Dispatch Technician'}</button>}
+        <button className={`r-primary ${st}`} onClick={onMitigate}>{st === 'crit' ? 'Simulate repair' : 'Dispatch Technician'}</button>}
       </div>
     </div>);
 
@@ -5372,7 +5372,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
               <div className="tr-t">SENSORS IN TROUBLE — SESSION TREND<span className="tl"><i style={{ background: 'var(--crit)' }} />critical</span><span className="tl"><i style={{ background: 'var(--warn)' }} />warning</span></div>
               <Trend />
             </div>
-            <div className="rp-meta">Events this session: {evC} critical · {evW} warnings · {evR} recoveries · every event and mitigation outcome below is timestamped and fed back into NEPHES.</div>
+            <div className="rp-meta">Events this session: {evC} critical · {evW} warnings · {evR} recoveries · every event and simulated outcome below is timestamped and kept for this session only.</div>
             <div className="ov-grid">
               <div className="ov-col">
                 <div className="rp-sec-t ov-t">WORST ZONES<button className="ov-more" onClick={() => setTab('zones')}>all zones →</button></div>
@@ -5532,7 +5532,7 @@ function AnalyticsPanel({ recs, hist = [], points = [], events = [], onInspect, 
               </div>)}
             {mrecs.length > 10 && <button className="show-more" onClick={() => setMitAll((v) => !v)}>{mitAll ? 'Show fewer ↑' : `Show all ${mrecs.length} ↓`}</button>}
           </div>
-          <div className="rp-note">NEPHES weights future mitigation choices toward what measurably recovered fastest — unassisted recoveries form the baseline it has to beat. History shown includes seeded records plus everything logged live this session.</div>
+          <div className="rp-note">Demo only: these outcomes come from the simulator. NFO does not choose repairs or learn from them. History shown includes seeded records plus everything logged this session.</div>
           </React.Fragment>}
         </div>
     </React.Fragment>);
@@ -5565,7 +5565,7 @@ function ShiftReport({ data, onClose }) {
     `Shift ${fmtT(d.start)}–${fmtT(d.now)} · Plant health ${Math.round(d.health)}%`,
     `Sensors: ${d.counts.ok} OK · ${d.counts.warn} warn · ${d.counts.crit} critical`,
     `Events: ${d.events.crit} critical · ${d.events.warn} warnings · ${d.events.ok} recoveries`,
-    `Mitigations: ${d.nDis} dispatched · ${d.nRes} resolved · auto-mitigate ${d.autoMit ? 'ON' : 'OFF'}`,
+    `Simulated repairs: ${d.nDis} started · ${d.nRes} resolved · simulated auto-repair ${d.autoMit ? 'ON' : 'OFF'}`,
     `Simulated savings this shift (demo): ${money(d.saved)}`,
     d.risks.length ? 'Hand off: ' + d.risks.map((r) => `${r.name} (${r.val})`).join(', ') : 'No open risks at handoff.',
     d.workspaces && d.workspaces.length ? 'Workspaces: ' + d.workspaces.map((w) => w.name + ' — ' + w.n + ' sensors, ' + w.c + ' crit' + (w.lastNote ? ' (“' + w.lastNote + '”)' : '')).join(' · ') : 'No open workspace investigations.'];
@@ -5612,7 +5612,7 @@ function ShiftReport({ data, onClose }) {
               <div className="rp-row" key={e.key}><span className={`rp-dot ${e.sev >= 3 ? 'crit' : e.sev === 2 ? 'warn' : 'ok'}`} /><span className="rp-when">{e.ts}</span><span className="rp-name">{e.asset}</span><span className="rp-msg">{e.msg}</span></div>)}
             </div>
           </div>
-          <div className="rp-note">Auto-mitigate was <b>{d.autoMit ? 'ON' : 'OFF'}</b> at handoff. Numbers reflect the console at generation time.</div>
+          <div className="rp-note">Simulated auto-repair was <b>{d.autoMit ? 'ON' : 'OFF'}</b> at handoff. Numbers reflect the console at generation time.</div>
           <div className="rp-actions">
             <button className="rp-btn" onClick={copy}>⧉ Copy summary</button>
             <button className="rp-btn" onClick={doPrint}>⎙ Print</button>
@@ -6005,7 +6005,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
     [8500, '__FAULT2__And a second, nastier problem: a bearing physically wearing out on Assembly Line A.'],
     [14000, 'NEPHES separates the two problems and groups the sensors behind each — automatically, no alarm flood.'],
     [20000, 'Everything detected and ranked. And NEPHES is honest: the hydraulic fault is software-fixable — the worn bearing is not.'],
-    [26000, '__AUTOMIT__Auto-Mitigate on. Corrections are dispatched — and NEPHES is honest here too: readings walk back to safe over the next minute, not by magic.'],
+    [26000, '__AUTOMIT__Simulated auto-repair on: the simulator plays a technician clearing each fault, and readings walk back over the next minute. NFO never acts on equipment.'],
     [34000, '__DISPATCH__…while the bearing gets what it actually needs: a technician, dispatched with the diagnosis and part number attached.'],
     [42500, '__TECHDONE__Technician on site — bearing replaced. NEPHES verifies the recovery in the simulation.'],
     [50000, '__ENTERPRISE__The same hour in dollars — downtime avoided, revenue protected, and the running total NEPHES saved.'],
@@ -6223,7 +6223,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
   { label: 'Run investor demo', ic: '▶', run: () => runDemo() },
   { label: 'Inject test fault (Hydraulics)', ic: '⚠', run: () => { injectFault('Hydraulic Systems', 'crit'); toast('Test fault injected into Hydraulic Systems', 'warn'); } },
   { label: 'Clear all faults', ic: '✓', run: () => { clearAllFaults(); toast('All faults cleared'); } },
-  { label: autoMit ? 'Turn Auto-Mitigate off' : 'Turn Auto-Mitigate on', ic: '◉', run: () => setAutoMit((v) => !v) },
+  { label: autoMit ? 'Turn simulated auto-repair off' : 'Turn simulated auto-repair on', ic: '◉', run: () => setAutoMit((v) => !v) },
   { label: 'Provision a sensor', ic: '＋', run: () => setShowAdd(true) },
   { label: 'Shift handoff report', ic: '📋', run: () => setShowReport(true) },
   { label: 'Open Analytics profile', ic: '📊', run: () => setProfile('analytics') },
@@ -6243,7 +6243,7 @@ function Industrial({ stream, density, defaultView = 'grid', startProfile = 'man
   return (
     <div className="shell" style={appear.density === 'compact' || density === 'compact' ? { fontSize: 11 } : null}>
       <Header health={health} statusText={statusText} recText={recText} counts={counts} profile={profile} setProfile={setProfile} clock={clock} stale={!stream.live} blueLight={blueLight} setBlueLight={setBlueLight} autoMit={autoMit} setAutoMit={setAutoMit} onAddSensor={() => setShowAdd(true)} onDatasheets={() => setShowDatasheets(true)} customCount={customSensors.length} onDemo={() => demoCap ? endDemo() : runDemo()} demoOn={!!demoCap} onToggleLive={onToggleLive} onSearch={() => setCmdk(true)} notifs={notifs} notifUnread={notifUnread} notifOpen={notifOpen} onNotifToggle={() => setNotifOpen((o) => { if (!o) setNotifUnread(0); return !o; })} onNotifPick={(id) => { if (String(id).indexOf('ladder:') === 0) { window.dispatchEvent(new CustomEvent('nephes:ladder', { detail: { progIdx: +String(id).slice(7) } })); setNotifOpen(false); return; } setProfile('manufacturing'); setSel(id); setNotifOpen(false); }} onNotifClear={() => { setNotifs([]); setNotifUnread(0); }} eyeComfort={eyeComfort} setEyeComfort={setEyeComfort} soundOn={soundOn} setSoundOn={handleSound} soundKind={soundKind} setSoundKind={handleSoundKind} onReport={() => setShowReport(true)} onAnalytics={() => setShowAnalytics(true)} appear={appear} setAppear={setAppear} />
-      {profile === 'manufacturing' && <WorkspaceStrip list={wsAll.filter((w) => !w.archived)} archived={wsAll.filter((w) => !!w.archived)} active={wsActive} cur={wsCur} gridPoints={gridPoints} tiles={tileAssets} hist={wsHist} flagged={wsCur && wsCur.pins && wsCur.pins.length ? [...wsGrid, ...wsTiles].filter((a) => statusOf(a) !== 'ok').length : 0} onSwitch={setWsActive} onCreate={(o) => { if (o && o.fromFilters) { const { fromFilters, ...rest } = o; wsCreate({ ...rest, filters: { ...lastFiltersRef.current } }); } else wsCreate(o); }} onUpdate={wsUpdate} onDelete={wsDelete} onDuplicate={wsDuplicate} onSetDefault={wsSetDefault} onExport={wsExport} onNote={(id, txt) => wsNote(id, txt, 'user')} onArchive={wsArchive} onRestore={wsRestore} onToggleWatch={wsToggleWatch} onToggleRule={wsToggleRule} onBulkMitigate={() => { if (!wsCur || !wsCur.pins || !wsCur.pins.length) return; const flagged = [...wsGrid, ...wsTiles].filter((a) => statusOf(a) !== 'ok'); if (!flagged.length) { toast('Nothing flagged in this workspace'); return; } flagged.forEach((a) => startMitigation(a.id)); wsNote(wsCur.id, 'Bulk mitigation dispatched to ' + flagged.length + ' flagged sensor(s)', 'sys'); toast('Mitigation dispatched to ' + flagged.length + ' sensor(s)'); }} />}
+      {profile === 'manufacturing' && <WorkspaceStrip list={wsAll.filter((w) => !w.archived)} archived={wsAll.filter((w) => !!w.archived)} active={wsActive} cur={wsCur} gridPoints={gridPoints} tiles={tileAssets} hist={wsHist} flagged={wsCur && wsCur.pins && wsCur.pins.length ? [...wsGrid, ...wsTiles].filter((a) => statusOf(a) !== 'ok').length : 0} onSwitch={setWsActive} onCreate={(o) => { if (o && o.fromFilters) { const { fromFilters, ...rest } = o; wsCreate({ ...rest, filters: { ...lastFiltersRef.current } }); } else wsCreate(o); }} onUpdate={wsUpdate} onDelete={wsDelete} onDuplicate={wsDuplicate} onSetDefault={wsSetDefault} onExport={wsExport} onNote={(id, txt) => wsNote(id, txt, 'user')} onArchive={wsArchive} onRestore={wsRestore} onToggleWatch={wsToggleWatch} onToggleRule={wsToggleRule} onBulkMitigate={() => { if (!wsCur || !wsCur.pins || !wsCur.pins.length) return; const flagged = [...wsGrid, ...wsTiles].filter((a) => statusOf(a) !== 'ok'); if (!flagged.length) { toast('Nothing flagged in this workspace'); return; } flagged.forEach((a) => startMitigation(a.id)); wsNote(wsCur.id, 'Simulated repair started on ' + flagged.length + ' flagged sensor(s)', 'sys'); toast('Simulated repair started on ' + flagged.length + ' sensor(s)'); }} />}
       {profile !== 'logic' && cust(profile, 'kpis').show && <KpiStrip stream={stream} counts={counts} profile={profile} kpiOff={cust(profile, 'kpis').off || []} />}
       <main className={`main fade-in ${wallFocus ? 'wall-focus' : ''} ${profile === 'analytics' || profile === 'logic' || !rightVis ? 'analytics-full' : ''}`} style={{ '--right-w': ((cz[profile] || {}).rightW || 668) + 'px', '--ok-dim': cust('manufacturing', 'wall').dim != null ? cust('manufacturing', 'wall').dim : 0.6 }}>
         <div className={`wall-zone ${profile === 'analytics' || profile === 'logic' ? 'wall-zone-full' : ''}`}>
@@ -6460,7 +6460,7 @@ function WorkspaceStrip({ list, active, cur, gridPoints, tiles, onSwitch, onCrea
       <span className="ws-hint">{cur ? 'filters save to this workspace · ⌥0 exits' : '⌥1–9 switch · pin from any sensor detail'}</span>
       {cur && cur.pins && cur.pins.length > 0 && <span className="ws-trend" title="Warn (amber) and critical (red) counts inside this workspace over the shift"><Spark series={(hist || []).map((h) => h.w)} w={62} h={14} color="var(--warn)" strokeW={1.2} dot={false} /><Spark series={(hist || []).map((h) => h.c)} w={62} h={14} color="var(--crit)" strokeW={1.2} dot={false} /></span>}
       {cur && <button className="ws-act" onClick={() => setNotesFor(cur.id)} title="Investigation log — notes travel with the shift handoff">🗒 Notes{(cur.notes || []).length ? ' · ' + (cur.notes || []).length : ''}</button>}
-      {cur && flagged > 0 && <button className="ws-act mit" onClick={onBulkMitigate} title="Dispatch mitigation to every flagged sensor in this workspace">◉ Mitigate all ({flagged})</button>}
+      {cur && flagged > 0 && <button className="ws-act mit" onClick={onBulkMitigate} title="Demo control: simulate a repair on every flagged sensor in this workspace">◉ Simulate repair, all ({flagged})</button>}
       {notesFor && (() => { const w = list.find((x) => x.id === notesFor); return w ? <WsNotesPanel ws={w} onAdd={onNote} onClose={() => setNotesFor(null)} /> : null; })()}
     </div>);
 }
