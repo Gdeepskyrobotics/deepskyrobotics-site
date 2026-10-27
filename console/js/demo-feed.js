@@ -9,7 +9,8 @@
  * There is no WebSocket: the page falls back to its 1 s poll.
  *
  * What the simulator does, so the page has something to show: each reading wanders inside its learned band;
- * pump_01's vibration drifts up past its warning limit and back (a 150 s cycle); valve_01's actuator temperature stops
+ * pump_01's motor temperature drifts up past its warning limit and back (a 150 s cycle; NEPHES's recorded verified advice
+ * for pump_01 cites its temperature); valve_01's actuator temperature stops
  * updating after 6 s, so it ages into "stale". All of it is made up here and labelled simulated on screen.
  */
 (function () {
@@ -17,7 +18,7 @@
   var SNAP = window.NFO_DEMO_SNAPSHOT;
   if (!SNAP) return;
 
-  var DRIFT = { asset: "pump_01", tag: "vib_rms_g" };
+  var DRIFT = { asset: "pump_01", tag: "motor_temp_c" };
   var STALE = { asset: "valve_01", tag: "actuator_temp_c", after: 6 };
 
   // a fixed seed, so two runs of the page (and the CI recording) move the same way
@@ -42,7 +43,7 @@
   }
   var SEV = { normal: "info", warning: "warning", critical: "critical" }, RANK = { normal: 0, warning: 1, critical: 2 };
 
-  // pump_01 vibration: level for 5 s, up to just past the warning limit by 30 s, held to 60 s, back down by 90 s
+  // pump_01 motor temperature: level for 5 s, up to just past the warning limit by 30 s, held to 60 s, back down by 90 s
   function driftLevel(t, s, b) {
     var w = num(s.threshold_warning), c = num(s.threshold_critical); if (w === null) return b;
     var top = c !== null ? w + (c - w) * 0.35 : w * 1.05, p = t % 150;
@@ -78,13 +79,15 @@
       drm_status: { running: true, tick_rate_s: 1 }, events: [], findings: [], time: new Date(now * 1000).toISOString() };
   }
 
-  // the advice as recorded, moved to the present so its times read as minutes ago rather than a date
+  // the advice as recorded, moved so the newest reads as now and the rest keep their recorded gaps (not a date)
   function aiAnalysis() {
-    var shift = Date.now() - Date.parse(SNAP.recorded_at), move = function (iso) { var t = Date.parse(iso); return isFinite(t) ? new Date(t + shift).toISOString() : iso; };
-    var ai = JSON.parse(JSON.stringify(SNAP.ai));
-    (ai.recommendations || []).forEach(function (r) {
+    var ai = JSON.parse(JSON.stringify(SNAP.ai)), recs = ai.recommendations || [];
+    var newest = Math.max.apply(null, recs.map(function (r) { return Date.parse(r.timestamp) || 0; }).concat([Date.parse(SNAP.recorded_at)]));
+    var shift = Date.now() - newest, move = function (iso) { var t = Date.parse(iso); return isFinite(t) ? new Date(t + shift).toISOString() : iso; };
+    recs.forEach(function (r) {
       r.timestamp = move(r.timestamp);
-      if (r.data_window) { r.data_window.first = move(r.data_window.first); r.data_window.last = move(r.data_window.last); }
+      var w = r.data_window;
+      if (w) { w.first = move(w.first); w.last = move(w.last); (w.moments || []).forEach(function (m) { m.at = move(m.at); }); }
     });
     return ai;
   }
