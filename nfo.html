@@ -134,11 +134,10 @@ img{max-width:100%}
       var wrap = document.querySelector('.console-embed');
       var fr = document.querySelector('.console-frame');
       if (!wrap || !fr) return;
-      // The console's own layout is ~1478px wide (fixed right column + the
-      // sensor wall + detail panel). Render it at that natural size and SCALE
-      // the whole thing to fit the container, so the right-hand panels (Action
-      // Log) are never clipped. Interactive on desktop; a non-interactive
-      // scaled preview on phone/tablet.
+      // Render the console (a copy of NFO's Live wall: insights beside the
+      // machine grid) at a desk size, 1478px wide, and SCALE the whole thing to
+      // fit the container, so the machine column is never clipped. Interactive
+      // on desktop; a non-interactive scaled preview on phone/tablet.
       var LW = 1478, LH = 880;
       function fit() {
         var w = wrap.clientWidth;

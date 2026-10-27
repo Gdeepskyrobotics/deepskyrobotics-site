@@ -3,37 +3,85 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NEPHES Factory Observer — Console</title>
-
-<link rel="stylesheet" href="console.css">
+<title>NEPHES Factory Observer · Live (website demo, simulated data)</title>
+<!-- A static copy of NFO's Live page (the Wall) for the website. The page code, styles and fonts are NFO's own, copied
+     from preview/all @4543aa5 (ui/templates/console_v4.html and ui/static), unchanged but for asset paths (the header
+     logo, the font files). Only the Wall is here, without
+     Details, Devices or fault injection. There is no server: js/demo-feed.js answers the page's data requests in the
+     browser from a simulator, and the page's own banner says so. -->
+<link rel="stylesheet" href="fonts/nfo-fonts.css">
+<link rel="stylesheet" href="css/nephes-ds.css">
+<link rel="stylesheet" href="css/nfo-shared-header.css">
+<link rel="stylesheet" href="css/nfo-console-palette.css">
+<link rel="stylesheet" href="css/nfo-live-wall.css">
 <style>
-  html, body { margin:0; height:100%; overflow:hidden; background:#0d0d0b; }
-  #root { height:100%; }
-  /* Brand override — console.css ships an orange accent (#FF7A18); the console is
-     embedded in the NFO-Gold marketing page, so keep the gold identity here. */
-  :root {
-    --accent:        #E4BC49;
-    --accent-bright: #FFD86A;
-    --accent-rgb:    228,188,73;
-  }
-  a { color: var(--accent); } a:hover { color: var(--accent-bright); }
+  /* website demo only: links and buttons that lead to pages this demo doesn't have are shown, inert */
+  .h5-seg a[aria-disabled="true"] { opacity: .5; cursor: default; }
+  #v4BigTiles .mg-open, .settings a[href="/handbook"], .hh-panel a[href="/console/signal#now"], .h5-seg .tabn { display: none !important; }
+  .hh-panel a { pointer-events: none; }
 </style>
-
-<script src="vendor/react.development.js"></script>
-<script src="vendor/react-dom.development.js"></script>
-<script src="vendor/babel.min.js"></script>
-<script src="vendor/marked.min.js"></script>
-<script src="vendor/purify.min.js"></script>
 </head>
-<body>
-<div id="root"></div>
+<body class="ds lw" data-profile="console-v4" data-tab="attention">
+<div id="root">
+<div id="nfoProvenance"></div>
+<div id="nfoSharedHdr" data-page="live"></div>
+<!-- console-v4.js writes the clock and status here; NFO keeps this old top bar hidden too -->
+<header class="topbar" hidden>
+  <span class="status-chip" id="v4Status" role="status"><span class="led"></span>connecting</span>
+  <span class="clock" id="v4Clock" aria-label="Local time">--:--:--</span>
+</header>
 
-<!-- Self-contained workspaces console bundle (exposes window.NFOConsoleApp) -->
-<script type="text/babel" src="console-bundle-ws.jsx"></script>
-<script type="text/babel">
-  ReactDOM.createRoot(document.getElementById('root')).render(
-    React.createElement(NFOConsoleApp, { profile: 'manufacturing', speed: 'slow' })
-  );
+<main class="wrap">
+  <div class="page-head">
+    <div class="grow">
+      <h1 id="v4Title">Live</h1>
+      <p id="v4Lede">The floor at a glance: what NEPHES says needs eyes on it, worst first.</p>
+    </div>
+  </div>
+  <div class="banner warn" id="v4Banner" role="alert" hidden></div>
+
+  <section id="v4Wall2" class="lw-page" aria-label="Live wall">
+    <h1 class="sr-only">Live</h1>
+    <div class="lw-main ni-main">
+      <section class="card ni-card" aria-labelledby="v4InsH">
+        <h2 class="ni-title" id="v4InsH">NEPHES insights <span class="tag">advice</span> <b class="lw-hn" id="v4InsN"></b></h2>
+        <div class="ni-list" id="v4Insights" aria-live="polite"></div>
+      </section>
+      <div class="lw-side ni-side" id="v4WallSide">
+        <div class="mg-counts" id="v4Counts"></div>
+        <div class="lw-tiles" id="v4BigTiles" aria-label="Every machine, worst first"></div>
+      </div>
+    </div>
+  </section>
+
+  <p class="footnote">NEPHES is read-only intelligence: its insights are advice, not confirmed causes. It does not actuate the plant or dispatch work. On this website every reading is simulated in your browser.</p>
+</main>
+</div>
+<script src="js/demo-snapshot.js"></script>
+<script src="js/demo-feed.js"></script>
+<script src="js/provenance_banner.js"></script>
+<script src="js/nfo-shared-header.js"></script>
+<script src="js/console-v4.js"></script>
+<script>
+  // only the Wall is in this demo; a "#details" or "#devices" link opens the Wall
+  if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+  NephesConsoleV4.mount(document);
+  // NFO's links point at its own server; here they would 404. Keep them visible but inert.
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest ? e.target.closest("a[href^='/'], [data-open], [data-mode]") : null;
+    if (t) { e.preventDefault(); e.stopImmediatePropagation(); }
+  }, true);
+  document.addEventListener("DOMContentLoaded", function () {
+    var hdr = document.getElementById("nfoSharedHdr");
+    var logo = hdr.querySelector(".hdr-logo"); if (logo) logo.src = "dsr-logo.png";
+    var brand = hdr.querySelector(".hdr-brand"); if (brand) brand.setAttribute("href", "./");
+    var pill = hdr.querySelector("[data-h='pill']"); if (pill) { pill.removeAttribute("href"); pill.removeAttribute("title"); }
+    Array.prototype.forEach.call(hdr.querySelectorAll(".h5-seg a"), function (a) {
+      if (a.classList.contains("on")) { a.setAttribute("href", "./"); return; }
+      a.removeAttribute("href"); a.setAttribute("aria-disabled", "true");
+      a.title = "Not part of this website demo: only the Live page is here";
+    });
+  });
 </script>
 </body>
 </html>

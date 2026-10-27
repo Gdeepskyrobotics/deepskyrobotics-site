@@ -1,0 +1,241 @@
+/* LW1: Live as the wall display (a TV on the floor). Same pieces as the Feed: mono numbers with units, a status dot and a
+   word, neutral cards with the colour only on the reading. Built to be read from across a room: big numbers, few words,
+   no scrolling. Loaded by /console only. */
+body.lw .page-head { margin-bottom: 10px; }
+body.lw .page-head h1, body.lw #v4Lede { display: none; }
+body.lw .page-head { justify-content: flex-end; }
+body.lw .tabbar, body.lw .footnote { display: none; }
+body.lw main.wrap { max-width: none; padding-left: 18px; padding-right: 18px; }
+.lw-page { display: flex; flex-direction: column; gap: 14px; }
+.lw-focus { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+.lw-card { display: flex; flex-direction: column; gap: 2px; padding: 14px 18px; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); min-width: 0; }
+.lw-card .lw-cl { font: 800 11px var(--sans, "Inter", sans-serif); letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); }
+.lw-card .lw-cv { font: 700 40px/1.1 "JetBrains Mono", ui-monospace, monospace; color: var(--text); }
+.lw-card .lw-cv small { font-size: 18px; color: var(--text-faint); margin-left: 4px; }
+.lw-card .lw-cs { font-size: 12.5px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-card.crit { border-color: rgba(var(--crit-rgb), .7); } .lw-card.crit .lw-cv { color: var(--crit-text); }
+.lw-card.warn { border-color: rgba(var(--warn-rgb), .55); } .lw-card.warn .lw-cv { color: var(--warn-text); }
+.lw-ex { font: 700 9.5px "JetBrains Mono", monospace; letter-spacing: .04em; color: var(--warn); border: 1px solid rgba(var(--warn-rgb), .45); border-radius: 4px; padding: 0 5px; text-transform: none; vertical-align: 1px; }
+.lw-main { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 14px; align-items: start; }
+.lw-side > .card { margin: 0; }
+.lw-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 1499px) { .lw-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1099px) { .lw-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .lw-main { grid-template-columns: 1fr; } }
+.lw-tile { position: relative; display: flex; flex-direction: column; min-height: 176px; padding: 14px 16px 12px; border: 1px solid var(--border); border-radius: 14px; background: var(--tile-bg); min-width: 0; }
+.lw-tile .lw-m { font: 700 15px "JetBrains Mono", monospace; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-tile .lw-t { font-size: 13px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-tile .lw-k { font: 600 10px "JetBrains Mono", monospace; letter-spacing: .08em; text-transform: uppercase; color: var(--text-kicker); margin-top: 2px; }
+.lw-tile .lw-v { margin-top: auto; font: 700 44px/1.05 "JetBrains Mono", monospace; color: var(--text); white-space: nowrap; }
+.lw-tile .lw-v small { font: 600 19px "JetBrains Mono", monospace; color: var(--text-faint); margin-left: 5px; }
+.lw-tile .lw-st { display: flex; align-items: center; gap: 8px; margin-top: 4px; font: 600 13px var(--sans, "Inter", sans-serif); color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-tile .lw-st i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--good); }
+.lw-tile .lw-band { position: relative; display: block; height: 6px; margin-top: 9px; border-radius: 3px; background: var(--border); }
+.lw-tile .lw-band .lw-norm { position: absolute; left: 25%; width: 50%; top: 0; bottom: 0; border-radius: 3px; background: rgba(var(--good-rgb), .35); }
+.lw-tile .lw-band b { position: absolute; top: -3px; width: 4px; height: 12px; margin-left: -2px; border-radius: 2px; background: var(--text); }
+.lw-tile .lw-sp { display: block; width: 100%; height: 30px; margin-top: 8px; } .lw-tile .lw-sp path { fill: none; stroke: var(--text-faint); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.lw-tile.crit { border-color: rgba(var(--crit-rgb), .75); background: linear-gradient(180deg, rgba(var(--crit-rgb), .14), var(--tile-bg) 62%); }
+.lw-tile.crit .lw-v { color: var(--crit-text); } .lw-tile.crit .lw-st i { background: var(--crit); } .lw-tile.crit .lw-sp path { stroke: var(--crit); } .lw-tile.crit .lw-band b { background: var(--crit); }
+.lw-tile.warn { border-color: rgba(var(--warn-rgb), .55); } .lw-tile.warn .lw-v { color: var(--warn-text); } .lw-tile.warn .lw-st i { background: var(--warn); } .lw-tile.warn .lw-sp path { stroke: var(--warn); } .lw-tile.warn .lw-band b { background: var(--warn); }
+.lw-tile.pred { border-style: dashed; border-color: rgba(var(--warn-rgb), .5); } .lw-tile.pred .lw-st i { background: transparent; border: 2px solid var(--warn); box-sizing: border-box; } .lw-tile.pred .lw-sp path { stroke: var(--warn); }
+/* a tile that newly turns critical rings three times (transform and opacity only), then holds still; never with motion off */
+.lw-tile::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 2px solid var(--crit); opacity: 0; pointer-events: none; }
+@keyframes lw-ring { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.06); } }
+@media (prefers-reduced-motion: no-preference) { .lw-tile.lw-new::after { animation: lw-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; } }
+html.nfo-motion-on .lw-tile.lw-new::after { animation: lw-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; }
+html.nfo-motion-off .lw-tile.lw-new::after { animation: none; }
+/* the mode switch sits small at the top right of the wall, so the tiles get the height */
+body.lw .page-head { margin: 0 0 8px; min-height: 0; }
+body.lw .page-head .seg button { padding-top: 4px; padding-bottom: 4px; }
+
+/* LL3: three lanes (out of range, NEPHES predicts, watching) and a right column for monitoring the whole plant */
+.lw-tiles { display: block; }
+.lw-lane + .lw-lane { margin-top: 12px; }
+.lw-lh { display: flex; align-items: baseline; gap: 8px; margin: 0 2px 8px; font: 800 11px var(--sans, "Inter", sans-serif); letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); }
+.lw-lh b { font: 700 12px "JetBrains Mono", monospace; color: var(--text-dim); letter-spacing: 0; }
+.lw-lh .lw-more { margin-left: auto; font: 500 11.5px var(--sans, "Inter", sans-serif); letter-spacing: 0; text-transform: none; color: var(--text-faint); }
+.lw-lane.out .lw-lh { color: var(--crit-text-dim); }
+.lw-lg { display: grid; gap: 12px; }
+.lw-lane.watch .lw-tile { min-height: 0; padding: 10px 12px; }
+.lw-lane.watch .lw-tile .lw-v { font-size: 28px; margin-top: 6px; }
+.lw-lane.watch .lw-tile .lw-k, .lw-lane.watch .lw-tile .lw-band, .lw-lane.watch .lw-tile .lw-sp { display: none; }
+.lw-lane.watch .lw-tile .lw-st { font-size: 12px; }
+.lw-side { display: flex; flex-direction: column; gap: 12px; }
+.lw-side > .card { margin: 0; }
+.lw-side h3 .tag { margin-left: 6px; }
+.lw-mg { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+.lw-mr { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto; grid-template-rows: auto auto; column-gap: 8px; align-items: center; padding: 5px 0; border-bottom: 1px solid var(--border); }
+.lw-mr i { grid-row: 1 / 3; width: 9px; height: 9px; border-radius: 50%; background: var(--good); }
+.lw-mr.warning i { background: var(--warn); } .lw-mr.critical i { background: var(--crit); }
+.lw-mn { font: 700 12.5px "JetBrains Mono", monospace; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-mh { font: 600 12px "JetBrains Mono", monospace; color: var(--text-dim); }
+.lw-mw { grid-column: 2 / 4; font-size: 11px; color: var(--text-faint); }
+.lw-mr.critical .lw-mw { color: var(--crit-text-dim); } .lw-mr.warning .lw-mw { color: var(--warn-text-dim); }
+.lw-val .lw-vr { display: flex; flex-direction: column; padding: 6px 0; border-bottom: 1px solid var(--border); }
+.lw-val .lw-vl { font: 800 10.5px var(--sans, "Inter", sans-serif); letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); }
+.lw-val .lw-vv { font: 700 30px/1.15 "JetBrains Mono", monospace; color: var(--text); } .lw-val .lw-vv.ok { color: var(--good-text); }
+.lw-val .lw-vs { font-size: 12px; color: var(--text-dim); }
+.lw-val .lw-vd { margin-top: 8px; font-size: 11.5px; color: var(--text-faint); }
+/* machines: one line each (dot, name, % health), the status word under it only when it isn't normal */
+.lw-mr { grid-template-columns: 9px minmax(0, 1fr) auto; grid-template-rows: auto; padding: 4px 0; }
+.lw-mr i { grid-row: 1; grid-column: 1; } .lw-mn { grid-row: 1; grid-column: 2; } .lw-mh { grid-row: 1; grid-column: 3; }
+.lw-mw { grid-row: 2; grid-column: 2 / 4; } .lw-mr.normal .lw-mw { display: none; }
+/* the wall fits one screen: no page heading, the mode switch is a small link pair in the corner */
+body.lw .page-head { display: none; }
+body.lw main.wrap { padding-top: 14px; }
+.lw-modes { position: fixed; right: 14px; bottom: 10px; z-index: 5; display: flex; gap: 4px; opacity: .55; }
+.lw-modes:hover, .lw-modes:focus-within { opacity: 1; }
+.lw-modes button { font: 600 11.5px var(--sans, "Inter", sans-serif) !important; height: 26px !important; padding: 0 10px !important; border-radius: 7px !important; }
+body:not(.lw) .lw-modes { display: none; }
+body.lw #v4HealthRec { display: none; }
+.lw-side .card { padding-top: 14px; padding-bottom: 14px; }
+/* side column fits under the cards on one screen; on short screens it scrolls inside itself, never the page */
+.lw-side .card { padding: 10px 14px; }
+.lw-side { gap: 10px; }
+.lw-val .lw-vv { font-size: 26px; }
+@media (min-width: 1100px) {
+  body.lw .lw-side { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+}
+.lw-val .lw-vd { margin: 0 0 4px; } .lw-val .lw-va { margin-top: 6px; }
+/* the OEE card already shows A · P · Q, so the wall's health card keeps only the score and the asset bar */
+body.lw #v4HealthCard > div:last-child { display: none; }
+body.lw #v4HealthCard .nhb-legend { margin-top: 10px !important; }
+/* short screens: the machine list (worst first) scrolls in itself so the value card stays in view */
+@media (max-height: 1000px) and (min-width: 1100px) { body.lw .lw-mg { max-height: 104px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; } }
+/* LL3b: no empty cells: tiles flow in rows and the last row widens to fill; out of range and predicted share one block */
+.lw-lg { display: flex; flex-wrap: wrap; gap: 12px; }
+.lw-lg > .lw-tile { flex: 1 1 calc((100% - (var(--c, 3) - 1) * 12px) / var(--c, 3)); min-width: 0; }
+.lw-lh .lw-ho { color: var(--crit-text-dim); } .lw-lh .lw-hs { color: var(--text-faint); }
+.lw-lh > span:not(.lw-more) { display: inline-flex; gap: 6px; align-items: baseline; }
+/* LL3c: rows stretch to fill one screen; the extra height goes to each tile's trend line, never to blank space */
+@media (min-width: 1100px) {
+  body.lw .lw-main { align-items: stretch; }
+  body.lw #v4BigTiles { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  body.lw .lw-lane { display: flex; flex-direction: column; min-height: 0; }
+  body.lw .lw-lane + .lw-lane { margin-top: 0; }
+  body.lw .lw-lane.big { flex: 2 1 auto; } body.lw .lw-lane.watch { flex: 1 1 auto; }
+  body.lw .lw-lg { flex: 1 1 auto; align-content: stretch; }
+  body.lw .lw-tile .lw-sp { flex: 1 1 30px; height: auto; min-height: 30px; }
+  body.lw .lw-lane.watch .lw-tile .lw-sp { display: block; flex: 1 1 0; min-height: 0; margin-top: 6px; }
+  body.lw .lw-measure .lw-lane { flex: none; } body.lw .lw-measure .lw-lg { flex: none; align-content: flex-start; }
+  body.lw .lw-measure .lw-lane.watch .lw-tile .lw-sp { display: none; }
+  /* the side column is the same height: the machine list takes the spare room, one evenly spaced row per machine */
+  body.lw .lw-side { height: 100%; }
+  body.lw .lw-mcard { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+  body.lw .lw-mcard #v4Machines { flex: 1 1 auto; min-height: 0; display: flex; }
+  body.lw .lw-mcard .lw-mg { flex: 1 1 auto; grid-auto-rows: minmax(30px, 1fr); max-height: none; overflow-y: auto; }
+}
+/* the other views are a quiet footer of the side column, not a floating overlay */
+.lw-modes { position: static; opacity: 1; flex: none; align-items: center; justify-content: flex-end; gap: 6px; }
+.lw-modes span { margin-right: auto; font-size: 11.5px; color: var(--text-faint); }
+.lw-tile .lw-rng { display: block; margin-top: 4px; font: 500 11px "JetBrains Mono", monospace; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lw-lane.watch .lw-tile .lw-rng { font-size: 10.5px; }
+body.lw .lw-measure .lw-lane.watch .lw-tile .lw-rng { display: none; }
+@media (max-width: 1099px) { .lw-lane.watch .lw-tile .lw-rng { display: none; } }
+.lw-lh .lw-hk { margin-left: 10px; font: 500 11px "JetBrains Mono", monospace; letter-spacing: 0; text-transform: none; color: var(--text-faint); }
+h3 .lw-hn { font: 700 12px "JetBrains Mono", monospace; color: var(--text-dim); }
+.lw-mg.lw-cut { -webkit-mask-image: linear-gradient(black calc(100% - 22px), transparent); mask-image: linear-gradient(black calc(100% - 22px), transparent); padding-bottom: 14px; }
+@media (min-width: 1100px) { body.lw .lw-mcard { min-height: 150px; } }
+/* the focus cards wrap without leaving a hole: a short last row widens to fill */
+.lw-focus { display: flex; flex-wrap: wrap; } .lw-focus > * { flex: 1 1 220px; min-width: 0; }
+/* LL3d: back to equal columns: a tile (and its trend line) is always one column wide */
+.lw-lg { display: grid; grid-template-columns: repeat(var(--c, 3), minmax(0, 1fr)); gap: 12px; }
+.lw-lg > .lw-tile { flex: none; }
+@media (min-width: 1100px) { body.lw .lw-lg { grid-auto-rows: 1fr; } body.lw .lw-measure .lw-lg { grid-auto-rows: auto; } }
+.kpi .spark path { stroke: var(--text-faint); }
+.lw-mg:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+/* F14: the whole system at once. A counts strip, then one neutral tile per machine (worst first) with a compact row per
+   reading. Colour sits only on the dot, the value and the state word, and every state also has its own dot shape and word:
+   in limits (filled), watch (filled), alert (filled), stale (hollow), no data (dashed ring), no limits set (a dash). */
+.mg-counts:empty { display: none; }
+.mg-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); font: 600 13px var(--sans, "Inter", sans-serif); color: var(--text-dim); }
+.mg-c { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.mg-c b { font: 700 15px "JetBrains Mono", monospace; color: var(--text); }
+.mg-c.st-watch b { color: var(--warn-text); } .mg-c.st-alert b { color: var(--crit-text); }
+.mg-dot { color: var(--text-faint); }
+.mg-of { margin-left: auto; font: 500 12px "JetBrains Mono", monospace; color: var(--text-faint); white-space: nowrap; }
+.mg-c i, .mg-s i, .mg-r i { flex: none; display: inline-block; width: 9px; height: 9px; border-radius: 50%; box-sizing: border-box; background: var(--good); }
+.st-watch > i, .st-watch .mg-rb > i { background: var(--warn); }
+.st-alert > i, .st-alert .mg-rb > i { background: var(--crit); }
+.st-stale > i, .st-stale .mg-rb > i { background: transparent; border: 2px solid var(--text-faint); }
+.st-nodata > i, .st-nodata .mg-rb > i { background: transparent; border: 2px dashed var(--border-strong); }
+.st-unchecked > i, .st-unchecked .mg-rb > i { height: 2px; border-radius: 1px; background: var(--text-faint); }
+body.lw #v4BigTiles { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.mg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 12px; align-items: start; }
+.mg-tile { position: relative; min-width: 0; padding: 10px 12px 6px; border: 1px solid var(--border); border-radius: 14px; background: var(--tile-bg); }
+.mg-tile::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 2px solid var(--crit); opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: no-preference) { .mg-tile.lw-new::after { animation: lw-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; } }
+html.nfo-motion-on .mg-tile.lw-new::after { animation: lw-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; }
+html.nfo-motion-off .mg-tile.lw-new::after { animation: none; }
+.mg-h { display: flex; align-items: center; gap: 8px; min-width: 0; padding-bottom: 6px; }
+.mg-n { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 14px "JetBrains Mono", monospace; color: var(--text); }
+.mg-s { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; flex: none; font: 600 12px var(--sans, "Inter", sans-serif); color: var(--text-dim); }
+.mg-s.st-watch { color: var(--warn-text); } .mg-s.st-alert { color: var(--crit-text); }
+.mg-adv { display: inline-flex; align-items: center; gap: 5px; flex: none; font: 600 10.5px "JetBrains Mono", monospace; color: var(--warn-text-dim); white-space: nowrap; }
+.mg-adv i { flex: none; width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--warn); box-sizing: border-box; }
+.mg-rows { list-style: none; margin: 0; padding: 0; }
+.mg-r { border-top: 1px solid var(--border); }
+.mg-rb { display: grid; grid-template-columns: 9px minmax(0, 1fr) auto 52px 80px; align-items: center; column-gap: 8px; width: 100%; min-height: 32px; padding: 3px 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.mg-rb:hover .mg-t { color: var(--text); }
+.mg-rb:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 6px; }
+.mg-t { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12.5px; color: var(--text-dim); }
+.mg-v { font: 700 13px "JetBrains Mono", monospace; color: var(--text); white-space: nowrap; text-align: right; }
+.mg-v small { margin-left: 3px; font-weight: 600; font-size: 11px; color: var(--text-faint); }
+.st-watch .mg-v { color: var(--warn-text); } .st-alert .mg-v { color: var(--crit-text); }
+.st-stale .mg-v, .st-nodata .mg-v { color: var(--text-faint); }
+.mg-sp { display: block; width: 52px; height: 16px; } .mg-sp path { fill: none; stroke: var(--text-faint); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.st-watch .mg-sp path { stroke: var(--warn); } .st-alert .mg-sp path { stroke: var(--crit); }
+.mg-w { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11.5px; color: var(--text-faint); }
+.st-watch .mg-w { color: var(--warn-text-dim); } .st-alert .mg-w { color: var(--crit-text-dim); }
+.mg-r.open { background: var(--bg-section); border-radius: 0 0 8px 8px; }
+.mg-x { padding: 2px 8px 8px 17px; font-size: 12px; color: var(--text-dim); }
+.mg-x p { margin: 2px 0; } .mg-x .mg-k { font: 500 11px "JetBrains Mono", monospace; color: var(--text-faint); }
+.mg-x .mg-open { margin-top: 6px; min-height: 32px; }
+.mg-none { margin: 4px 0 8px; font-size: 12px; color: var(--text-faint); }
+@media (max-width: 520px) {
+  .mg-grid { grid-template-columns: minmax(0, 1fr); }
+  .mg-rb { grid-template-columns: 9px minmax(0, 1fr) auto 44px 74px; column-gap: 6px; }
+  .mg-sp { width: 44px; }
+  .mg-of { margin-left: 0; white-space: normal; }
+}
+/* narrow screens stack: the whole-system view (counts, then machines) comes before the plant number cards */
+@media (max-width: 1099px) { .lw-page > .mg-counts { order: 1; } .lw-page > .lw-main { order: 2; } .lw-page > .lw-focus { order: 3; } }
+/* NEPHES insights lead the wall: the widest column, read first; the counts and every machine sit beside them.
+   Bigger type, same claims: the severity colour stays on the dot, the cause is marked as a correlation, no confidence figure. */
+.ni-main { grid-template-columns: minmax(0, 1.45fr) minmax(360px, 1fr); }
+@media (max-width: 1099px) { .ni-main { grid-template-columns: minmax(0, 1fr); } }
+.ni-card { display: flex; flex-direction: column; min-height: 0; margin: 0; padding: 14px 18px; }
+.ni-title { display: flex; align-items: baseline; gap: 8px; margin: 0 0 4px; font: 800 13px var(--sans, "Inter", sans-serif); letter-spacing: .12em; text-transform: uppercase; color: var(--text-dim); }
+.ni-list { flex: 1 1 auto; min-height: 0; }
+.ni { padding: 14px 0 16px; border-top: 1px solid var(--border); }
+.ni:first-child { border-top: 0; }
+.ni-h { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.ni-m { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 700 20px "JetBrains Mono", monospace; color: var(--text); }
+.ni-s { display: inline-flex; align-items: center; gap: 7px; font: 600 14px var(--sans, "Inter", sans-serif); color: var(--text-dim); }
+.ni-s i { width: 11px; height: 11px; border-radius: 50%; background: var(--text-faint); }
+.ni.st-watch .ni-s i, .ni.st-warning .ni-s i { background: var(--warn); } .ni.st-critical .ni-s i { background: var(--crit); }
+.ni.st-warning .ni-s, .ni.st-watch .ni-s { color: var(--warn-text); } .ni.st-critical .ni-s { color: var(--crit-text); }
+.ni-t { margin-left: auto; flex: none; font: 500 12px "JetBrains Mono", monospace; color: var(--text-faint); }
+.ni-c { margin: 8px 0 2px; font: 650 21px/1.3 var(--sans, "Inter", sans-serif); color: var(--text); }
+.ni-corr { display: inline-block; margin-left: 6px; padding: 1px 7px; border: 1px solid var(--border-strong); border-radius: 5px; font: 600 11px var(--sans, "Inter", sans-serif); color: var(--text-faint); vertical-align: 3px; }
+.ni-w { margin: 2px 0 0; font-size: 14px; color: var(--text-dim); }
+.ni-b { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 18px; margin-top: 10px; }
+@media (max-width: 760px) { .ni-b { grid-template-columns: minmax(0, 1fr); gap: 8px; } }
+.ni-b h4 { margin: 0 0 4px; font: 800 11px var(--sans, "Inter", sans-serif); letter-spacing: .1em; text-transform: uppercase; color: var(--text-faint); }
+.ni-b ul, .ni-b ol { margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.45; color: var(--text-dim); }
+.ni-b li + li { margin-top: 3px; }
+.ni-er { color: var(--text-faint); }
+.ni-dw { margin: 6px 0 0; font-size: 12.5px; color: var(--text-faint); } .ni-dw b { margin-right: 4px; color: var(--text-dim); }
+.ni-st ol { color: var(--text); }
+.ni-safe { color: var(--text); } .ni-safe b { margin-right: 6px; font: 800 10.5px var(--sans, "Inter", sans-serif); letter-spacing: .08em; text-transform: uppercase; color: var(--warn-text); }
+.ni-cav b { margin-right: 6px; font: 800 10.5px var(--sans, "Inter", sans-serif); letter-spacing: .08em; text-transform: uppercase; color: var(--warn-text); }
+.ni-value { flex: none; margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--border); }
+.ni-value .lw-val .lw-vv { font-size: 20px; }
+@media (min-width: 1100px) {
+  body.lw .ni-main { align-items: stretch; }
+  body.lw .ni-card { overflow: hidden; } body.lw .ni-list { overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  body.lw .ni-side { display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; }
+  body.lw .ni-side #v4BigTiles { flex: 1 1 auto; min-height: 0; }
+  body.lw .ni-side .mg-grid { grid-template-columns: minmax(0, 1fr); }
+}
+.ni-h { flex-wrap: wrap; row-gap: 4px; } .ni-m { flex: 0 1 auto; }
+@media (max-width: 520px) { .ni-m { font-size: 17px; white-space: normal; overflow-wrap: anywhere; } .ni-c { font-size: 19px; } }

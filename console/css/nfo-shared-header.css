@@ -1,0 +1,269 @@
+/* NEPHES shared header: the Signal Console header on Live Operations and Replay too.
+   Generated from ui/static/css/signal-console.css (header, status chip, clock, screen settings),
+   scoped under .nfo-hdr-root so page styles don't clash. Used with /static/js/nfo-shared-header.js. */
+.nfo-hdr-root {
+  --ground: #1b1b1a; --card: #242423; --raised: #2c2c2a; --line: #33332f; --line-2: #4a4945;
+  --text: #d9d5cc; --text-2: #a8a49b; --text-3: #a4a199; --text-4: #9d9a92; --crit-ink: #d08a81;   /* text tiers and critical text pass 4.5:1 on the card surfaces */
+  --accent: #d3b05a; --accent-rgb: 211,176,90; --warn: #dcae4f; --warn-rgb: 220,174,79; --ok: #6f9e80; --crit: #c27a72;
+  --r: 12px; --r-sm: 6px;
+  --sans: "Inter", "Segoe UI", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  position: sticky; top: var(--nfo-prov-h, 0px); z-index: 40; font: 400 14.5px/1.55 var(--sans); color: var(--text); -webkit-font-smoothing: antialiased;
+}
+.nfo-hdr-root, .nfo-hdr-root * { box-sizing: border-box; }
+.nfo-hdr-root [hidden] { display: none !important; }
+.nfo-hdr-root .mono { font-family: var(--mono); }
+.nfo-hdr-root .hdr-btn.wide { width: 100%; margin-top: 12px; }
+.nfo-hdr-root .hh-chip { cursor: pointer; text-decoration: none; }
+.nfo-hdr-root .hdr-nav a.on { pointer-events: none; }
+.nfo-hdr-root .hdr { position: sticky; top: var(--nfo-prov-h, 0px); z-index: 20; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 10px 18px;
+  background: #181817; border-bottom: 1px solid #2f2f2c; }
+.nfo-hdr-root .hdr-brand { display: flex; align-items: center; gap: 11px; text-decoration: none; color: inherit; }
+.nfo-hdr-root .hdr-logo { height: 32px; width: auto; }
+.nfo-hdr-root .hdr-title { display: flex; flex-direction: column; font-size: 13.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text); }
+.nfo-hdr-root .hdr-title small { font-size: 10px; font-weight: 600; letter-spacing: .16em; color: var(--text-3); margin-top: 2px; }
+.nfo-hdr-root .hdr-nav { display: flex; gap: 3px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; }
+.nfo-hdr-root .hdr-nav a { color: var(--text-2); text-decoration: none; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: var(--r-sm); }
+.nfo-hdr-root .hdr-nav a:hover { color: var(--text); }
+.nfo-hdr-root .hdr-nav a.on { color: var(--accent); background: rgba(var(--accent-rgb), .1); }
+.nfo-hdr-root .hdr-health { width: 330px; flex-shrink: 0; }
+.nfo-hdr-root .hh-top { display: flex; align-items: baseline; margin-bottom: 5px; }
+.nfo-hdr-root .hh-l { font-size: 10px; font-weight: 800; letter-spacing: .12em; color: var(--text-3); text-transform: uppercase; }
+.nfo-hdr-root .hh-v { margin-left: auto; font: 700 15px var(--mono); }
+.nfo-hdr-root .hh-v.ok { color: var(--ok); } .nfo-hdr-root .hh-v.warn { color: var(--warn); } .nfo-hdr-root .hh-v.crit { color: var(--crit-ink); }
+.nfo-hdr-root .hh-bar { display: flex; height: 9px; gap: 2px; border-radius: 5px; overflow: hidden; background: rgba(255,255,255,.05); }
+.nfo-hdr-root .hh-seg { height: 100%; }
+.nfo-hdr-root .hh-seg.ok { background: var(--ok); } .nfo-hdr-root .hh-seg.warn { background: var(--warn); } .nfo-hdr-root .hh-seg.crit { background: var(--crit); }
+.nfo-hdr-root .hh-legend { display: flex; align-items: center; gap: 12px; margin-top: 6px; font-size: 10.5px; color: var(--text-3); }
+.nfo-hdr-root .hh-legend i { width: 7px; height: 7px; border-radius: 2px; display: inline-block; margin-right: 4px; }
+.nfo-hdr-root .hh-legend i.ok { background: var(--ok); } .nfo-hdr-root .hh-legend i.warn { background: var(--warn); } .nfo-hdr-root .hh-legend i.crit { background: var(--crit); }
+.nfo-hdr-root .hh-legend b { font-family: var(--mono); color: var(--text); margin-left: 4px; }
+.nfo-hdr-root .hh-chip { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; border: 1px solid transparent; font: 700 11.5px var(--sans); color: var(--text-2); background: none; }
+.nfo-hdr-root button.hh-chip { cursor: pointer; } .nfo-hdr-root button.hh-chip:hover { border-color: rgba(var(--warn-rgb), .5); }
+.nfo-hdr-root .hh-chip.crit,.nfo-hdr-root .hh-chip.crit b { color: var(--crit); }
+.nfo-hdr-root .hh-rec { color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; }
+.nfo-hdr-root .hdr-spacer { flex: 1; }
+.nfo-hdr-root .hdr-chip { display: inline-flex; align-items: center; gap: 7px; font: 700 10.5px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+.nfo-hdr-root .hdr-chip .hdr-led { width: 8px; height: 8px; border-radius: 50%; background: var(--text-4); }
+.nfo-hdr-root .hdr-chip.live { color: var(--ok); } .nfo-hdr-root .hdr-chip.live .hdr-led { background: var(--ok); }
+.nfo-hdr-root .hdr-chip.mock { color: var(--warn); } .nfo-hdr-root .hdr-chip.mock .hdr-led { background: var(--warn); }
+.nfo-hdr-root .hdr-chip.off { color: var(--crit); } .nfo-hdr-root .hdr-chip.off .hdr-led { background: var(--crit); }
+.nfo-hdr-root .hdr-clock { font-size: 12.5px; color: var(--text-2); }
+.nfo-hdr-root .gear-wrap { position: relative; }
+.nfo-hdr-root .gear { width: 32px; height: 32px; border-radius: var(--r-sm); border: 1px solid var(--line); background: transparent; color: var(--text-3); font-size: 15px; cursor: pointer; }
+.nfo-hdr-root .gear[aria-expanded="true"],.nfo-hdr-root .gear:hover { color: var(--accent); border-color: var(--accent); }
+.nfo-hdr-root .settings { position: absolute; right: 0; top: 40px; width: 300px; z-index: 50; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.5); }
+.nfo-hdr-root .stitle { font-size: 9.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--text-3); margin: 10px 0 8px; }
+.nfo-hdr-root .stitle:first-child { margin-top: 0; }
+.nfo-hdr-root .srow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 9px; font-size: 12px; color: var(--text-2); }
+.nfo-hdr-root .srow small { display: block; font-size: 10px; color: var(--text-4); }
+.nfo-hdr-root .tgl { width: 34px; height: 18px; border-radius: 999px; border: 1px solid var(--line); background: #181817; position: relative; cursor: pointer; padding: 0; flex-shrink: 0; }
+.nfo-hdr-root .tgl span { position: absolute; top: 1px; left: 1px; width: 14px; height: 14px; border-radius: 50%; background: var(--text-3); transition: transform .18s; }
+.nfo-hdr-root .tgl.on { border-color: var(--accent); background: rgba(var(--accent-rgb), .22); } .nfo-hdr-root .tgl.on span { transform: translateX(16px); background: var(--accent); }
+.nfo-hdr-root .sgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.nfo-hdr-root .sopt { text-align: left; background: #181817; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 7px 8px; color: var(--text-2); font: 700 11px var(--sans); cursor: pointer; }
+.nfo-hdr-root .sopt small { display: block; font-weight: 400; font-size: 9.5px; color: var(--text-3); margin-top: 2px; }
+.nfo-hdr-root .sopt.on,.nfo-hdr-root .sseg button.on { color: var(--accent); border-color: var(--accent); background: rgba(var(--accent-rgb), .08); }
+.nfo-hdr-root .sseg { display: flex; gap: 4px; }
+.nfo-hdr-root .sseg button { flex: 1; background: #181817; border: 1px solid var(--line); border-radius: var(--r-sm); padding: 6px 0; color: var(--text-2); font: 700 10.5px var(--sans); cursor: pointer; }
+.nfo-hdr-root .shint { font-size: 10.5px; color: var(--text-4); line-height: 1.5; margin: 10px 0 0; }
+.nfo-hdr-root .hdr-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 0 14px; font: 600 13.5px/1 var(--sans); color: var(--text);
+  background: var(--raised); border: 1px solid var(--line); border-radius: var(--r-sm); cursor: pointer; text-decoration: none; }
+.nfo-hdr-root .hdr-btn:hover { border-color: var(--line-2); }
+.nfo-hdr-root .hdr-btn.primary { color: var(--accent); background: rgba(var(--accent-rgb), .08); border-color: var(--accent); }
+.nfo-hdr-root .hdr-btn.ghost { background: transparent; color: var(--text-2); }
+.nfo-hdr-root .hdr-btn.sm { min-height: 30px; padding: 0 10px; font-size: 12.5px; }
+.nfo-hdr-root .hdr-btn.wide { width: 100%; margin-top: 10px; }
+
+@media (max-width: 1600px) { .nfo-hdr-root .hdr { gap: 12px; } .nfo-hdr-root .hdr-health { width: 260px; } }
+@media (max-width: 1000px) {
+  .nfo-hdr-root .hdr { gap: 10px; padding: 8px 12px; }
+  .nfo-hdr-root .hdr-title small, .nfo-hdr-root .hh-rec { display: none; }
+  .nfo-hdr-root .hdr-nav a { padding: 6px 8px; font-size: 12px; }
+  .nfo-hdr-root .hdr-title { font-size: 12px; }
+  .nfo-hdr-root .hdr-health { width: 220px; }
+}
+@media (max-width: 560px) { .nfo-hdr-root .hdr-health { width: 100%; order: 5; } }
+.nfo-hdr-root .hdr { position: static; }
+.nfo-hdr-root .hdr-spacer { flex: 1; }
+/* the page's old top bar stays in the DOM (its ids are still used) but hidden */
+header.topbar[hidden] { display: none !important; }
+
+/* ── H5: brand and plant health on top, the views as tabs that open into the page (same as the Signal Console) ── */
+.nfo-hdr-root .hdr.h5 { display: block; padding: 0; gap: 0; background: #181817; border-bottom: 1px solid #2f2f2c; }
+.nfo-hdr-root .h5-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 18px; padding: 12px 18px 18px; }
+.nfo-hdr-root .h5-top .hdr-brand { justify-self: start; }
+.nfo-hdr-root .h5-health { width: auto; display: flex; align-items: center; gap: 12px; justify-self: center; }
+.nfo-hdr-root .h5-health .hh-v { margin-left: 0; font-size: 14px; }
+.nfo-hdr-root .h5-health .hh-bar { width: 380px; height: 8px; }
+.nfo-hdr-root .h5-health .hh-legend { margin-top: 0; white-space: nowrap; }
+.nfo-hdr-root .h5-right { display: flex; align-items: center; gap: 12px; justify-self: end; }
+.nfo-hdr-root .h5-tabs { display: flex; gap: 6px; padding: 0 18px; margin: 2px 0 -1px; overflow-x: auto; scrollbar-width: none; }
+.nfo-hdr-root .h5-tabs a { position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px 10px; font-size: 13px; font-weight: 600; color: var(--text-3); text-decoration: none; white-space: nowrap;
+  border: 1px solid transparent; border-bottom: 0; border-radius: 9px 9px 0 0; }
+.nfo-hdr-root .h5-tabs a:hover { color: var(--text); }
+.nfo-hdr-root .h5-tabs a.on { color: var(--accent); background: #1b1b1a; border-color: #3a3936; box-shadow: inset 0 2px 0 var(--accent); pointer-events: none; }
+.nfo-hdr-root .h5-tabs .tabn { font: 700 10.5px var(--mono); padding: 1px 7px; border-radius: 999px; background: rgba(220,174,79,.15); color: var(--warn); }
+@media (max-width: 1500px) { .nfo-hdr-root .h5-health .hh-bar { width: 240px; } .nfo-hdr-root .h5-health .hh-rec { display: none; } }
+@media (max-width: 1100px) {
+  .nfo-hdr-root .h5-top { grid-template-columns: auto 1fr; row-gap: 10px; padding: 10px 14px 12px; }
+  .nfo-hdr-root .h5-health { grid-column: 1 / -1; grid-row: 2; justify-self: stretch; }
+  .nfo-hdr-root .h5-health .hh-bar { flex: 1; width: auto; min-width: 120px; }
+  .nfo-hdr-root .h5-tabs { padding: 0 10px; } .nfo-hdr-root .h5-tabs a { padding: 8px 12px 9px; }
+}
+@media (max-width: 560px) { .nfo-hdr-root .h5-health .hh-legend { display: none; } }
+/* a phone: the right-hand items take their own row and wrap, so the header never widens the page */
+@media (max-width: 560px) { .nfo-hdr-root .h5-top { grid-template-columns: minmax(0, 1fr); } .nfo-hdr-root .h5-right { justify-self: start; flex-wrap: wrap; max-width: 100%; } .nfo-hdr-root .h5-health { grid-row: 3; } }
+
+/* the health bar and the right-hand items sit midway between the top of the header and the tabs (the row has 12 px above, 18 px below) */
+@media (min-width: 1101px) { .nfo-hdr-root .h5-health, .nfo-hdr-root .h5-right { margin-top: 6px; } }
+
+/* the company logo and title, still: no animation (it cost too much on busy screens). The title keeps its chrome
+   look, a gradient clipped to its letters, which is painted once. */
+.nfo-hdr-root .hdr-mark { position: relative; display: inline-block; width: 32px; height: 32px; flex: none; }
+.nfo-hdr-root .hdr-mark .hdr-logo { display: block; position: relative; }
+.nfo-hdr-root .hdr-waves { display: none; }
+.nfo-hdr-root .hdr-title { -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-image: linear-gradient(180deg, #fbfbfa 0%, #d8d8d5 26%, #9c9b97 46%, #4e4d4a 50%, #6c6b67 56%, #b9b8b4 78%, #eceae6 100%); }
+.nfo-hdr-root .hdr-title small { -webkit-background-clip: text; background-clip: text; color: transparent; background-image: linear-gradient(180deg, #d6d5d1, #8f8e8a); }
+
+/* header title (Andrew's settings): Inter 15.5 px bold (0.14 em) over Inter 9 px semibold (0.16 em) with no gap, a 40 px logo 9 px from the text */
+.nfo-hdr-root .hdr-brand { gap: 9px; }
+.nfo-hdr-root .hdr-mark { width: 40px; height: 40px; }
+.nfo-hdr-root .hdr-mark .hdr-logo { width: 40px; height: 40px; }
+.nfo-hdr-root .hdr-title { font-family: "Inter", "Segoe UI", system-ui, sans-serif; font-size: 15.5px; font-weight: 700; letter-spacing: .14em; }
+.nfo-hdr-root .hdr-title small { font-family: "Inter", "Segoe UI", system-ui, sans-serif; font-size: 9px; font-weight: 600; letter-spacing: .16em; margin-top: 0; }
+@media (max-width: 1000px) { .nfo-hdr-root .hdr-title { font-size: 12.5px; } .nfo-hdr-root .hdr-mark, .nfo-hdr-root .hdr-mark .hdr-logo { width: 34px; height: 34px; } }
+.nfo-hdr-root .hdr-title { white-space: nowrap; }   /* one line, so the chrome gradient covers it once */
+/* the active tab flares into the page: each side curves out at the bottom (a 10 px concave corner). The corners take the
+   tab's own background (colour and the fixed page gradient), so they match it exactly; the outline is drawn round the
+   whole shape (tab plus corners) as a 1 px shadow, so there is no border stub inside a corner. Each corner overlaps the tab by 2 px and
+   the tab overlaps the header line by 2 px, so no seam shows at fractional display scaling (125 %, 150 %). */
+.nfo-hdr-root .h5-tabs { padding-left: 28px; padding-top: 1px; margin-top: 1px; margin-bottom: -2px; }
+.nfo-hdr-root .h5-tabs a.on { border-color: transparent; filter: drop-shadow(0 1px 0 rgb(29, 29, 28)) drop-shadow(1px 0 0 #3a3936) drop-shadow(-1px 0 0 #3a3936) drop-shadow(0 -1px 0 #56544f); }
+/* GT2 glass: the active tab is lit like glass at the top (a bright rim, a soft sheen fading down, faint side rims) and becomes
+   the page colour where it flares into the page. The header behind it stays solid: nothing shows through and nothing is blurred. */
+.nfo-hdr-root .h5-tabs a.on { color: #e9cf8a; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .26), inset 0 16px 18px -14px rgba(255, 255, 255, .10), inset 1px 0 0 rgba(255, 255, 255, .05), inset -1px 0 0 rgba(255, 255, 255, .05); }
+.nfo-hdr-root .h5-tabs a.on::before, .nfo-hdr-root .h5-tabs a.on::after { content: ""; position: absolute; bottom: 0; width: 12px; height: 10px; pointer-events: none; background: inherit; }
+.nfo-hdr-root .h5-tabs a.on::before { left: -11px; -webkit-mask: radial-gradient(circle at 0 0, transparent 9.5px, #000 10.5px); mask: radial-gradient(circle at 0 0, transparent 9.5px, #000 10.5px); }
+.nfo-hdr-root .h5-tabs a.on::after { right: -11px; -webkit-mask: radial-gradient(circle at 100% 0, transparent 9.5px, #000 10.5px); mask: radial-gradient(circle at 100% 0, transparent 9.5px, #000 10.5px); }
+/* GT2 glass band: the tab row is a frosted strip across the full width of the header, both ways from the active tab (a faint
+   light sheen with a lit top edge). It is a gradient on a solid header, so nothing shows through and nothing is blurred. */
+.nfo-hdr-root .h5-tabs { background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .012) 70%, rgba(255, 255, 255, 0)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06); }
+
+/* P4-a1 plant health: one pill with how many machines need checking (no names, so it stays one line however many there are),
+   small counts after it, and a bell beside LIVE that opens the list. Drawn once per change; nothing animates. */
+.nfo-hdr-root .h5-health { display: flex; align-items: center; gap: 12px; justify-self: center; white-space: nowrap; min-width: 0; }
+.nfo-hdr-root .hh-pill { display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line-2); background: none; font: 500 12.5px var(--sans); color: var(--text); text-decoration: none; cursor: pointer; white-space: nowrap; }
+.nfo-hdr-root .hh-pill b { font: 700 12.5px var(--mono); }
+.nfo-hdr-root .hh-pill .hh-ic { display: inline-flex; color: var(--text-3); }
+.nfo-hdr-root .hh-pill .hh-pd { color: var(--text-3); }
+.nfo-hdr-root .hh-pill:hover { background: rgba(255, 255, 255, .04); }
+.nfo-hdr-root .hh-pill:focus-visible, .nfo-hdr-root .hh-bell:focus-visible, .nfo-hdr-root .hh-panel a:focus-visible, .nfo-hdr-root .hh-panel button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.nfo-hdr-root .hh-pill.crit { border-color: rgba(194, 122, 114, .6); } .nfo-hdr-root .hh-pill.crit .hh-ic { color: var(--crit); }
+.nfo-hdr-root .hh-pill.warn { border-color: rgba(var(--warn-rgb), .5); } .nfo-hdr-root .hh-pill.warn .hh-ic { color: var(--warn); }
+.nfo-hdr-root .hh-pill.ok { border-color: rgba(111, 158, 128, .5); } .nfo-hdr-root .hh-pill.ok .hh-ic { color: var(--ok); }
+.nfo-hdr-root .hh-sm { font-size: 11px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.nfo-hdr-root .hh-sm b { font: 600 11px var(--mono); color: var(--text-2); }
+.nfo-hdr-root .bell-wrap { position: relative; }
+.nfo-hdr-root .hh-bell { position: relative; display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; border: 1px solid var(--line-2); border-radius: 9px; background: #20201f; color: var(--text-2); cursor: pointer; }
+.nfo-hdr-root .hh-bell.quiet { color: var(--text-4); border-color: var(--line); }
+.nfo-hdr-root .hh-bell:hover { color: var(--text); }
+.nfo-hdr-root .hh-bell[aria-expanded="true"] { border-color: #6f6c66; background: #2c2c2a; color: var(--text); }
+.nfo-hdr-root .hh-bell .bn { position: absolute; top: -6px; right: -7px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--crit); color: #1b1b1a; font: 800 11px/18px var(--mono); font-style: normal; text-align: center; box-shadow: 0 0 0 2px #181817; }
+.nfo-hdr-root .hh-bell .bn.warn { background: var(--warn); }
+.nfo-hdr-root .hh-panel { position: absolute; right: 0; top: calc(100% + 8px); z-index: 60; width: 380px; max-height: min(440px, 70vh); overflow: auto; padding: 12px 14px; text-align: left; white-space: normal;
+  background: var(--card); border: 1px solid var(--line-2); border-radius: 12px; box-shadow: 0 16px 40px rgba(0, 0, 0, .55); scrollbar-color: var(--line-2) transparent; }
+.nfo-hdr-root .hh-panel h3 { display: flex; gap: 8px; align-items: baseline; margin: 0 0 2px; font: 700 13px var(--sans); color: var(--text); } .nfo-hdr-root .hh-panel h3 span { margin-left: auto; font: 500 11px var(--sans); color: var(--text-3); }
+.nfo-hdr-root .hh-panel .sub { margin-bottom: 6px; font-size: 11px; color: var(--text-3); }
+.nfo-hdr-root .hh-panel ul { list-style: none; margin: 0; padding: 0; }
+.nfo-hdr-root .hh-panel li > a, .nfo-hdr-root .hh-panel li > button { display: grid; grid-template-columns: 16px minmax(0, 1fr) auto; gap: 9px; align-items: baseline; width: 100%; padding: 8px 4px; border: 0; border-top: 1px solid var(--line); border-radius: 0;
+  background: none; color: var(--text-2); font: 400 12px var(--sans); text-align: left; text-decoration: none; cursor: pointer; }
+.nfo-hdr-root .hh-panel li > a:hover, .nfo-hdr-root .hh-panel li > button:hover { background: rgba(255, 255, 255, .03); }
+.nfo-hdr-root .hh-panel li span { overflow-wrap: anywhere; }
+.nfo-hdr-root .hh-panel .ic { color: var(--crit); } .nfo-hdr-root .hh-panel .ic.warning { color: var(--warn); }
+.nfo-hdr-root .hh-panel b { font: 700 12px var(--mono); color: var(--text); }
+.nfo-hdr-root .hh-panel .w { font-size: 11px; color: var(--text-3); } .nfo-hdr-root .hh-panel .more { font: 500 11px var(--mono); color: var(--text-4); }
+.nfo-hdr-root .hh-panel .empty { padding: 8px 0; border-top: 1px solid var(--line); font-size: 12px; color: var(--text-3); }
+.nfo-hdr-root .hh-panel .ft { padding-top: 8px; border-top: 1px solid var(--line); font-size: 11px; } .nfo-hdr-root .hh-panel .ft a { color: var(--accent); text-decoration: none; }
+@media (max-width: 1300px) { .nfo-hdr-root .hh-sm { display: none; } }
+@media (max-width: 1100px) { .nfo-hdr-root .h5-health { justify-self: start; } }
+
+/* GT2 glass, continued: the same frost runs over the active tab too, so the tab row reads as one frosted plane from edge to edge
+   (it fades out at the bottom, where the active tab meets the page). */
+.nfo-hdr-root .h5-tabs { position: relative; }
+.nfo-hdr-root .h5-tabs::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .045), rgba(255, 255, 255, .012) 70%, rgba(255, 255, 255, 0)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .06); }
+.nfo-hdr-root .h5-tabs { background: none; box-shadow: none; }
+
+/* page button styles (Replay, Live Operations) must not resize the bell or its icon */
+.nfo-hdr-root .hh-bell { padding: 0 !important; min-width: 34px; height: 34px !important; line-height: 1; } .nfo-hdr-root .hh-bell svg { width: 17px; height: 17px; flex: none; }
+.nfo-hdr-root .hh-pill { height: auto !important; line-height: 1.3; }
+/* the folder's glass follows across the top: the active tab's lit rim and sheen run the full width of the tab row at the
+   tab's top edge, as one pane of glass; the tab keeps its outline, page-coloured body and flared corners */
+.nfo-hdr-root .h5-tabs::after { background: linear-gradient(180deg, rgba(255, 255, 255, .075), rgba(255, 255, 255, .025) 40%, rgba(255, 255, 255, 0)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22); }
+.nfo-hdr-root .h5-tabs a.on { box-shadow: none; }
+
+/* TR1: the data status and the clock share one glass capsule ("live as of 08:21:57"); the bell and settings stay separate */
+.nfo-hdr-root .hdr-cap { display: inline-flex; align-items: center; height: 34px; border: 1px solid var(--line-2); border-radius: 10px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12); white-space: nowrap; }
+.nfo-hdr-root .hdr-cap > * { display: inline-flex; align-items: center; height: 100%; padding: 0 11px; }
+.nfo-hdr-root .hdr-cap > * + * { border-left: 1px solid var(--line); }
+.nfo-hdr-root .hdr-cap .hdr-chip { border: 0; border-radius: 0; padding-top: 0; padding-bottom: 0; }
+.nfo-hdr-root .hdr-cap .hdr-clock { font-size: 13px; }
+
+/* Frosted glass header: the whole header is one pane of frosted glass. It is translucent and blurs whatever scrolls under it
+   (the page content, never anything placed behind it on purpose), with a fine frost grain, a soft sheen and a lit top edge.
+   One blurred layer, never animated; solid when the computer asks for less transparency. */
+.nfo-hdr-root .hdr.h5 {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .018) 40%, rgba(255, 255, 255, .03)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .055 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    rgba(26, 26, 25, .74);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3); backdrop-filter: blur(20px) saturate(1.3);
+  border-bottom-color: rgba(255, 255, 255, .08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), 0 8px 22px rgba(0, 0, 0, .28);
+}
+@media (prefers-reduced-transparency: reduce) { .nfo-hdr-root .hdr.h5 { background-color: #181817; -webkit-backdrop-filter: none; backdrop-filter: none; } }
+.nfo-hdr-root .hdr-cap { cursor: pointer; } .nfo-hdr-root .hdr-cap:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* the screen-settings button matches the bell: same size, fill, border and icon colour (page button styles can't change it) */
+.nfo-hdr-root .gear { display: inline-grid; place-items: center; width: 34px; height: 34px !important; min-width: 34px; padding: 0 !important; border: 1px solid var(--line-2) !important; border-radius: 9px !important;
+  background: #20201f !important; color: var(--text-2) !important; font-size: 15px; line-height: 1; box-shadow: none !important; }
+.nfo-hdr-root .gear:hover { color: var(--text) !important; border-color: var(--line-2) !important; }
+.nfo-hdr-root .gear[aria-expanded="true"] { border-color: #6f6c66 !important; background: #2c2c2a !important; color: var(--text) !important; }
+.nfo-hdr-root .gear:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* the header is identical on every page: page button styles (Replay, Live Operations) can't resize or recolour its buttons */
+.nfo-hdr-root .hh-bell, .nfo-hdr-root .gear { box-sizing: border-box !important; width: 34px !important; height: 34px !important; min-height: 0 !important; max-height: 34px !important; min-width: 34px !important;
+  padding: 0 !important; margin: 0 !important; border-radius: 9px !important; font: 400 15px/1 var(--sans) !important; letter-spacing: normal !important; text-transform: none !important; }
+.nfo-hdr-root .hh-bell { background: #20201f !important; border: 1px solid var(--line-2) !important; color: var(--text-2) !important; box-shadow: none !important; }
+.nfo-hdr-root .hh-bell.quiet { border-color: var(--line) !important; color: var(--text-4) !important; }
+.nfo-hdr-root .hh-bell:hover { color: var(--text) !important; }
+.nfo-hdr-root .hh-bell[aria-expanded="true"] { border-color: #6f6c66 !important; background: #2c2c2a !important; color: var(--text) !important; }
+.nfo-hdr-root .hdr-cap .hdr-clock, .nfo-hdr-root .hdr-cap > :last-child { letter-spacing: normal; }
+.nfo-hdr-root .hh-pill { font-family: var(--sans) !important; letter-spacing: normal !important; text-transform: none !important; }
+
+/* A critical machine reads as an alert, not just an outlined pill: a red fill, a solid red edge, white text and the warning
+   sign in a red disc. When a machine newly turns critical, a ring pulses out from the pill three times (transform and
+   opacity only, so it costs nothing to draw), then it stays still and strong. No pulse when motion is off. */
+.nfo-hdr-root .hh-pill.crit { position: relative; background: rgba(194, 122, 114, .2); border-color: var(--crit); color: #fff; box-shadow: 0 0 0 1px rgba(194, 122, 114, .35), 0 0 18px rgba(194, 122, 114, .25); }
+.nfo-hdr-root .hh-pill.crit b { color: #fff; }
+.nfo-hdr-root .hh-pill.crit .hh-pd { color: #f2d0cb; }
+.nfo-hdr-root .hh-pill.crit .hh-ic { width: 18px; height: 18px; border-radius: 50%; background: var(--crit); color: #1b1b1a; display: inline-grid; place-items: center; }
+.nfo-hdr-root .hh-pill.crit .hh-ic svg path:first-child { fill: #1b1b1a; } .nfo-hdr-root .hh-pill.crit .hh-ic svg path:last-of-type { stroke: var(--crit); } .nfo-hdr-root .hh-pill.crit .hh-ic svg circle { fill: var(--crit); }
+.nfo-hdr-root .hh-pill.crit:hover { background: rgba(194, 122, 114, .28); }
+.nfo-hdr-root .hh-pill.crit::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; border: 2px solid var(--crit); opacity: 0; pointer-events: none; }
+@keyframes hh-ring { 0% { opacity: .85; transform: scale(1); } 100% { opacity: 0; transform: scale(1.18, 1.6); } }
+@media (prefers-reduced-motion: no-preference) { .nfo-hdr-root .hh-pill.crit.hh-new::after { animation: hh-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; } }
+html.nfo-motion-on .nfo-hdr-root .hh-pill.crit.hh-new::after { animation: hh-ring 1.4s cubic-bezier(.2, .7, .3, 1) 3; }
+.motion-off .nfo-hdr-root .hh-pill.crit.hh-new::after, .nfo-hdr-root .motion-off .hh-pill.crit.hh-new::after, html.nfo-motion-off .nfo-hdr-root .hh-pill.crit.hh-new::after { animation: none; }
+
+/* TT3: the views are tags in one glass capsule (like the status capsule top right), each with a small line icon; the
+   selected one is a lit glass segment with gold text. They no longer open into the page, so the header ends in one edge. */
+.nfo-hdr-root .h5-tabs { display: flex; align-items: center; padding: 0 18px 12px !important; margin: 0 !important; background: none !important; box-shadow: none !important; overflow: visible; }
+.nfo-hdr-root .h5-tabs::after { content: none !important; }
+.nfo-hdr-root .h5-seg { display: inline-flex; align-items: center; height: 36px; padding: 3px; gap: 2px; border: 1px solid var(--line-2); border-radius: 12px; background: rgba(255, 255, 255, .035); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12); }
+.nfo-hdr-root .h5-tabs a { display: inline-flex; align-items: center; gap: 7px; height: 100%; padding: 0 16px !important; margin: 0 !important; border: 0 !important; border-radius: 9px !important; font: 600 13px var(--sans) !important;
+  color: var(--text-3); text-decoration: none; background: none !important; filter: none !important; box-shadow: none !important; view-transition-name: none; }
+.nfo-hdr-root .h5-tabs a:hover { color: var(--text); background: rgba(255, 255, 255, .035) !important; }
+.nfo-hdr-root .h5-tabs a.on { color: #e9cf8a; background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .04)) !important; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .28), 0 0 0 1px rgba(255, 255, 255, .08) !important; }
+.nfo-hdr-root .h5-tabs a.on::before, .nfo-hdr-root .h5-tabs a.on::after { content: none !important; }
+.nfo-hdr-root .h5-tabs .tb-ic { display: inline-flex; opacity: .9; } .nfo-hdr-root .h5-tabs .tb-ic svg { width: 14px; height: 14px; }
+.nfo-hdr-root .h5-tabs a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
