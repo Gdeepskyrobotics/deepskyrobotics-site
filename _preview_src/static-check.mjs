@@ -8,6 +8,8 @@ import { pathToFileURL } from 'node:url';
 export const FORBIDDEN = [
   'entirely on-prem', 'installed desktop release', 'read-only, always', 'reads live plc telemetry',
   'days before the failure', "can't be attacked", "only engine you'll ever need", 'integrates with', 'we beat',
+  // NFO UI honesty (2026-10-27): no early-warning claim, no fake confidence, no write-back promise.
+  'predictive maintenance', 'calibrated confidence', 'write-back is on the roadmap', 'live demo',
 ];
 export const NEW_LINES = [
   'When a line stops, the first question is why.',
