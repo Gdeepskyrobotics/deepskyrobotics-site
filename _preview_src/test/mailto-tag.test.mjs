@@ -12,7 +12,8 @@ const PAGES = ['index.html', 'nfo.html', 'preview/index.html'].filter((p) => exi
 function snippetFrom(file) {
   const m = SNIPPET.exec(readFileSync(join(root, file), 'utf8'));
   assert.ok(m, `${file} has no <script data-ga="mailto"> block`);
-  return m[1];
+  // index.html and nfo.html are stored with CRLF in git and new files with LF, so compare the code, not the line ends.
+  return m[1].replace(/\r\n/g, '\n');
 }
 
 function harness(code, { withGtag = true } = {}) {

@@ -1,0 +1,49 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>S4 fork</title>
+<body>
+<script src="scene.js"></script>
+<script>
+// S4 fork: one core; a single trunk leaves it and splits into two lanes, one per vertical.
+defineScene({ seconds: 3, fps: 30, posterT: 0, render: function (t, ctx, w, h) {
+  var portrait = h > w;
+  // a: distance along the flow (0..1); b: offset across it (-1..1). Portrait keeps the flow in the central band
+  // (34%-66% of the height): landscape tablets cover-crop portrait clips to about 30%-70%.
+  function at(a, b) { return portrait ? { x: w * (0.5 + 0.3 * b), y: h * (0.34 + 0.32 * a) } : { x: w * (0.14 + 0.74 * a), y: h * (0.5 + 0.26 * b) }; }
+  var SPLIT = 0.4;
+  function laneB(a, side) { return a < SPLIT ? 0 : side * ease.inOut((a - SPLIT) / (1 - SPLIT)); }
+  var core = at(0, 0), R = Math.min(w, h) * 0.06;
+
+  var glow = ctx.createRadialGradient(core.x, core.y, 0, core.x, core.y, R * 3);
+  glow.addColorStop(0, 'rgba(129,140,248,0.35)'); glow.addColorStop(1, 'rgba(129,140,248,0)');
+  ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(core.x, core.y, R * 3, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = PALETTE.indigo; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(core.x, core.y, R, 0, Math.PI * 2); ctx.stroke();
+
+  var a0 = R / (portrait ? h * 0.32 : w * 0.74);
+  var reachA = a0 + (1 - a0) * ease.inOut(span(t, 0.1, 0.9));
+  function stroke(from, to, side, color) {
+    if (to <= from) return;
+    ctx.strokeStyle = color; ctx.lineWidth = portrait ? 4 : 3; ctx.lineCap = 'round'; ctx.globalAlpha = 0.9;
+    ctx.beginPath();
+    for (var k = 0; k <= 60; k++) {
+      var a = from + (to - from) * (k / 60), p = at(a, laneB(a, side));
+      if (k === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+    }
+    ctx.stroke();
+  }
+  stroke(a0, Math.min(reachA, SPLIT), 0, PALETTE.mute);
+  stroke(SPLIT, reachA, -1, PALETTE.indigo);
+  stroke(SPLIT, reachA, 1, PALETTE.emerald);
+
+  if (reachA > SPLIT) {
+    var pa = SPLIT + (reachA - SPLIT) * ease.out(span(t, 0.5, 1));
+    [[-1, PALETTE.indigo], [1, PALETTE.emerald]].forEach(function (lane) {
+      var p = at(pa, laneB(pa, lane[0]));
+      ctx.globalAlpha = 1; ctx.fillStyle = lane[1];
+      ctx.beginPath(); ctx.arc(p.x, p.y, portrait ? 6 : 5, 0, Math.PI * 2); ctx.fill();
+    });
+  }
+  ctx.globalAlpha = 1;
+}});
+</script>
+</body>

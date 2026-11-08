@@ -1,0 +1,61 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>S2 trace</title>
+<body>
+<script src="scene.js"></script>
+<script>
+// S2 trace: starts on S1's last frame. The field fades back, a graph of nodes appears, and one path lights from where
+// the drifting trace left the frame back to a single source.
+defineScene({ seconds: 5, fps: 30, posterT: 0, render: function (t, ctx, w, h) {
+  var fade = ease.inOut(span(t, 0, 0.3));
+  FIELD.draw(ctx, w, h, FIELD.END, 1 - 0.75 * fade);
+
+  var portrait = h > w, layers = portrait ? 4 : 5, per = portrait ? 6 : 5, rnd = mulberry32(11), nodes = [];
+  for (var L = 0; L < layers; L++) {
+    nodes.push([]);
+    for (var j = 0; j < per; j++) {
+      nodes[L].push({ x: w * (0.12 + 0.7 * L / (layers - 1)) + (rnd() - 0.5) * w * 0.04,
+                      y: h * (0.18 + 0.64 * (j + 0.5) / per) + (rnd() - 0.5) * h * 0.05 });
+    }
+  }
+  var start = FIELD.drifterEnd(w, h, FIELD.END), path = [start], prev = start;
+  for (var L2 = layers - 1; L2 >= 0; L2--) {
+    var best = nodes[L2][0];
+    nodes[L2].forEach(function (n) { if (Math.abs(n.y - prev.y) < Math.abs(best.y - prev.y)) best = n; });
+    path.push(best); prev = best;
+  }
+
+  ctx.lineWidth = 1; ctx.strokeStyle = PALETTE.mute;
+  for (var L3 = 0; L3 < layers - 1; L3++) {
+    nodes[L3].forEach(function (a) {
+      nodes[L3 + 1].slice().sort(function (p, q) { return Math.abs(p.y - a.y) - Math.abs(q.y - a.y); }).slice(0, 2)
+        .forEach(function (b) { ctx.globalAlpha = 0.14 * fade; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
+    });
+  }
+  nodes.forEach(function (layer) { layer.forEach(function (n) {
+    ctx.globalAlpha = 0.5 * fade; ctx.fillStyle = PALETTE.mute;
+    ctx.beginPath(); ctx.arc(n.x, n.y, portrait ? 4 : 3.5, 0, Math.PI * 2); ctx.fill();
+  }); });
+
+  var lit = ease.inOut(span(t, 0.3, 0.85)) * (path.length - 1);
+  ctx.globalAlpha = 1; ctx.strokeStyle = PALETTE.cyan; ctx.lineWidth = portrait ? 4 : 3; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(path[0].x, path[0].y);
+  for (var k = 1; k < path.length; k++) {
+    var f = Math.min(1, lit - (k - 1));
+    if (f <= 0) break;
+    ctx.lineTo(path[k - 1].x + (path[k].x - path[k - 1].x) * f, path[k - 1].y + (path[k].y - path[k - 1].y) * f);
+  }
+  if (lit > 0) ctx.stroke();
+
+  var found = ease.out(span(t, 0.85, 1));
+  if (found > 0) {
+    var src = path[path.length - 1];
+    ctx.globalAlpha = found; ctx.lineWidth = 2; ctx.strokeStyle = PALETTE.emerald;
+    ctx.beginPath(); ctx.arc(src.x, src.y, (portrait ? 14 : 12) + 18 * (1 - found), 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = PALETTE.emerald;
+    ctx.beginPath(); ctx.arc(src.x, src.y, portrait ? 5 : 4.5, 0, Math.PI * 2); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+}});
+</script>
+</body>
